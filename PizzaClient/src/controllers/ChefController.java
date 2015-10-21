@@ -5,17 +5,12 @@
  */
 package controllers;
 
-import java.beans.*;
-
 /**
  *
  * @author Jacob
  */
-public class MainController extends AbstractController {
-    public MainController() {
-        super();
-    }
-    
+public class ChefController extends AbstractController{
+
     @Override
     public void submit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -35,4 +30,5 @@ public class MainController extends AbstractController {
     public void runCommand(String command, Object input) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

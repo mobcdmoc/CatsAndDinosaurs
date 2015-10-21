@@ -6,13 +6,14 @@
 package controllers;
 
 import java.beans.*;
+import java.io.Serializable;
 
 /**
  *
  * @author Jacob
  */
-public class MainController extends AbstractController {
-    public MainController() {
+public class EmployeeManagerController extends AbstractController {
+    public EmployeeManagerController() {
         super();
     }
     
@@ -35,4 +36,6 @@ public class MainController extends AbstractController {
     public void runCommand(String command, Object input) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
 }
