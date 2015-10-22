@@ -29,4 +29,6 @@ public interface IDataContext {
     void saveOrder(IModel model);
     void savePizza(IModel model);
     void saveUser(IModel model);
+
+    public void load();
 }

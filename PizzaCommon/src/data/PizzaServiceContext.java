@@ -15,6 +15,12 @@ import models.IModel;
 public class PizzaServiceContext implements IDataContext {
 
     @Override
+    public void load()
+    {
+        
+    }
+    
+    @Override
     public IModel getAddress(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
