@@ -5,6 +5,7 @@
  */
 package data;
 
+import java.util.ArrayList;
 import models.IModel;
 
 /**
@@ -12,6 +13,20 @@ import models.IModel;
  * @author Jacob
  */
 public interface IDataContext {
-    IModel get(int id);
-    void save(IModel model);
+    IModel getAddress(int id);
+    IModel getEmployee(int id);
+    IModel getItem(int id);
+    ArrayList<IModel> getItems();
+    IModel getMenu();
+    IModel getOrder(int id);
+    IModel getPizza(int id);
+    ArrayList<IModel> getToppings();
+    IModel getUser(int id);
+    void saveAddress(IModel model);
+    void saveEmployee(IModel model);
+    void saveItem(IModel model);
+    void saveMenu(IModel model);
+    void saveOrder(IModel model);
+    void savePizza(IModel model);
+    void saveUser(IModel model);
 }
