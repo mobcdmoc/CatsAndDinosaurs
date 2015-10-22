@@ -5,6 +5,8 @@
  */
 package resources;
 
+import Storage.DataStorage;
+import data.IDataContext;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -26,11 +28,13 @@ public class PizzaService {
 
     @Context
     private UriInfo context;
-
+    private IDataContext dataStorage;
     /**
      * Creates a new instance of GeneralServiceResource
      */
     public PizzaService() {
+        dataStorage = new DataStorage();
+        dataStorage.load();
     }
 
     /**
