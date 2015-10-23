@@ -37,12 +37,26 @@ public class MainWindow extends javax.swing.JFrame {
         mainView = new views.MainView();
         loginView = new views.LoginView();
         orderView = new views.OrderView();
+        createAccountView = new views.CreateAccountView();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
-        getContentPane().add(mainView, "mainCard");
-        getContentPane().add(loginView, "loginCard");
-        getContentPane().add(orderView, "orderCard");
+        getContentPane().add(mainView, "card2");
+        getContentPane().add(loginView, "card3");
+        getContentPane().add(orderView, "card4");
+
+        javax.swing.GroupLayout createAccountViewLayout = new javax.swing.GroupLayout(createAccountView);
+        createAccountView.setLayout(createAccountViewLayout);
+        createAccountViewLayout.setHorizontalGroup(
+            createAccountViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
+        createAccountViewLayout.setVerticalGroup(
+            createAccountViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 499, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(createAccountView, "card5");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -88,10 +102,12 @@ public class MainWindow extends javax.swing.JFrame {
     private void initCustom() {
         mainView.initCustom(this, client);
         orderView.initCustom(this, client);
+        createAccountView.initCustom(this, client);
     }
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private views.CreateAccountView createAccountView;
     private views.LoginView loginView;
     private views.MainView mainView;
     private views.OrderView orderView;

@@ -64,6 +64,11 @@ public class MainView extends javax.swing.JPanel {
         });
 
         createAccountButton.setText("Create Account");
+        createAccountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createAccountButtonActionPerformed(evt);
+            }
+        });
 
         makeOrderButton.setText("Make Order");
         makeOrderButton.addActionListener(new java.awt.event.ActionListener() {
@@ -130,13 +135,18 @@ public class MainView extends javax.swing.JPanel {
 
     private void logInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButtonActionPerformed
         CardLayout layout = (CardLayout)parent.getContentPane().getLayout();
-        layout.show(parent.getContentPane(), "loginCard");
+        layout.show(parent.getContentPane(), "card3");
     }//GEN-LAST:event_logInButtonActionPerformed
 
     private void makeOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeOrderButtonActionPerformed
         CardLayout layout = (CardLayout)parent.getContentPane().getLayout();
-        layout.show(parent.getContentPane(), "orderCard");
+        layout.show(parent.getContentPane(), "card4");
     }//GEN-LAST:event_makeOrderButtonActionPerformed
+
+    private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
+        CardLayout layout = (CardLayout)parent.getContentPane().getLayout();
+        layout.show(parent.getContentPane(), "card5");
+    }//GEN-LAST:event_createAccountButtonActionPerformed
 
 
     

@@ -19,9 +19,9 @@ public class OrderController extends AbstractController {
     //This is a hack to get it working.
     private IModel menu;
     
-    public IModel getMenu()
+    public MenuModel getMenu()
     {
-        return menu;
+        return (MenuModel)menu;
     }
     
     public void setMenu(IModel value)
