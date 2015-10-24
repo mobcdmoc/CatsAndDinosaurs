@@ -5,8 +5,11 @@
  */
 package resources;
 
-import Storage.DataStorage;
-import data.IDataContext;
+import com.google.gson.Gson;
+import data.DataContext;
+import data.SqliteDataSource;
+import exceptions.LoadException;
+import exceptions.StorageException;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -16,6 +19,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import models.IModel;
 
 /**
  * REST Web Service
@@ -28,12 +32,22 @@ public class PizzaService {
 
     @Context
     private UriInfo context;
-    private IDataContext dataStorage;
+    private DataContext dataStorage;
+    private Gson gson ;
+    private static final String IdError = "{\"ERROR\":\"Bad Id\"}";
+    private static final String SystemError = "{\"ERROR\":\"Internal Servcer Errror. Could Not Fetch Data!\"}";
+    /*
+    Normally we would actually want to read this in from a config file, but
+    in the interest of time we're just going to hard code it for now.
+    */
+    private static final String connectionString = "jdbc:sqlite:C:\\Users\\Jacob\\Documents\\NetBeansProjects\\Git\\CatsAndDinosaurs\\PizzaWebService\\resources\\PizzaDb.db"; //"jdbc:sqlite:resources/PizzaDb.db";
     /**
      * Creates a new instance of GeneralServiceResource
+     * @throws exceptions.LoadException
      */
-    public PizzaService() {
-        dataStorage = new DataStorage();
+    public PizzaService() throws LoadException {
+        gson = new Gson();
+        dataStorage = new DataContext(new SqliteDataSource(connectionString));
         dataStorage.load();
     }
 
@@ -46,7 +60,22 @@ public class PizzaService {
     @Produces("application/json")
     @Path("/Get/User/{id}")
     public String getUser(@PathParam("id") int id) {
-        return "{\"cat\":\"dog\"}";
+        
+        if(id < 1)
+            return IdError;
+        String results = "";
+        try
+        {
+            IModel model = dataStorage.getUser(id);
+            results = gson.toJson(model);
+        
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Here we would want to log to a file
+            return SystemError;
+        }
     }
     /**
      * Retrieves representation of an instance of Item
@@ -57,7 +86,19 @@ public class PizzaService {
     @Produces("application/json")
     @Path("/Get/Item/{id}")
     public String getItem(@PathParam("id") int id) {
-        return "{\"cat\":\"dog\"}";
+        if(id < 1)
+            return IdError;
+        try
+        {
+            IModel model = dataStorage.getItem(id);
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemError;
+        }
     }
     /**
      * Retrieves representation of a collection of items
