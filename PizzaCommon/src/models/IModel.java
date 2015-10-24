@@ -5,6 +5,9 @@
  */
 package models;
 
+import exceptions.LoadException;
+import java.util.HashMap;
+
 /**
  *
  * @author Jacob
@@ -12,4 +15,12 @@ package models;
 public interface IModel {
     public void save();
     public IModel get(int id);
+    /*
+    The load method takes a hashmap of string object and 
+    uses it to place the provided values in the model.
+    
+    It expects the key names to be all lowercase and identical
+    to the property name.
+    */
+    public void load(HashMap<String,Object> fields) throws LoadException;
 }

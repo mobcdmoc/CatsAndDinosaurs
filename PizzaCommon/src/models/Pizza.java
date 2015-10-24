@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author Jacob
  */
-public class Pizza extends Item {
+public class Pizza extends ItemModel {
     public Pizza() {
         super();
     }

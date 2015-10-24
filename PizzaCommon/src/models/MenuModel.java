@@ -7,6 +7,7 @@ package models;
 
 import java.beans.*;
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  *
@@ -28,6 +29,11 @@ public class MenuModel extends AbstractModel {
 
     @Override
     public IModel get(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void load(HashMap<String, Object> fields) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

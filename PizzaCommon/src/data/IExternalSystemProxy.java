@@ -5,13 +5,12 @@
  */
 package data;
 
-import java.lang.reflect.Type;
+import models.PaymentModel;
 
 /**
  *
  * @author Jacob
  */
-public class DbMapping {
-    public Type type;
-    public String table;
+public interface IExternalSystemProxy {
+    public boolean AuthorizePayment(PaymentModel paymentInfo);
 }

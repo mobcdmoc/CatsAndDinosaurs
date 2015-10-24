@@ -5,17 +5,18 @@
  */
 package models;
 
-import data.IDataContext;
+import data.DataContext;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  *
  * @author Jacob
  */
 public abstract class AbstractModel implements IModel, Serializable{
-    protected IDataContext context;
+    protected DataContext context;
     
     protected PropertyChangeSupport propertySupport;
     
