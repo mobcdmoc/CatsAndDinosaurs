@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import models.*;
 
 /**
@@ -164,23 +165,61 @@ public class SqliteDataSource implements IDataSource{
         ArrayList<IModel> rtn = executeQueryMultiple(ItemModel.class, query);
         return rtn;
     }
-
+    
     @Override
-    public IModel getMenu() {
+    public IModel getMenu() throws StorageException {
+        String query = "SELECT * FROM Items WHERE Type > 3";
+        
+        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class, query);
         IModel rtn = new MenuModel();
+        ((MenuModel)rtn).setItems(FXCollections.observableArrayList(items));
         
         return rtn;
     }
 
     @Override
-    public IModel getOrder(int id) {
+    public IModel getOrder(int id) throws StorageException {
+        StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE id = '");
+        query.append(id).append("'");
+        
+        IModel rtn = executeQuery(OrderModel.class, query.toString());
+        
+        if(rtn == null)
+            return new OrderModel();
+                
+        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+        itemQuery.append(((OrderModel)rtn).getId());
+        itemQuery.append("'");
+        
+        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+        
+        ((OrderModel)rtn).setItems(FXCollections.observableArrayList(items));
+
+        return rtn;
+    }
+    @Override
+    public IModel getOrders() throws StorageException {
+        String query = "SELECT * FROM Orders";
+        
+        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
         IModel rtn = new MenuModel();
+        ((MenuModel)rtn).setItems(FXCollections.observableArrayList(orders));
+        
+        for(IModel model : orders)
+        {
+            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+            itemQuery.append(((OrderModel)model).getId());
+            itemQuery.append("'");
+        
+            ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+            ((OrderModel)model).setItems(FXCollections.observableArrayList(items));
+        }
         
         return rtn;
     }
 
     @Override
-    public IModel getPizza(int id) {
+    public IModel getPizzaFixins(int id) {
         IModel rtn = new MenuModel();
         
         return rtn;
@@ -236,11 +275,6 @@ public class SqliteDataSource implements IDataSource{
 
     @Override
     public void saveOrder(IModel model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void savePizza(IModel model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

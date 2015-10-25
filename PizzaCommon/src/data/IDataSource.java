@@ -22,7 +22,8 @@ public interface IDataSource {
     ArrayList<IModel> getItems()throws StorageException;
     IModel getMenu()throws StorageException;
     IModel getOrder(int id)throws StorageException;
-    IModel getPizza(int id)throws StorageException;
+    IModel getOrders()throws StorageException;
+    IModel getPizzaFixins(int id)throws StorageException;
     ArrayList<IModel> getToppings()throws StorageException;
     IModel getUser(int id)throws StorageException;
     IModel getUser(String userName, String password) throws StorageException;
@@ -31,6 +32,5 @@ public interface IDataSource {
     void saveItem(IModel model)throws StorageException;
     void saveMenu(IModel model)throws StorageException;
     void saveOrder(IModel model)throws StorageException;
-    void savePizza(IModel model)throws StorageException;
     void saveUser(IModel model)throws StorageException;
 }
