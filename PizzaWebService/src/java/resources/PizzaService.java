@@ -40,7 +40,7 @@ public class PizzaService {
     Normally we would actually want to read this in from a config file, but
     in the interest of time we're just going to hard code it for now.
     */
-    private static final String connectionString = "jdbc:sqlite:C:\\Users\\Jacob\\Documents\\NetBeansProjects\\Git\\CatsAndDinosaurs\\PizzaWebService\\resources\\PizzaDb.db"; //"jdbc:sqlite:resources/PizzaDb.db";
+    private static final String connectionString = "jdbc:sqlite:../resources/PizzaDb.db"; //"jdbc:sqlite:resources/PizzaDb.db";
     /**
      * Creates a new instance of GeneralServiceResource
      * @throws exceptions.LoadException
