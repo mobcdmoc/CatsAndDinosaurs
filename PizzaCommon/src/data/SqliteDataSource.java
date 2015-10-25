@@ -56,10 +56,14 @@ public class SqliteDataSource implements IDataSource{
             HashMap<String,Object> fields = new HashMap<>();
             ResultSet results = cmd.executeQuery(query);
             //grab only the first one.
-            results.next();
-            fields = translateItem(results);
-            model.load(fields);
-            return model;
+            
+            if(results.next())
+            {
+                fields = translateItem(results);
+                model.load(fields);
+                return model;
+            }
+            return null;
         }
         catch(SQLException e)
         {
@@ -197,6 +201,20 @@ public class SqliteDataSource implements IDataSource{
     }
 
     @Override
+    public IModel getUser(String userName, String password) throws StorageException {
+        StringBuilder query = new StringBuilder("SELECT * FROM Users WHERE UserName = '");
+        query.append(userName).append("' AND Password = '");
+        query.append(password).append("'");
+        
+        IModel rtn = executeQuery(UserModel.class,query.toString());
+        if(rtn == null)
+        {
+            rtn = new UserModel();
+        }
+        return rtn;
+    }
+    
+    @Override
     public void saveAddress(IModel model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -230,5 +248,5 @@ public class SqliteDataSource implements IDataSource{
     public void saveUser(IModel model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

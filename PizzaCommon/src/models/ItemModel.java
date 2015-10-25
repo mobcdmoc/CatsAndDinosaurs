@@ -5,6 +5,7 @@
  */
 package models;
 
+import data.IDataSource;
 import enums.ItemType;
 import exceptions.LoadException;
 import java.beans.*;
@@ -30,6 +31,10 @@ public class ItemModel extends AbstractModel {
     
     public ItemModel() {
         super();
+    }
+    public ItemModel(IDataSource source)
+    {
+        super(source);
     }
     //<editor-fold desc="id">
     public int getId()
@@ -94,12 +99,29 @@ public class ItemModel extends AbstractModel {
     
     @Override
     public void save() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            dataSource.saveItem(this);
+        }
+        catch(Exception e)
+        {
+            //TODO: Do something here
+            //Eat it.
+        }
     }
 
     @Override
     public IModel get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            return dataSource.getItem(id);
+        }
+        catch(Exception e)
+        {
+            //TODO: Do something here
+            //Eat it.
+        }
+        return null;
     }
 
     @Override
@@ -115,7 +137,6 @@ public class ItemModel extends AbstractModel {
         {
             throw new LoadException("ItemModel: No fields passed in!");
         }
-        
         //NOTE: This is a little gross but it should work.
         //We may want to find a more elegant way of doing this
         //maybe through reflection.

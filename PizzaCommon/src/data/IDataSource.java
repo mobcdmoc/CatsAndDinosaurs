@@ -25,6 +25,7 @@ public interface IDataSource {
     IModel getPizza(int id)throws StorageException;
     ArrayList<IModel> getToppings()throws StorageException;
     IModel getUser(int id)throws StorageException;
+    IModel getUser(String userName, String password) throws StorageException;
     void saveAddress(IModel model)throws StorageException;
     void saveEmployee(IModel model)throws StorageException;
     void saveItem(IModel model)throws StorageException;

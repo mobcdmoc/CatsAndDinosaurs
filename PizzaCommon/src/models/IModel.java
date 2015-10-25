@@ -5,6 +5,7 @@
  */
 package models;
 
+import data.IDataSource;
 import exceptions.LoadException;
 import java.util.HashMap;
 
