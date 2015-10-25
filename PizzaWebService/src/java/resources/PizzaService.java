@@ -10,6 +10,8 @@ import data.DataContext;
 import data.SqliteDataSource;
 import exceptions.LoadException;
 import exceptions.StorageException;
+import java.util.ArrayList;
+import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -19,6 +21,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import models.IModel;
 import models.ItemModel;
 
@@ -52,46 +56,17 @@ public class PizzaService {
         dataStorage.load();
     }
 
-    /**
-     * Retrieves representation of an instance of User
-     * @param id
-     * @return an instance of java.lang.String
-     */
     @GET
-    @Produces("application/json")
-    @Path("/Get/User/{id}")
-    public String getUser(@PathParam("id") int id) {
-        
-        if(id < 1)
-            return IdError;
-        String results = "";
-        try
-        {
-            IModel model = dataStorage.getUser(id);
-            results = gson.toJson(model);
-        
-            return results;
-        }
-        catch(StorageException e)
-        {
-            //Here we would want to log to a file
-            return SystemError;
-        }
+    @Produces(value = "application/json")
+    @Path(value = "/Get/Order/{id}")
+    @Asynchronous
+    public void getOrder(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "id") final int id) {
+        asyncResponse.resume(doGetOrder(id));
     }
-    /**
-     * Retrieves representation of an instance of Item
-     * @param id
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/json")
-    @Path("/Get/Item/{id}")
-    public String getItem(@PathParam("id") int id) {
-        if(id < 1)
-            return IdError;
+    private String doGetOrder(@PathParam("id") int id) {
         try
         {
-            ItemModel model = (ItemModel)dataStorage.getItem(id);
+            IModel model = (IModel)dataStorage.getOrder(id);
             String results = gson.toJson(model);
             return results;
         }
@@ -101,122 +76,202 @@ public class PizzaService {
             return SystemError;
         }
     }
-    /**
-     * Retrieves representation of a collection of items
-     * @return an instance of java.lang.String
-     */
+
     @GET
-    @Produces("application/json")
-    @Path("/Get/Items")
-    public String getItems() {
-        return "{\"cat\":\"dog\"}";
+    @Produces(value = "application/json")
+    @Path(value = "/Get/User/{id}")
+    @Asynchronous
+    public void getUser(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "id") final int id) {
+        asyncResponse.resume(doGetUser(id));
     }
-    /**
-     * Retrieves representation of a menu
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/json")
-    @Path("/Get/Menu")
-    public String getMenu() {
-        return "{\"cat\":\"dog\"}";
-    }
-    /**
-     * Retrieves representation of an order
-     * @param id
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/json")
-    @Path("/Get/Order/{id}")
-    public String getOrder(@PathParam("id") int id) {
-        return "{\"cat\":\"dog\"}";
-    }
-    /**
-     * Retrieves representation of a Pizza
-     * @param id
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/json")
-    @Path("/Get/Pizza/{id}")
-    public String getPizza(@PathParam("id") int id) {
-        return "{\"cat\":\"dog\"}";
-    }
-    /**
-     * Retrieves representation of all available valid toppings
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/json")
-    @Path("/Get/Toppings")
-    public String getToppings() {
-        return "{\"cat\":\"dog\"}";
-    }
-   
-    /**
-     * PUT method for updating or creating an instance of PizzaServiceResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    @Path("/Save/Employee/")
-    public void saveEmployee(String content) {
+    private String doGetUser(@PathParam("id") int id) {
+        if(id < 1)
+            return IdError;
+        String results = "";
+        try
+        {
+            IModel model = dataStorage.getUser(id);
+            results = gson.toJson(model);
+            
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Here we would want to log to a file
+            return SystemError;
+        }
     }
     
-    /**
-     * PUT method for updating or creating an instance of PizzaServiceResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    @Path("/Save/Item/")
-    public void saveItem(String content) {
+    @GET
+    @Produces(value = "application/json")
+    @Path(value = "/Get/Item/{id}")
+    @Asynchronous
+    public void getItem(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "id") final int id) {
+        asyncResponse.resume(doGetItem(id));
+    }
+    private String doGetItem(@PathParam("id") int id) {
+        if(id < 1)
+            return IdError;
+        try
+        {
+            IModel model = (ItemModel)dataStorage.getItem(id);
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemError;
+        }
+    }
+
+    @GET
+    @Produces(value = "application/json")
+    @Path(value = "/Get/Items")
+    @Asynchronous
+    public void getItems(@Suspended final AsyncResponse asyncResponse) {
+        asyncResponse.resume(doGetItems());
+    }
+    private String doGetItems() {
+        try
+        {
+            ArrayList<IModel> model = (ArrayList<IModel>)dataStorage.getItems();
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemError;
+        }
     }
     
-    /**
-     * PUT method for updating or creating an instance of PizzaServiceResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    @Path("/Save/Menu/")
-    public void saveMenu(String content) {
+    @GET
+    @Produces(value = "application/json")
+    @Path(value = "/Get/Menu")
+    @Asynchronous
+    public void getMenu(@Suspended final AsyncResponse asyncResponse) {
+        asyncResponse.resume(doGetMenu());
     }
-    
-    /**
-     * PUT method for updating or creating an instance of PizzaServiceResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    @Path("/Save/Order/")
-    public void saveOrder(String content) {
+    private String doGetMenu() {
+        try
+        {
+            IModel model = (IModel)dataStorage.getMenu();
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemError;
+        }
     }
-    
-    /**
-     * PUT method for updating or creating an instance of PizzaServiceResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    @Path("/Save/Pizza/")
-    public void savePizza(String content) {
+
+    @GET
+    @Produces(value = "application/json")
+    @Path(value = "/Get/Pizza/{id}")
+    @Asynchronous
+    public void getPizza(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "id") final int id) {
+        asyncResponse.resume(doGetPizza(id));
     }
-    
-    /**
-     * PUT method for updating or creating an instance of PizzaServiceResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
+    private String doGetPizza(@PathParam("id") int id) {
+        try
+        {
+            IModel model = (IModel)dataStorage.getPizza(id);
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemError;
+        }
+    }
+
+    @GET
+    @Produces(value = "application/json")
+    @Path(value = "/Get/Toppings")
+    @Asynchronous
+    public void getToppings(@Suspended final AsyncResponse asyncResponse) {
+        asyncResponse.resume(doGetToppings());
+    }
+    private String doGetToppings() {
+        try
+        {
+            ArrayList<IModel> model = (ArrayList<IModel>)dataStorage.getToppings();
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemError;
+        }
+    }
+
     @PUT
-    @Consumes("application/json")
-    @Path("/Save/User/")
-    public void saveUser(String content) {
+    @Consumes(value = "application/json")
+    @Path(value = "/Save/Employee/")
+    @Asynchronous
+    public void saveEmployee(@Suspended final AsyncResponse asyncResponse, final String content) {
+        doSaveEmployee(content);
+        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+    }
+    private void doSaveEmployee(String content) {
+    }
+
+    @PUT
+    @Consumes(value = "application/json")
+    @Path(value = "/Save/Item/")
+    @Asynchronous
+    public void saveItem(@Suspended final AsyncResponse asyncResponse, final String content) {
+        doSaveItem(content);
+        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+    }
+    private void doSaveItem(String content) {
+    }
+
+    @PUT
+    @Consumes(value = "application/json")
+    @Path(value = "/Save/Menu/")
+    @Asynchronous
+    public void saveMenu(@Suspended final AsyncResponse asyncResponse, final String content) {
+        doSaveMenu(content);
+        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+    }
+    private void doSaveMenu(String content) {
+    }
+
+    @PUT
+    @Consumes(value = "application/json")
+    @Path(value = "/Save/Order/")
+    @Asynchronous
+    public void saveOrder(@Suspended final AsyncResponse asyncResponse, final String content) {
+        doSaveOrder(content);
+        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+    }
+    private void doSaveOrder(String content) {
+    }
+
+    @PUT
+    @Consumes(value = "application/json")
+    @Path(value = "/Save/Pizza/")
+    @Asynchronous
+    public void savePizza(@Suspended final AsyncResponse asyncResponse, final String content) {
+        doSavePizza(content);
+        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+    }
+    private void doSavePizza(String content) {
+    }
+
+    @PUT
+    @Consumes(value = "application/json")
+    @Path(value = "/Save/User/")
+    @Asynchronous
+    public void saveUser(@Suspended final AsyncResponse asyncResponse, final String content) {
+        doSaveUser(content);
+        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+    }
+    private void doSaveUser(String content) {
     }
 }
