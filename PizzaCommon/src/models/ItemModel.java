@@ -120,15 +120,15 @@ public class ItemModel extends AbstractModel {
         //We may want to find a more elegant way of doing this
         //maybe through reflection.
         if(fields.containsKey(PROP_ID))
-            setId((int)fields.get(PROP_ID));
+            setId(Integer.parseInt(fields.get(PROP_ID).toString()));
         if(fields.containsKey(PROP_NAME))
-            setName((String)fields.get(PROP_NAME));
+            setName(fields.get(PROP_NAME).toString());
         if(fields.containsKey(PROP_DESCRIPTION))
-            setDescription((String)fields.get(PROP_DESCRIPTION));
+            setDescription(fields.get(PROP_DESCRIPTION).toString());
         if(fields.containsKey(PROP_PRICE))
-            setPrice((double)fields.get(PROP_PRICE));
+            setPrice(Double.parseDouble(fields.get(PROP_PRICE).toString()));
         if(fields.containsKey(PROP_TYPE))
-            setType((int)fields.get(PROP_TYPE));
+            setType(Integer.parseInt(fields.get(PROP_TYPE).toString()));
     }
     
 }

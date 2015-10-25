@@ -10,6 +10,7 @@ import exceptions.StorageException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class SqliteDataSource implements IDataSource{
         this.connectionString = connectionString;
     }
     
+    @Override
     public void load() throws LoadException
     {
         try
@@ -47,38 +49,17 @@ public class SqliteDataSource implements IDataSource{
         }
     }
     
-    @Override
-    public IModel getAddress(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public IModel getEmployee(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public IModel getItem(int id) throws StorageException{
-        IModel rtn = new ItemModel();
-        HashMap<String,Object> fields = new HashMap<String,Object>();
-        try
-        {
-            Statement cmd = connection.createStatement();
-            
-            StringBuilder query = new StringBuilder("SELECT * FROM Items WHERE Id = '");
-            query.append(id);
-            query.append("'");
-            
-            
-            ResultSet results = cmd.executeQuery(query.toString());
+    private <K extends AbstractModel> IModel executeQuery(Class<K> modelClass,String query) throws StorageException
+    {   
+        try (Statement cmd = connection.createStatement()) {
+            K model = modelClass.newInstance();
+            HashMap<String,Object> fields = new HashMap<>();
+            ResultSet results = cmd.executeQuery(query);
             //grab only the first one.
             results.next();
-            
             fields = translateItem(results);
-            
-            rtn.load(fields);
-            
-            cmd.close();
+            model.load(fields);
+            return model;
         }
         catch(SQLException e)
         {
@@ -86,58 +67,133 @@ public class SqliteDataSource implements IDataSource{
         }
         catch(LoadException e)
         {
-            
             throw new StorageException("Failed to translate data!", e);
+        } 
+        catch (InstantiationException e) 
+        {
+            throw new StorageException("Failed to instantiate provided Type! Type: " + modelClass.toString(), e);
+        } 
+        catch (IllegalAccessException e) 
+        {
+            throw new StorageException("\"Failed to instantiate provided Type! Type: " + modelClass.toString(), e);
         }
-        
-        return rtn;
+        catch(Exception e)
+        {
+            throw new StorageException("Something went horribly wrong!");
+        }
     }
-    
+    private <K extends AbstractModel> ArrayList<IModel> executeQueryMultiple (Class<K> modelClass, String query) throws StorageException
+    {
+        try (Statement cmd = connection.createStatement()) {
+            ArrayList<IModel> rtn = new ArrayList<>();
+            
+            ResultSet results = cmd.executeQuery(query);
+            while(results.next())
+            {
+                K model = modelClass.newInstance();
+                HashMap<String,Object> fields = new HashMap<>();
+                fields = translateItem(results);
+                model.load(fields);
+                rtn.add(model);
+            }
+            return rtn;
+        }
+        catch(SQLException e)
+        {
+            throw new StorageException("Failed to fetch Item!", e);
+        }
+        catch(LoadException e)
+        {
+            throw new StorageException("Failed to translate data!", e);
+        } 
+        catch (InstantiationException e) 
+        {
+            throw new StorageException("Failed to instantiate provided Type! Type: " + modelClass.toString(), e);
+        } 
+        catch (IllegalAccessException e) 
+        {
+            throw new StorageException("\"Failed to instantiate provided Type! Type: " + modelClass.toString(), e);
+        }
+        catch(Exception e)
+        {
+            throw new StorageException("Something went horribly wrong!");
+        }
+    }
     private HashMap<String,Object> translateItem(ResultSet results) throws SQLException
     {
-        HashMap<String,Object> fields = new HashMap<String,Object>();
-        String idField = "id";
-        String nameField = "name";
-        String descriptionField = "description";
-        String priceField = "price";
-        String typeField = "type";
-        fields.put(idField, results.getInt(idField));
-        fields.put(nameField, results.getString(nameField));
-        fields.put(descriptionField, results.getString(descriptionField));
-        fields.put(priceField, results.getDouble(priceField));
-        fields.put(typeField, results.getInt(typeField));
+        HashMap<String,Object> fields = new HashMap<>();
+        
+        ResultSetMetaData mt = results.getMetaData();
+        for(int i = 1; i < mt.getColumnCount()+1; i++)
+        {
+            fields.put(mt.getColumnName(i).toLowerCase(), results.getObject(i));
+        }
         return fields;
     }
     
+    @Override
+    public IModel getAddress(int id) {
+        IModel rtn = new AddressModel();
+        
+        return rtn;
+    }
 
     @Override
-    public ArrayList<IModel> getItems() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public IModel getEmployee(int id) {
+        IModel rtn = new MenuModel();
+        return rtn;
+    }
+
+    @Override
+    public IModel getItem(int id) throws StorageException
+    {
+        StringBuilder query = new StringBuilder("SELECT * FROM Items WHERE Id = '");
+        query.append(id);
+        query.append("'");
+        IModel rtn = executeQuery(ItemModel.class,query.toString());
+        return rtn;
+    }
+    
+    @Override
+    public ArrayList<IModel> getItems() throws StorageException{
+        String query = "SELECT * FROM Items";
+        ArrayList<IModel> rtn = executeQueryMultiple(ItemModel.class, query);
+        return rtn;
     }
 
     @Override
     public IModel getMenu() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        IModel rtn = new MenuModel();
+        
+        return rtn;
     }
 
     @Override
     public IModel getOrder(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        IModel rtn = new MenuModel();
+        
+        return rtn;
     }
 
     @Override
     public IModel getPizza(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        IModel rtn = new MenuModel();
+        
+        return rtn;
     }
 
     @Override
     public ArrayList<IModel> getToppings() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<IModel> rtn = new ArrayList<IModel>();
+        
+        return rtn;
     }
 
     @Override
     public IModel getUser(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        IModel rtn = new MenuModel();
+        
+        return rtn;
     }
 
     @Override
