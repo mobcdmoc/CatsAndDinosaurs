@@ -84,6 +84,27 @@ public class PizzaService {
 
     @GET
     @Produces(value = "application/json")
+    @Path(value = "/Get/Orders")
+    @Asynchronous
+    public void getOrders(@Suspended final AsyncResponse asyncResponse) {
+        asyncResponse.resume(doGetOrders());
+    }
+    private String doGetOrders() {
+        try
+        {
+            IModel model = (IModel)dataStorage.getOrders();
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemError;
+        }
+    }
+    
+    @GET
+    @Produces(value = "application/json")
     @Path(value = "/Get/User/{id}")
     @Asynchronous
     public void getUser(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "id") final int id) {
@@ -116,8 +137,7 @@ public class PizzaService {
     }
     //NOTE: handing the username and password in plain text is technically bad
     //but with the scope of the assignement and the fact that noone will ever
-    //put a password they actually use in here it's find for now. It expects a
-    //';' delimited string
+    //put a password they actually use in here it's find for now. 
     private String doGetUser(@PathParam("username") String username, @PathParam("password") String password) {
         if(username == null || password == null)
             return TokenError;
@@ -209,13 +229,13 @@ public class PizzaService {
     @Produces(value = "application/json")
     @Path(value = "/Get/Pizza/{id}")
     @Asynchronous
-    public void getPizza(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "id") final int id) {
-        asyncResponse.resume(doGetPizza(id));
+    public void getPizzaFixins(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "id") final int id) {
+        asyncResponse.resume(doGetPizzaFixins(id));
     }
-    private String doGetPizza(@PathParam("id") int id) {
+    private String doGetPizzaFixins(@PathParam("id") int id) {
         try
         {
-            IModel model = (IModel)dataStorage.getPizza(id);
+            IModel model = (IModel)dataStorage.getPizzaFixins(id);
             String results = gson.toJson(model);
             return results;
         }
