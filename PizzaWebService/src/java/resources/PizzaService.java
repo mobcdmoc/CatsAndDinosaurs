@@ -6,7 +6,7 @@
 package resources;
 
 import com.google.gson.Gson;
-import data.DataContext;
+import data.IDataSource;
 import data.SqliteDataSource;
 import exceptions.LoadException;
 import exceptions.StorageException;
@@ -37,10 +37,11 @@ public class PizzaService {
 
     @Context
     private UriInfo context;
-    private DataContext dataStorage;
+    private IDataSource dataStorage;
     private Gson gson ;
     private static final String IdError = "{\"ERROR\":\"Bad Id\"}";
     private static final String SystemError = "{\"ERROR\":\"Internal Servcer Errror. Could Not Fetch Data!\"}";
+    private static final String TokenError = "{\"ERROR\":\"Bad Token\"}";
     /*
     Normally we would actually want to read this in from a config file, but
     in the interest of time we're just going to hard code it for now.
@@ -51,8 +52,12 @@ public class PizzaService {
      * @throws exceptions.LoadException
      */
     public PizzaService() throws LoadException {
+        this(new SqliteDataSource(connectionString));
+    }
+    public PizzaService(IDataSource dataStorage) throws LoadException
+    {
         gson = new Gson();
-        dataStorage = new DataContext(new SqliteDataSource(connectionString));
+        this.dataStorage = dataStorage;
         dataStorage.load();
     }
 
@@ -91,6 +96,39 @@ public class PizzaService {
         try
         {
             IModel model = dataStorage.getUser(id);
+            results = gson.toJson(model);
+            
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Here we would want to log to a file
+            return SystemError;
+        }
+    }
+    
+    @GET
+    @Produces(value = "application/json")
+    @Path(value = "/Get/User/{username}/{password}")
+    @Asynchronous
+    public void getUser(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "username") final String username, @PathParam(value = "password") final String password) {
+        asyncResponse.resume(doGetUser(username, password));
+    }
+    //NOTE: handing the username and password in plain text is technically bad
+    //but with the scope of the assignement and the fact that noone will ever
+    //put a password they actually use in here it's find for now. It expects a
+    //';' delimited string
+    private String doGetUser(@PathParam("username") String username, @PathParam("password") String password) {
+        if(username == null || password == null)
+            return TokenError;
+//        String[] tokenSplit = token.split(";");
+//        if(tokenSplit.length < 2)
+//            return TokenError;
+        
+        String results = "";
+        try
+        {
+            IModel model = dataStorage.getUser(username, password);
             results = gson.toJson(model);
             
             return results;
