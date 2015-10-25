@@ -16,9 +16,9 @@ import java.util.HashMap;
  * @author Jacob
  */
 public abstract class AbstractModel implements IModel, Serializable{
-    protected DataContext context;
+    protected transient DataContext context;
     
-    protected PropertyChangeSupport propertySupport;
+    protected transient PropertyChangeSupport propertySupport;
     
     public AbstractModel()
     {

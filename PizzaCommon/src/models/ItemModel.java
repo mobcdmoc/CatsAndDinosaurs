@@ -16,11 +16,11 @@ import java.util.HashMap;
  * @author Jacob
  */
 public class ItemModel extends AbstractModel {
-    public static final String PROP_ID = "id";
-    public static final String PROP_NAME = "name";
-    public static final String PROP_DESCRIPTION = "description";
-    public static final String PROP_PRICE = "price";
-    public static final String PROP_TYPE = "type";
+    public static final transient String PROP_ID = "id";
+    public static final transient String PROP_NAME = "name";
+    public static final transient String PROP_DESCRIPTION = "description";
+    public static final transient String PROP_PRICE = "price";
+    public static final transient String PROP_TYPE = "type";
     
     private int id;
     private String name;
