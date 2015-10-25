@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import data.IDataSource;
 import java.beans.*;
 
 /**
@@ -12,8 +13,8 @@ import java.beans.*;
  * @author Jacob
  */
 public class MainController extends AbstractController {
-    public MainController() {
-        super();
+    public MainController(IDataSource source) {
+        super(source);
     }
     
     @Override

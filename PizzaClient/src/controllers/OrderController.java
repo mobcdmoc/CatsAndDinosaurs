@@ -5,12 +5,19 @@
  */
 package controllers;
 
+import data.IDataSource;
+
 /**
  *
  * @author Jacob
  */
 public class OrderController extends AbstractController {
 
+    public OrderController(IDataSource source)
+    {
+       super(source);
+    }
+    
     @Override
     public void submit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -18,7 +25,7 @@ public class OrderController extends AbstractController {
 
     @Override
     public void get() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override

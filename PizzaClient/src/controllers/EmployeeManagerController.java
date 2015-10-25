@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import data.IDataSource;
 import java.beans.*;
 import java.io.Serializable;
 
@@ -13,8 +14,8 @@ import java.io.Serializable;
  * @author Jacob
  */
 public class EmployeeManagerController extends AbstractController {
-    public EmployeeManagerController() {
-        super();
+    public EmployeeManagerController(IDataSource source) {
+        super(source);
     }
     
     @Override

@@ -5,12 +5,19 @@
  */
 package controllers;
 
+import data.IDataSource;
+
 /**
  *
  * @author Jacob
  */
 public class PaymentController extends AbstractController {
 
+    public PaymentController(IDataSource source)
+    {
+        super(source);
+    }
+    
     @Override
     public void submit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

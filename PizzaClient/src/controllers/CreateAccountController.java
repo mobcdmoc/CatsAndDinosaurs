@@ -5,12 +5,19 @@
  */
 package controllers;
 
+import data.IDataSource;
+
 /**
  *
  * @author Jacob
  */
 public class CreateAccountController extends AbstractController{
 
+    public CreateAccountController(IDataSource source)
+    {
+        super(source);
+    }
+    
     @Override
     public void submit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

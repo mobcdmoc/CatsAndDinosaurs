@@ -5,15 +5,17 @@
  */
 package controllers;
 
+import data.IDataSource;
+
 /**
  *
  * @author Jacob
  */
 public class ChangeMenuController extends AbstractController{
 
-    public ChangeMenuController()
+    public ChangeMenuController(IDataSource source)
     {
-        super();
+        super(source);
     }
     
     @Override
