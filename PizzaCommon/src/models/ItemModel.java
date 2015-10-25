@@ -124,11 +124,11 @@ public class ItemModel extends AbstractModel {
         if(fields.containsKey(PROP_NAME))
             setName((String)fields.get(PROP_NAME));
         if(fields.containsKey(PROP_DESCRIPTION))
-            setName((String)fields.get(PROP_DESCRIPTION));
+            setDescription((String)fields.get(PROP_DESCRIPTION));
         if(fields.containsKey(PROP_PRICE))
-            setName((String)fields.get(PROP_PRICE));
+            setPrice((double)fields.get(PROP_PRICE));
         if(fields.containsKey(PROP_TYPE))
-            setName((String)fields.get(PROP_TYPE));
+            setType((int)fields.get(PROP_TYPE));
     }
     
 }

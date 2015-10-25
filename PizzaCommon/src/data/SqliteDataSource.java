@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.*;
 
 /**
@@ -34,11 +36,14 @@ public class SqliteDataSource implements IDataSource{
     {
         try
         {
+            Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(connectionString);
         }
         catch(SQLException e)
         {
             throw new LoadException("Failure to load sqlConnection!", e);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SqliteDataSource.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -60,7 +65,7 @@ public class SqliteDataSource implements IDataSource{
         {
             Statement cmd = connection.createStatement();
             
-            StringBuilder query = new StringBuilder("SELECT * FROM Item WHERE Id = '");
+            StringBuilder query = new StringBuilder("SELECT * FROM Items WHERE Id = '");
             query.append(id);
             query.append("'");
             
