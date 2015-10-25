@@ -185,7 +185,7 @@ public class SqliteDataSource implements IDataSource{
         IModel rtn = executeQuery(OrderModel.class, query.toString());
         
         if(rtn == null)
-            return new OrderModel();
+            return null;
                 
         StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
         itemQuery.append(((OrderModel)rtn).getId());
@@ -246,10 +246,6 @@ public class SqliteDataSource implements IDataSource{
         query.append(password).append("'");
         
         IModel rtn = executeQuery(UserModel.class,query.toString());
-        if(rtn == null)
-        {
-            rtn = new UserModel();
-        }
         return rtn;
     }
     

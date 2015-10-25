@@ -12,8 +12,8 @@ import java.io.Serializable;
  *
  * @author Jacob
  */
-public class Pizza extends ItemModel {
-    public Pizza() {
+public class PizzaModel extends ItemModel {
+    public PizzaModel() {
         super();
     }
 }
