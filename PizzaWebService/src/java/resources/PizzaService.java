@@ -23,8 +23,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
+import models.EmployeeModel;
 import models.IModel;
 import models.ItemModel;
+import models.MenuModel;
+import models.OrderModel;
+import models.PizzaModel;
+import models.UserModel;
 
 /**
  * REST Web Service
@@ -40,8 +45,9 @@ public class PizzaService {
     private IDataSource dataStorage;
     private Gson gson ;
     private static final String IdError = "{\"ERROR\":\"Bad Id\"}";
-    private static final String SystemError = "{\"ERROR\":\"Internal Servcer Errror. Could Not Fetch Data!\"}";
+    private static final String SystemErrorGet = "{\"ERROR\":\"Internal Service Errror. Could Not Fetch Data!\"}";
     private static final String TokenError = "{\"ERROR\":\"Bad Token\"}";
+    private static final String SystemErrorSave = "{\"ERROR\":\"Internal Service Errror. Could Not Save Data!\"}";
     /*
     Normally we would actually want to read this in from a config file, but
     in the interest of time we're just going to hard code it for now.
@@ -78,7 +84,7 @@ public class PizzaService {
         catch(StorageException e)
         {
             //Do logging here
-            return SystemError;
+            return SystemErrorGet;
         }
     }
 
@@ -99,7 +105,7 @@ public class PizzaService {
         catch(StorageException e)
         {
             //Do logging here
-            return SystemError;
+            return SystemErrorGet;
         }
     }
     
@@ -124,7 +130,7 @@ public class PizzaService {
         catch(StorageException e)
         {
             //Here we would want to log to a file
-            return SystemError;
+            return SystemErrorGet;
         }
     }
     
@@ -156,7 +162,7 @@ public class PizzaService {
         catch(StorageException e)
         {
             //Here we would want to log to a file
-            return SystemError;
+            return SystemErrorGet;
         }
     }
     
@@ -179,7 +185,7 @@ public class PizzaService {
         catch(StorageException e)
         {
             //Do logging here
-            return SystemError;
+            return SystemErrorGet;
         }
     }
 
@@ -200,7 +206,7 @@ public class PizzaService {
         catch(StorageException e)
         {
             //Do logging here
-            return SystemError;
+            return SystemErrorGet;
         }
     }
     
@@ -221,7 +227,7 @@ public class PizzaService {
         catch(StorageException e)
         {
             //Do logging here
-            return SystemError;
+            return SystemErrorGet;
         }
     }
 
@@ -242,7 +248,7 @@ public class PizzaService {
         catch(StorageException e)
         {
             //Do logging here
-            return SystemError;
+            return SystemErrorGet;
         }
     }
 
@@ -263,7 +269,7 @@ public class PizzaService {
         catch(StorageException e)
         {
             //Do logging here
-            return SystemError;
+            return SystemErrorGet;
         }
     }
 
@@ -276,6 +282,16 @@ public class PizzaService {
         asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
     }
     private void doSaveEmployee(String content) {
+        try
+        {
+            
+        IModel model = gson.fromJson(content, EmployeeModel.class);
+        dataStorage.saveEmployee(model);
+        }
+        catch(StorageException e)
+        {
+            //eat it for now?
+        }
     }
 
     @PUT
@@ -287,6 +303,15 @@ public class PizzaService {
         asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
     }
     private void doSaveItem(String content) {
+        try
+        {
+            IModel model = gson.fromJson(content, ItemModel.class);
+            dataStorage.saveEmployee(model);
+        }
+        catch(StorageException e)
+        {
+            //eat it for now
+        }
     }
 
     @PUT
@@ -298,6 +323,15 @@ public class PizzaService {
         asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
     }
     private void doSaveMenu(String content) {
+        try
+        {
+            IModel model = gson.fromJson(content, MenuModel.class);
+            dataStorage.saveEmployee(model);
+        }
+        catch(StorageException e)
+        {
+            //eat it for now
+        }
     }
 
     @PUT
@@ -309,6 +343,15 @@ public class PizzaService {
         asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
     }
     private void doSaveOrder(String content) {
+        try
+        {
+            IModel model = gson.fromJson(content, OrderModel.class);
+            dataStorage.saveEmployee(model);
+        }
+        catch(StorageException e)
+        {
+            //eat it for now
+        }
     }
 
     @PUT
@@ -320,6 +363,15 @@ public class PizzaService {
         asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
     }
     private void doSavePizza(String content) {
+        try
+        {
+            IModel model = gson.fromJson(content, PizzaModel.class);
+            dataStorage.saveEmployee(model);
+        }
+        catch(StorageException e)
+        {
+            //eat it for now
+        }
     }
 
     @PUT
@@ -331,5 +383,14 @@ public class PizzaService {
         asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
     }
     private void doSaveUser(String content) {
+        try
+        {
+            IModel model = gson.fromJson(content, UserModel.class);
+            dataStorage.saveEmployee(model);
+        }
+        catch(StorageException e)
+        {
+            //eat it for now
+        }
     }
 }
