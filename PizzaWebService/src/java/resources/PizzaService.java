@@ -20,6 +20,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import models.IModel;
+import models.ItemModel;
 
 /**
  * REST Web Service
@@ -90,7 +91,7 @@ public class PizzaService {
             return IdError;
         try
         {
-            IModel model = dataStorage.getItem(id);
+            ItemModel model = (ItemModel)dataStorage.getItem(id);
             String results = gson.toJson(model);
             return results;
         }
