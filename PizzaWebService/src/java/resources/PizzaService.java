@@ -11,6 +11,7 @@ import data.SqliteDataSource;
 import exceptions.LoadException;
 import exceptions.StorageException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Context;
@@ -28,7 +29,6 @@ import models.IModel;
 import models.ItemModel;
 import models.MenuModel;
 import models.OrderModel;
-import models.PizzaModel;
 import models.UserModel;
 
 /**
@@ -98,7 +98,10 @@ public class PizzaService {
     private String doGetOrders() {
         try
         {
-            IModel model = (IModel)dataStorage.getOrders();
+            ObservableList<IModel> model = dataStorage.getOrders();
+            
+            if(model.size() <1)
+                return null;
             String results = gson.toJson(model);
             return results;
         }
@@ -108,6 +111,30 @@ public class PizzaService {
             return SystemErrorGet;
         }
     }
+    
+    @GET
+    @Produces(value = "application/json")
+    @Path(value = "/Get/Orders/{id}")
+    @Asynchronous
+    public void getOrders(@Suspended final AsyncResponse asyncResponse, @PathParam(value="id") int id) {
+        asyncResponse.resume(doGetOrders(id));
+    }
+    private String doGetOrders(@PathParam(value="id") int id) {
+        try
+        {
+            ObservableList<IModel> model = dataStorage.getOrders(id);
+            if(model.size() <1)
+                return null;
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemErrorGet;
+        }
+    }
+    
     
     @GET
     @Produces(value = "application/json")
@@ -168,6 +195,30 @@ public class PizzaService {
     
     @GET
     @Produces(value = "application/json")
+    @Path(value = "/Get/Users")
+    @Asynchronous
+    public void getUsers(@Suspended final AsyncResponse asyncResponse) {
+        asyncResponse.resume(doGetUsers());
+    }
+    private String doGetUsers() {
+        String results = "";
+        try
+        {
+            ObservableList<IModel> model = dataStorage.getUsers();
+            results = gson.toJson(model);
+            
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Here we would want to log to a file
+            return SystemErrorGet;
+        }
+    }
+    
+    
+    @GET
+    @Produces(value = "application/json")
     @Path(value = "/Get/Item/{id}")
     @Asynchronous
     public void getItem(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "id") final int id) {
@@ -199,7 +250,7 @@ public class PizzaService {
     private String doGetItems() {
         try
         {
-            ArrayList<IModel> model = (ArrayList<IModel>)dataStorage.getItems();
+            ObservableList<IModel> model = dataStorage.getItems();
             String results = gson.toJson(model);
             return results;
         }
@@ -231,48 +282,6 @@ public class PizzaService {
         }
     }
 
-    @GET
-    @Produces(value = "application/json")
-    @Path(value = "/Get/Pizza/{id}")
-    @Asynchronous
-    public void getPizzaFixins(@Suspended final AsyncResponse asyncResponse, @PathParam(value = "id") final int id) {
-        asyncResponse.resume(doGetPizzaFixins(id));
-    }
-    private String doGetPizzaFixins(@PathParam("id") int id) {
-        try
-        {
-            IModel model = (IModel)dataStorage.getPizzaFixins(id);
-            String results = gson.toJson(model);
-            return results;
-        }
-        catch(StorageException e)
-        {
-            //Do logging here
-            return SystemErrorGet;
-        }
-    }
-
-    @GET
-    @Produces(value = "application/json")
-    @Path(value = "/Get/Toppings")
-    @Asynchronous
-    public void getToppings(@Suspended final AsyncResponse asyncResponse) {
-        asyncResponse.resume(doGetToppings());
-    }
-    private String doGetToppings() {
-        try
-        {
-            ArrayList<IModel> model = (ArrayList<IModel>)dataStorage.getToppings();
-            String results = gson.toJson(model);
-            return results;
-        }
-        catch(StorageException e)
-        {
-            //Do logging here
-            return SystemErrorGet;
-        }
-    }
-
     @PUT
     @Consumes(value = "application/json")
     @Path(value = "/Save/Employee/")
@@ -294,6 +303,28 @@ public class PizzaService {
         }
     }
 
+    @PUT
+    @Consumes(value = "application/json")
+    @Path(value = "/Save/Employees/")
+    @Asynchronous
+    public void saveEmployees(@Suspended final AsyncResponse asyncResponse, final String content) {
+        doSaveEmployees(content);
+        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+    }
+    private void doSaveEmployees(String content) {
+        try
+        {
+            
+        ObservableList<IModel> models = gson.fromJson(content, ObservableList.class);
+        dataStorage.saveEmployees(models);
+        }
+        catch(StorageException e)
+        {
+            //eat it for now?
+        }
+    }
+
+    
     @PUT
     @Consumes(value = "application/json")
     @Path(value = "/Save/Item/")
@@ -346,26 +377,6 @@ public class PizzaService {
         try
         {
             IModel model = gson.fromJson(content, OrderModel.class);
-            dataStorage.saveEmployee(model);
-        }
-        catch(StorageException e)
-        {
-            //eat it for now
-        }
-    }
-
-    @PUT
-    @Consumes(value = "application/json")
-    @Path(value = "/Save/Pizza/")
-    @Asynchronous
-    public void savePizza(@Suspended final AsyncResponse asyncResponse, final String content) {
-        doSavePizza(content);
-        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
-    }
-    private void doSavePizza(String content) {
-        try
-        {
-            IModel model = gson.fromJson(content, PizzaModel.class);
             dataStorage.saveEmployee(model);
         }
         catch(StorageException e)
