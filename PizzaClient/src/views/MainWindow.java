@@ -5,6 +5,10 @@
  */
 package views;
 
+import controllers.MainController;
+import data.PizzaServiceClient;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Jacob
@@ -15,7 +19,10 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainView
      */
     public MainWindow() {
-        initComponents();
+        
+        client = new PizzaServiceClient();
+        initComponents(); 
+        initCustom();
     }
 
     /**
@@ -27,18 +34,15 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        mainView = new views.MainView();
+        loginView = new views.LoginView();
+        orderView = new views.OrderView();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.CardLayout());
+        getContentPane().add(mainView, "mainCard");
+        getContentPane().add(loginView, "loginCard");
+        getContentPane().add(orderView, "orderCard");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -79,6 +83,17 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }
 
+    private PizzaServiceClient client;
+    
+    private void initCustom() {
+        mainView.initCustom(this, client);
+        orderView.initCustom(this, client);
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private views.LoginView loginView;
+    private views.MainView mainView;
+    private views.OrderView orderView;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,12 +5,19 @@
  */
 package views;
 
+import controllers.MainController;
+import data.IDataSource;
+import java.awt.CardLayout;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Jacob
  */
 public class MainView extends javax.swing.JPanel {
 
+    private JFrame parent;
+    
     /**
      * Creates new form MainView
      */
@@ -18,6 +25,11 @@ public class MainView extends javax.swing.JPanel {
         initComponents();
     }
 
+    public void initCustom(JFrame parent, IDataSource client)
+    {
+        controller = new MainController(client);
+        this.parent = parent;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,6 +66,11 @@ public class MainView extends javax.swing.JPanel {
         createAccountButton.setText("Create Account");
 
         makeOrderButton.setText("Make Order");
+        makeOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeOrderButtonActionPerformed(evt);
+            }
+        });
 
         updateMenuButton.setText("Update Menu");
 
@@ -112,11 +129,18 @@ public class MainView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButtonActionPerformed
-        // TODO add your handling code here:
-        
+        CardLayout layout = (CardLayout)parent.getContentPane().getLayout();
+        layout.show(parent.getContentPane(), "loginCard");
     }//GEN-LAST:event_logInButtonActionPerformed
 
+    private void makeOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeOrderButtonActionPerformed
+        CardLayout layout = (CardLayout)parent.getContentPane().getLayout();
+        layout.show(parent.getContentPane(), "orderCard");
+    }//GEN-LAST:event_makeOrderButtonActionPerformed
 
+
+    
+    private MainController controller;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton checkOrdersButton;
     private javax.swing.JButton createAccountButton;
