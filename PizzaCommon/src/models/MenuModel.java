@@ -5,6 +5,8 @@
  */
 package models;
 
+import data.IDataSource;
+import exceptions.StorageException;
 import java.beans.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +28,12 @@ public class MenuModel extends AbstractModel {
         items = FXCollections.observableArrayList();
     }
     
+    public MenuModel(IDataSource source)
+    {
+        super(source);
+        items = FXCollections.observableArrayList();
+    }
+    
     public ObservableList<IModel> getItems()
     {
         return items;
@@ -44,12 +52,37 @@ public class MenuModel extends AbstractModel {
 
     @Override
     public IModel get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            ObservableList i = dataSource.getItems();
+            items = i;
+            return this;
+        }
+        catch(StorageException e)
+        {
+            //eat it
+        }
+        return null;
     }
 
     @Override
     public void load(HashMap<String, Object> fields) {
         
         
+    }
+
+    @Override
+    public IModel get() {
+        try
+        {
+            ObservableList i = dataSource.getItems();
+            items = i;
+            return this;
+        }
+        catch(StorageException e)
+        {
+            //eat it
+        }
+        return null;
     }
 }

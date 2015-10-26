@@ -16,6 +16,7 @@ import java.util.HashMap;
 public interface IModel {
     public void save();
     public IModel get(int id);
+    public IModel get();
     /*
     The load method takes a hashmap of string object and 
     uses it to place the provided values in the model.

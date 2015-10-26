@@ -21,6 +21,7 @@ public class OrderModel extends AbstractModel{
     public static final transient String PROP_USER = "user";
     public static final transient String PROP_STATUS = "status";
     public static final transient String PROP_ITEMS = "items";
+    public static final transient String PROP_TOTAL = "total";
     
     private int id;
     private int user;
@@ -80,7 +81,21 @@ public class OrderModel extends AbstractModel{
         propertySupport.firePropertyChange(PROP_ITEMS, oldValue, items);
     }
     //</editor-fold>
-    
+    //<editor-fold desc="Total">
+    public double getTotal()
+    {
+        double t = 0;
+        for(IModel item : items)
+        {
+            t += ((ItemModel)item).getPrice();
+        }
+        
+        return t;
+    }
+    public void setTotal (double value)
+    {
+    }
+    //</editor-fold>
     
     @Override
     public void save() {
@@ -107,6 +122,11 @@ public class OrderModel extends AbstractModel{
             setUser(Integer.parseInt(fields.get(PROP_USER+"id").toString()));
         if(fields.containsKey(PROP_STATUS+"id"))
             setStatus(Integer.parseInt(fields.get(PROP_STATUS+"id").toString()));
+    }
+
+    @Override
+    public IModel get() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

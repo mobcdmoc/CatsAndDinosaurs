@@ -34,4 +34,9 @@ public class PaymentModel extends AbstractModel {
     public void load(HashMap<String, Object> fields) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public IModel get() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

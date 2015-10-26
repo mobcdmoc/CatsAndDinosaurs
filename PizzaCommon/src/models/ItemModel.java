@@ -151,5 +151,10 @@ public class ItemModel extends AbstractModel {
         if(fields.containsKey(PROP_TYPE))
             setType(Integer.parseInt(fields.get(PROP_TYPE).toString()));
     }
+
+    @Override
+    public IModel get() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

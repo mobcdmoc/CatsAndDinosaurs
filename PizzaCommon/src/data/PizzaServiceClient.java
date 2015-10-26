@@ -5,16 +5,20 @@
  */
 package data;
 
+import com.google.gson.Gson;
 import exceptions.LoadException;
 import exceptions.StorageException;
 import java.util.ArrayList;
 import java.util.Collection;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 import models.IModel;
 import models.ItemModel;
+import models.MenuModel;
 import models.UserModel;
 
 /**
@@ -33,11 +37,13 @@ import models.UserModel;
 public class PizzaServiceClient implements IDataSource {
     private WebTarget webTarget;
     private Client client;
+    private Gson gson;
     private static final String BASE_URI = "http://localhost:8080/PizzaWebService/webresources";
 
     public PizzaServiceClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("PizzaService");
+        gson = new Gson();
     }
     
     public void saveItem(IModel requestEntity) throws ClientErrorException {
@@ -74,10 +80,11 @@ public class PizzaServiceClient implements IDataSource {
         webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
-    public <T> T getItems(Class<T> responseType) throws ClientErrorException {
+    @Override
+    public ObservableList<IModel> getItems() throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Items");
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+        return FXCollections.observableArrayList(gson.fromJson(resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class), ArrayList.class));
     }
 
     public <T> T getOrder(Class<T> responseType, String id) throws ClientErrorException {
@@ -89,6 +96,8 @@ public class PizzaServiceClient implements IDataSource {
     public <T> T getMenu(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Menu");
+        String bob = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+        IModel model = gson.fromJson(bob, MenuModel.class);
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -118,14 +127,10 @@ public class PizzaServiceClient implements IDataSource {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public ObservableList<IModel> getItems() throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public IModel getMenu() throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return getMenu(MenuModel.class);
     }
 
     @Override
