@@ -16,6 +16,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import controllers.ViewController;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class LoginView extends JPanel {
 	private JTextField usrName;
@@ -39,7 +40,7 @@ public class LoginView extends JPanel {
 		usrName = new JTextField();
 		usrName.setColumns(10);
 		
-		pssWrd = new JTextField();
+		pssWrd = new JPasswordField();
 		pssWrd.setColumns(10);
 		
 		JButton btnSubmit = new JButton("Submit");
