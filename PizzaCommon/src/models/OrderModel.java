@@ -23,10 +23,24 @@ public class OrderModel extends AbstractModel{
     public static final transient String PROP_STATUS = "status";
     public static final transient String PROP_ITEMS = "items";
     public static final transient String PROP_TOTAL = "total";
+    public static final transient String PROP_PAYMENTID = "paymentID";
     
     private int id;
     private int user;
     private int status;
+    private int paymentID; //int stores the associated payment ID
+
+    public int getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(int paymentID) 
+       {
+        int oldValue = id;
+        id = paymentID;
+        propertySupport.firePropertyChange(PROP_ID, oldValue, id);
+    }
+    
     private transient ObservableList<IModel> items;
     
     
@@ -123,6 +137,8 @@ public class OrderModel extends AbstractModel{
         if(fields.containsKey(PROP_USER+"id"))
             setUser(Integer.parseInt(fields.get(PROP_USER+"id").toString()));
         if(fields.containsKey(PROP_STATUS+"id"))
+            setStatus(Integer.parseInt(fields.get(PROP_STATUS+"id").toString()));
+        if(fields.containsKey(PROP_PAYMENTID+"id"))
             setStatus(Integer.parseInt(fields.get(PROP_STATUS+"id").toString()));
     }
 
