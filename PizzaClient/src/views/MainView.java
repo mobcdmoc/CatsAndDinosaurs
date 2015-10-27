@@ -40,6 +40,8 @@ public class MainView extends javax.swing.JPanel {
         checkOrder = new javax.swing.JButton();
         updateMenu = new javax.swing.JButton();
         exit = new javax.swing.JButton();
+        chefView = new javax.swing.JButton();
+        checkout = new javax.swing.JButton();
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -68,16 +70,45 @@ public class MainView extends javax.swing.JPanel {
             }
         });
 
-        makeOrder.setText("Make Order");
+        makeOrder.setText("Make/Edit Order");
+        makeOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeOrderActionPerformed(evt);
+            }
+        });
 
         checkOrder.setText("Check Order");
+        checkOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkOrderActionPerformed(evt);
+            }
+        });
 
         updateMenu.setText("Update Menu");
+        updateMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateMenuActionPerformed(evt);
+            }
+        });
 
         exit.setText("Exit");
         exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitActionPerformed(evt);
+            }
+        });
+
+        chefView.setText("Chef View");
+        chefView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chefViewActionPerformed(evt);
+            }
+        });
+
+        checkout.setText("Checkout");
+        checkout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkoutActionPerformed(evt);
             }
         });
 
@@ -96,7 +127,9 @@ public class MainView extends javax.swing.JPanel {
                     .addComponent(makeOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(checkOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(updateMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chefView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(checkout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -115,10 +148,14 @@ public class MainView extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(checkOrder)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(checkout)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(updateMenu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chefView)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(exit)
-                        .addGap(0, 225, Short.MAX_VALUE))
+                        .addGap(0, 167, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -145,12 +182,39 @@ public class MainView extends javax.swing.JPanel {
         
     }//GEN-LAST:event_viewMenuActionPerformed
 
+    private void chefViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chefViewActionPerformed
+        // TODO add your handling code here:
+        vc.showChefView();
+    }//GEN-LAST:event_chefViewActionPerformed
+
+    private void checkOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOrderActionPerformed
+        // TODO add your handling code here:
+        vc.displayOrder();
+    }//GEN-LAST:event_checkOrderActionPerformed
+
+    private void checkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutActionPerformed
+        // TODO add your handling code here:
+        vc.showPaymentView();
+    }//GEN-LAST:event_checkoutActionPerformed
+
+    private void makeOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeOrderActionPerformed
+        // TODO add your handling code here:
+        vc.showOrderView();
+    }//GEN-LAST:event_makeOrderActionPerformed
+
+    private void updateMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateMenuActionPerformed
+        // TODO add your handling code here:
+        vc.showChangeMenuView();
+    }//GEN-LAST:event_updateMenuActionPerformed
+
     public void changeDisplayMessage(String s){
         jTextArea1.setText(s);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton checkOrder;
+    private javax.swing.JButton checkout;
+    private javax.swing.JButton chefView;
     private javax.swing.JButton createAccount;
     private javax.swing.JButton exit;
     private javax.swing.JScrollPane jScrollPane1;

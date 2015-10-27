@@ -27,7 +27,9 @@
                   <Component id="makeOrder" alignment="0" max="32767" attributes="0"/>
                   <Component id="checkOrder" alignment="0" max="32767" attributes="0"/>
                   <Component id="updateMenu" alignment="0" max="32767" attributes="0"/>
-                  <Component id="exit" alignment="0" max="32767" attributes="0"/>
+                  <Component id="exit" max="32767" attributes="0"/>
+                  <Component id="chefView" alignment="0" max="32767" attributes="0"/>
+                  <Component id="checkout" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -49,10 +51,14 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="checkOrder" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="checkout" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="updateMenu" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="chefView" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="exit" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="225" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="167" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
               </Group>
@@ -105,18 +111,27 @@
     </Component>
     <Component class="javax.swing.JButton" name="makeOrder">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Make Order"/>
+        <Property name="text" type="java.lang.String" value="Make/Edit Order"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="makeOrderActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="checkOrder">
       <Properties>
         <Property name="text" type="java.lang.String" value="Check Order"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkOrderActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="updateMenu">
       <Properties>
         <Property name="text" type="java.lang.String" value="Update Menu"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateMenuActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="exit">
       <Properties>
@@ -124,6 +139,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="chefView">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Chef View"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chefViewActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="checkout">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Checkout"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkoutActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

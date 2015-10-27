@@ -60,7 +60,7 @@ public class CreateAccountView extends javax.swing.JPanel {
 
         lastNameLabel.setText("Last Name: ");
 
-        emailLabel.setText("Email:");
+        emailLabel.setText("Username:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

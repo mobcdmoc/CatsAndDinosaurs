@@ -6,6 +6,7 @@
 package views;
 
 import controllers.OrderController;
+import controllers.ViewController;
 import data.IDataSource;
 import javax.swing.JFrame;
 
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
  */
 public class OrderView extends javax.swing.JPanel {
 
+    ViewController vc = new ViewController();
     
     private JFrame parent;
     /**
@@ -32,68 +34,52 @@ public class OrderView extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         controller = new controllers.OrderController();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        receiptTable = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        menuTable = new javax.swing.JTable();
         totalLabel = new javax.swing.JLabel();
         TotalValue = new javax.swing.JLabel();
-        customPizzaButton = new javax.swing.JButton();
-        submitButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
+        done = new javax.swing.JButton();
         receiptLabel = new javax.swing.JLabel();
         menuLabel = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-
-        receiptTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(receiptTable);
-
-        menuTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${menu.items}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, eLProperty, menuTable);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane2.setViewportView(menuTable);
+        addSelectedItem = new javax.swing.JComboBox();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        menu = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        order = new javax.swing.JTextArea();
+        itemSelectButton = new javax.swing.JButton();
+        removeSelected = new javax.swing.JComboBox();
+        removeSelectedButton = new javax.swing.JButton();
 
         totalLabel.setText("Total:");
 
-        TotalValue.setText("jLabel2");
+        TotalValue.setText("$0.00");
 
-        customPizzaButton.setText("Custom Pizza");
+        done.setText("Done");
+        done.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doneActionPerformed(evt);
+            }
+        });
 
-        submitButton.setText("Submit");
+        receiptLabel.setText("Current Order:");
 
-        cancelButton.setText("Cancel");
+        menuLabel.setText("Menu:");
 
-        receiptLabel.setText("Receipt");
+        menu.setEditable(false);
+        menu.setColumns(20);
+        menu.setLineWrap(true);
+        menu.setRows(5);
+        jScrollPane3.setViewportView(menu);
 
-        menuLabel.setText("Menu");
+        order.setEditable(false);
+        order.setColumns(20);
+        order.setLineWrap(true);
+        order.setRows(5);
+        jScrollPane4.setViewportView(order);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        itemSelectButton.setText("Add Selected Item");
+
+        removeSelectedButton.setText("Remove Selected Item");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -103,81 +89,109 @@ public class OrderView extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(customPizzaButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(submitButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(done))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                .addGap(57, 57, 57))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(receiptLabel)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
                                         .addComponent(totalLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(TotalValue))
-                                    .addComponent(receiptLabel))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(removeSelectedButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(removeSelected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(menuLabel)
-                                .addGap(93, 93, 93)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                                .addGap(140, 140, 140))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(itemSelectButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(addSelectedItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(44, 44, 44))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(receiptLabel)
-                        .addComponent(menuLabel))
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(receiptLabel))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(menuLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(itemSelectButton)
+                    .addComponent(addSelectedItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeSelectedButton)
+                    .addComponent(removeSelected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalLabel)
                     .addComponent(TotalValue))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(customPizzaButton)
-                    .addComponent(submitButton)
-                    .addComponent(cancelButton))
-                .addContainerGap())
+                .addComponent(done)
+                .addGap(26, 26, 26))
         );
-
-        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
+        // TODO add your handling code here:
+        vc.showMainView();
+    }//GEN-LAST:event_doneActionPerformed
 
     public void initCustom(JFrame parent, IDataSource client)
     {
         controller = new OrderController(client);
         this.parent = parent;
     }
+    
+    public void setMenu(String s){
+        menu.setText(s);
+    }
+    
+    public void setOrder(String s){
+        order.setText(s);
+    }
+    
+    public void addItemsToMenuSelect(String s){
+        addSelectedItem.addItem(s);
+    }
+    
+    public void addItemsToOrderSelect(String s){
+        removeSelected.addItem(s);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TotalValue;
-    private javax.swing.JButton cancelButton;
+    private javax.swing.JComboBox addSelectedItem;
     private controllers.OrderController controller;
-    private javax.swing.JButton customPizzaButton;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton done;
+    private javax.swing.JButton itemSelectButton;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextArea menu;
     private javax.swing.JLabel menuLabel;
-    private javax.swing.JTable menuTable;
+    private javax.swing.JTextArea order;
     private javax.swing.JLabel receiptLabel;
-    private javax.swing.JTable receiptTable;
-    private javax.swing.JButton submitButton;
+    private javax.swing.JComboBox removeSelected;
+    private javax.swing.JButton removeSelectedButton;
     private javax.swing.JLabel totalLabel;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
