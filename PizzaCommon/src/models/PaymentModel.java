@@ -6,9 +6,18 @@
 package models;
 
 import enums.PaymentType;
+import exceptions.LoadException;
 import java.beans.*;
 import java.io.Serializable;
 import java.util.HashMap;
+import static models.UserModel.PROP_ADDRESS;
+import static models.UserModel.PROP_AUTHLEVEL;
+import static models.UserModel.PROP_FIRSTNAME;
+import static models.UserModel.PROP_ID;
+import static models.UserModel.PROP_LASTNAME;
+import static models.UserModel.PROP_MIDDLENAME;
+import static models.UserModel.PROP_PASSWORD;
+import static models.UserModel.PROP_USERNAME;
 
 /**
  *
@@ -75,8 +84,22 @@ public class PaymentModel extends AbstractModel {
     }
 
     @Override
-    public void load(HashMap<String, Object> fields) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void load(HashMap<String, Object> fields) throws LoadException {
+        if(fields == null || fields.keySet().size() < 1)
+        {
+            throw new LoadException("PaymentModel: No fields passed in!");
+        }
+        //NOTE: This is a little gross but it should work.
+        //We may want to find a more elegant way of doing this
+        //maybe through reflection.
+        if(fields.containsKey(PROP_ID.toLowerCase()))
+            setId(Integer.parseInt(fields.get(PROP_ID.toLowerCase()).toString()));
+        if(fields.containsKey(PROP_ADDRESS.toLowerCase()+"id"))
+            setType(PaymentType.getPaymentType(Integer.parseInt(fields.get(PROP_TYPE.toLowerCase()+"id").toString())));
+        if(fields.containsKey(PROP_APPROVED.toLowerCase()+"id"))
+            setApproved(Boolean.parseBoolean(fields.get(PROP_ADDRESS.toLowerCase()+"id").toString()));
+        if(fields.containsKey(PROP_TOTAL.toLowerCase()+"id"))
+            setTotal(Double.parseDouble(fields.get(PROP_AUTHLEVEL.toLowerCase()+"id").toString()));
     }
 
     @Override

@@ -25,13 +25,14 @@ public enum PaymentType {
     {
         return value;
     }
-    public static ItemType getItemType(int value)
+    public static PaymentType getPaymentType(int value)
     {
-        for(ItemType type : ItemType.values())
+        for(PaymentType type : PaymentType.values())
         {
             if(type.getValue() == value)
                 return type;
         }
         return null;
     }
+    
 }
