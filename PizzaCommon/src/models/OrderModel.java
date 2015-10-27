@@ -10,6 +10,7 @@ import exceptions.LoadException;
 import java.beans.*;
 import java.io.Serializable;
 import java.util.HashMap;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -31,6 +32,7 @@ public class OrderModel extends AbstractModel{
     
     public OrderModel() {
         super();
+        items = FXCollections.observableArrayList();
     }
     
     //<editor-fold desc="Id">
