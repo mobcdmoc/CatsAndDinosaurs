@@ -153,11 +153,11 @@ public class SqliteDataSource implements IDataSource{
         }
     }
     
-    @Override
-    public IModel getEmployee(int id) {
-        IModel rtn = new MenuModel();
-        return rtn;
-    }
+//    @Override
+//    public IModel getEmployee(int id) {
+//        IModel rtn = new MenuModel();
+//        return rtn;
+//    }
 
     @Override
     public IModel getItem(int id) throws StorageException
@@ -197,13 +197,13 @@ public class SqliteDataSource implements IDataSource{
         if(rtn == null)
             return null;
                 
-        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-        itemQuery.append(((OrderModel)rtn).getId());
-        itemQuery.append("'");
-        
-        ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-        
-        ((OrderModel)rtn).setItems(FXCollections.observableArrayList(items));
+//        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+//        itemQuery.append(((OrderModel)rtn).getId());
+//        itemQuery.append("'");
+//        
+//        ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+//        
+//        ((OrderModel)rtn).setItems(FXCollections.observableArrayList(items));
 
         return rtn;
     }
@@ -213,15 +213,15 @@ public class SqliteDataSource implements IDataSource{
         
         ObservableList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
         
-        for(IModel model : orders)
-        {
-            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-            itemQuery.append(((OrderModel)model).getId());
-            itemQuery.append("'");
+//        for(IModel model : orders)
+//        {
+//            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+//            itemQuery.append(((OrderModel)model).getId());
+//            itemQuery.append("'");
         
-            ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-            ((OrderModel)model).setItems(FXCollections.observableArrayList(items));
-        }
+//            ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+//            ((OrderModel)model).setItems(FXCollections.observableArrayList(items));
+//        }
         
         return orders;
     }
@@ -234,15 +234,15 @@ public class SqliteDataSource implements IDataSource{
         
         ObservableList<IModel> orders = executeQueryMultiple(OrderModel.class, query.toString());
         
-        for(IModel model : orders)
-        {
-            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-            itemQuery.append(((OrderModel)model).getId());
-            itemQuery.append("'");
+//        for(IModel model : orders)
+//        {
+//            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+//            itemQuery.append(((OrderModel)model).getId());
+//            itemQuery.append("'");
         
-            ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-            ((OrderModel)model).setItems(FXCollections.observableArrayList(items));
-        }
+//            ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+//            ((OrderModel)model).setItems(FXCollections.observableArrayList(items));
+//        }
         
         return orders;
     }
@@ -274,9 +274,9 @@ public class SqliteDataSource implements IDataSource{
         return rtn;
     }
     
-    @Override
-    public void saveEmployee(IModel model) throws StorageException {
-        
+//    @Override
+//    public void saveEmployee(IModel model) throws StorageException {
+//        
 //        EmployeeModel emp = (EmployeeModel)model;
 //        
 //        String query = null;
@@ -287,7 +287,7 @@ public class SqliteDataSource implements IDataSource{
 //            query = String.format("INSERT INTO Employees VALUES ('{0}','{1}','{2}'", emp.getId(),emp.getPayRate(),emp.getEmpStatus);
 //        
 //        executeNonQuery(query);
-    }
+//    }
 
     @Override
     public void saveItem(IModel model) {
@@ -308,15 +308,15 @@ public class SqliteDataSource implements IDataSource{
     public void saveUser(IModel model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public ObservableList<IModel> getEmployees() throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void saveEmployees(Collection<IModel> models) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//
+//    @Override
+//    public ObservableList<IModel> getEmployees() throws StorageException {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public void saveEmployees(Collection<IModel> models) throws StorageException {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 
 }

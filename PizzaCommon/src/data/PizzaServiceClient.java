@@ -79,10 +79,10 @@ public class PizzaServiceClient implements IDataSource {
         return FXCollections.observableArrayList(models);
     } 
     
-    @Override
-    public void saveEmployee(IModel requestEntity) throws ClientErrorException, StorageException {
-        webTarget.path("Save/Employee").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
-    }
+//    @Override
+//    public void saveEmployee(IModel requestEntity) throws ClientErrorException, StorageException {
+//        webTarget.path("Save/Employee").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+//    }
 
     @Override
     public ItemModel getItem(int id) throws ClientErrorException, StorageException {
@@ -135,11 +135,11 @@ public class PizzaServiceClient implements IDataSource {
 
     @Override
     public MenuModel getMenu() throws ClientErrorException, StorageException {
-        WebTarget resource = webTarget;
-        resource = resource.path("Get/Menu");
-        String bob = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        MenuModel model = gson.fromJson(bob, MenuModel.class);
-        return model;
+        
+        ObservableList<IModel> items = getItems();
+        MenuModel rtn = new MenuModel();
+        rtn.setItems(items);
+        return rtn;
     }
 
     @Override
@@ -156,28 +156,14 @@ public class PizzaServiceClient implements IDataSource {
         
     }
 
-    @Override
-    public IModel getEmployee(int id) throws ClientErrorException, StorageException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("Get/Employee/{0}", new Object[]{id}));
-        
-        String json =  resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        EmployeeModel model = gson.fromJson(json, EmployeeModel.class);
-        return model;
-    }
-
-    @Override
-    public ObservableList<IModel> getEmployees() throws StorageException {
-        WebTarget resource = webTarget;
-        resource = resource.path("Get/Employees");
-        ObservableList<IModel> models = gson.fromJson(resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class), new TypeToken<ArrayList<EmployeeModel>>(){}.getType());
-        return FXCollections.observableArrayList(models);
-    }
-
-
-    @Override
-    public void saveEmployees(Collection<IModel> models) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    @Override
+//    public IModel getEmployee(int id) throws ClientErrorException, StorageException {
+//        WebTarget resource = webTarget;
+//        resource = resource.path(java.text.MessageFormat.format("Get/Employee/{0}", new Object[]{id}));
+//        
+//        String json =  resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+//        EmployeeModel model = gson.fromJson(json, EmployeeModel.class);
+//        return model;
+//    }
 
 }

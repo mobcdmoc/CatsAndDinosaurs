@@ -27,7 +27,7 @@ public class OrderModel extends AbstractModel{
     private int id;
     private int user;
     private int status;
-    private ObservableList<IModel> items;
+    private transient ObservableList<IModel> items;
     
     
     public OrderModel() {

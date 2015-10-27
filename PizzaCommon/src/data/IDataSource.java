@@ -19,8 +19,6 @@ import models.IModel;
 public interface IDataSource {
     void load() throws LoadException;
     
-    IModel getEmployee(int id) throws StorageException;
-    ObservableList<IModel> getEmployees() throws StorageException;
     IModel getItem(int id) throws StorageException;
     ObservableList<IModel> getItems() throws StorageException;
     IModel getMenu() throws StorageException;
@@ -31,8 +29,6 @@ public interface IDataSource {
     IModel getUser(String userName, String password) throws StorageException;
     ObservableList<IModel> getUsers() throws StorageException;
     
-    void saveEmployee(IModel model) throws StorageException;
-    void saveEmployees(Collection<IModel> models) throws StorageException;
     void saveUser(IModel model) throws StorageException;
     void saveItem(IModel model)throws StorageException;
     void saveMenu(IModel model)throws StorageException;
