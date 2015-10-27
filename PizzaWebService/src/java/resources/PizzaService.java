@@ -282,47 +282,47 @@ public class PizzaService {
         }
     }
 
-    @PUT
-    @Consumes(value = "application/json")
-    @Path(value = "/Save/Employee/")
-    @Asynchronous
-    public void saveEmployee(@Suspended final AsyncResponse asyncResponse, final String content) {
-        doSaveEmployee(content);
-        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
-    }
-    private void doSaveEmployee(String content) {
-        try
-        {
-            
-        IModel model = gson.fromJson(content, EmployeeModel.class);
-        dataStorage.saveEmployee(model);
-        }
-        catch(StorageException e)
-        {
-            //eat it for now?
-        }
-    }
-
-    @PUT
-    @Consumes(value = "application/json")
-    @Path(value = "/Save/Employees/")
-    @Asynchronous
-    public void saveEmployees(@Suspended final AsyncResponse asyncResponse, final String content) {
-        doSaveEmployees(content);
-        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
-    }
-    private void doSaveEmployees(String content) {
-        try
-        {
-            
-        ObservableList<IModel> models = gson.fromJson(content, ObservableList.class);
-        dataStorage.saveEmployees(models);
-        }
-        catch(StorageException e)
-        {
-            //eat it for now?
-        }
-    }
+//    @PUT
+//    @Consumes(value = "application/json")
+//    @Path(value = "/Save/Employee/")
+//    @Asynchronous
+//    public void saveEmployee(@Suspended final AsyncResponse asyncResponse, final String content) {
+//        doSaveEmployee(content);
+//        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+//    }
+//    private void doSaveEmployee(String content) {
+//        try
+//        {
+//            
+//        IModel model = gson.fromJson(content, EmployeeModel.class);
+//        dataStorage.saveEmployee(model);
+//        }
+//        catch(StorageException e)
+//        {
+//            //eat it for now?
+//        }
+//    }
+//
+//    @PUT
+//    @Consumes(value = "application/json")
+//    @Path(value = "/Save/Employees/")
+//    @Asynchronous
+//    public void saveEmployees(@Suspended final AsyncResponse asyncResponse, final String content) {
+//        doSaveEmployees(content);
+//        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+//    }
+//    private void doSaveEmployees(String content) {
+//        try
+//        {
+//            
+//        ObservableList<IModel> models = gson.fromJson(content, ObservableList.class);
+//        dataStorage.saveEmployees(models);
+//        }
+//        catch(StorageException e)
+//        {
+//            //eat it for now?
+//        }
+//    }
 
     
     @PUT
@@ -337,7 +337,7 @@ public class PizzaService {
         try
         {
             IModel model = gson.fromJson(content, ItemModel.class);
-            dataStorage.saveEmployee(model);
+            dataStorage.saveItem(model);
         }
         catch(StorageException e)
         {
@@ -357,7 +357,7 @@ public class PizzaService {
         try
         {
             IModel model = gson.fromJson(content, MenuModel.class);
-            dataStorage.saveEmployee(model);
+            dataStorage.saveMenu(model);
         }
         catch(StorageException e)
         {
@@ -377,7 +377,7 @@ public class PizzaService {
         try
         {
             IModel model = gson.fromJson(content, OrderModel.class);
-            dataStorage.saveEmployee(model);
+            dataStorage.saveOrder(model);
         }
         catch(StorageException e)
         {
@@ -397,7 +397,7 @@ public class PizzaService {
         try
         {
             IModel model = gson.fromJson(content, UserModel.class);
-            dataStorage.saveEmployee(model);
+            dataStorage.saveUser(model);
         }
         catch(StorageException e)
         {
