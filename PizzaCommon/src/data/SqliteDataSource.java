@@ -13,8 +13,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -290,23 +289,93 @@ public class SqliteDataSource implements IDataSource{
 //    }
 
     @Override
-    public void saveItem(IModel model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void saveItem(IModel model) throws StorageException {
+        ItemModel m = (ItemModel)model;
+        StringBuilder query = new StringBuilder();
+        if(m.getId() < 1)
+        {
+            query.append("INSERT INTO Items (Name,Description,Price,Type,SpecialPrice,IsSpecial) VALUES ('");
+            query.append(m.getName()).append("', '");
+            query.append(m.getDescription()).append("', '");
+            query.append(m.getPrice()).append("', '");
+            query.append(m.getSpecialPrice()).append("', '");
+            query.append(m.getIsSpecial()).append("', '");
+            query.append(m.getType().getValue()).append("')");
+        }
+        else
+        {
+            query.append("UPDATE Items  SET Name = '");
+            query.append(m.getName()).append("', Description = '");
+            query.append(m.getDescription()).append("', Price = '");
+            query.append(m.getPrice()).append("', IsSpecial = '");
+            query.append(m.getIsSpecial()).append("', SpecialPrice = '");
+            query.append(m.getSpecialPrice()).append("', Type = '");
+            query.append(m.getType().getValue()).append("' WHERE Id = '");
+            query.append(m.getId()).append("'");
+        }
+       
+        executeNonQuery(query.toString());
     }
 
     @Override
-    public void saveMenu(IModel model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void saveMenu(IModel model) throws StorageException {
+        MenuModel m = (MenuModel)model;
+        for(IModel item : m.getItems())
+        {
+            saveItem(item);
+        }
     }
 
     @Override
-    public void saveOrder(IModel model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void saveOrder(IModel model) throws StorageException {
+        OrderModel m = (OrderModel)model;
+        StringBuilder query = new StringBuilder();
+        if(m.getId() < 1)
+        {
+            query.append("INSERT INTO Users (UserId,StatusId) VALUES ('");
+            query.append(m.getUser()).append("', '");
+            query.append(m.getStatus()).append("')");
+        }
+        else
+        {
+            query.append("UPDATE Users  SET UserId = '");
+            query.append(m.getUser()).append("', StatusId = '");
+            query.append(m.getStatus()).append("' WHERE Id = '");
+            query.append(m.getId()).append("'");
+        }
+       
+        executeNonQuery(query.toString());
     }
 
     @Override
-    public void saveUser(IModel model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void saveUser(IModel model) throws StorageException {
+        UserModel m = (UserModel)model;
+        StringBuilder query = new StringBuilder();
+        if(m.getId() < 1)
+        {
+            query.append("INSERT INTO Users (UserName,Password,FirstName,MiddleName,LastName,AddressId,AuthLevelId) VALUES ('");
+            query.append(m.getUserName()).append("', '");
+            query.append(m.getPassword()).append("', '");
+            query.append(m.getFirstName()).append("', '");
+            query.append(m.getMiddleName()).append("', '");
+            query.append(m.getLastName()).append("', '");
+            query.append(m.getAddress()).append("', '");
+            query.append(m.getAuthLevel()).append("')");
+        }
+        else
+        {
+            query.append("UPDATE Users  SET UserName = '");
+            query.append(m.getUserName()).append("', Password = '");
+            query.append(m.getPassword()).append("', FirstName = '");
+            query.append(m.getFirstName()).append("', MiddleName = '");
+            query.append(m.getMiddleName()).append("', LastName = '");
+            query.append(m.getLastName()).append("', AddressId = '");
+            query.append(m.getAddress()).append("', AuthLevelId = '");
+            query.append(m.getAuthLevel()).append("' WHERE Id = '");
+            query.append(m.getId()).append("'");
+        }
+       
+        executeNonQuery(query.toString());
     }
 //
 //    @Override

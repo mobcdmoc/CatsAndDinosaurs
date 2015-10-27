@@ -46,12 +46,12 @@ public class PizzaServiceClient implements IDataSource {
     
     @Override
     public void saveItem(IModel requestEntity) throws ClientErrorException, StorageException {
-        webTarget.path("Save/Item").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+        webTarget.path("Save/Item").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(gson.toJson(requestEntity), javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
     @Override
     public void saveOrder(IModel requestEntity) throws ClientErrorException, StorageException {
-        webTarget.path("Save/Order").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+        webTarget.path("Save/Order").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
     @Override
@@ -81,7 +81,7 @@ public class PizzaServiceClient implements IDataSource {
     
 //    @Override
 //    public void saveEmployee(IModel requestEntity) throws ClientErrorException, StorageException {
-//        webTarget.path("Save/Employee").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+//        webTarget.path("Save/Employee").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
 //    }
 
     @Override
@@ -106,14 +106,14 @@ public class PizzaServiceClient implements IDataSource {
     @Override
     public ObservableList<IModel> getOrders(int id) throws StorageException {
         WebTarget resource = webTarget;
-        resource = resource.path(String.format("Get/Orders/{0}",id));
+        resource = resource.path(java.text.MessageFormat.format("Get/Orders/{0}",new Object[] {id}));
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
         ArrayList<ItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
         return FXCollections.observableArrayList(models);
     }
     @Override
     public void saveMenu(IModel requestEntity) throws ClientErrorException, StorageException {
-        webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+        webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
     @Override
@@ -144,7 +144,7 @@ public class PizzaServiceClient implements IDataSource {
 
     @Override
     public void saveUser(IModel requestEntity) throws ClientErrorException, StorageException {
-        webTarget.path("Save/User").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+        webTarget.path("Save/User").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
     public void close() {

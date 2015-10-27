@@ -23,11 +23,16 @@ public class ItemModel extends AbstractModel {
     public static final transient String PROP_PRICE = "price";
     public static final transient String PROP_TYPE = "type";
     
+    public static final transient String PROP_SPECIALPRICE = "SpecialPrice";
+    public static final transient String PROP_ISSPECIAL = "IsSpecial";
+    
     private int id;
     private String name;
     private String description;
     private double price;
     private int type;
+    private double specialPrice;
+    private boolean isSpecial;
     
     public ItemModel() {
         super();
@@ -97,6 +102,32 @@ public class ItemModel extends AbstractModel {
     }
     //</editor-fold>
     
+    //<editor-fold desc="SpeicalPrice">
+    public double getSpecialPrice()
+    {
+        return specialPrice;
+    }
+    public void setSpecialPrice(double value)
+    {
+        double oldValue = specialPrice;
+        specialPrice = value;
+        propertySupport.firePropertyChange(PROP_SPECIALPRICE, oldValue, specialPrice);
+    }
+    //</editor-fold>
+    
+    //<editor-fold desc="IsSpecial">
+    public boolean getIsSpecial()
+    {
+        return isSpecial;
+    }
+    public void setIsSpecial(boolean value)
+    {
+        boolean oldValue = isSpecial;
+        isSpecial = value;
+        propertySupport.firePropertyChange(PROP_ISSPECIAL, oldValue, isSpecial);
+    }
+    //</editor-fold>
+    
     @Override
     public void save() {
         try
@@ -150,6 +181,10 @@ public class ItemModel extends AbstractModel {
             setPrice(Double.parseDouble(fields.get(PROP_PRICE).toString()));
         if(fields.containsKey(PROP_TYPE))
             setType(Integer.parseInt(fields.get(PROP_TYPE).toString()));
+        if(fields.containsKey(PROP_SPECIALPRICE))
+            setSpecialPrice(Double.parseDouble(fields.get(PROP_SPECIALPRICE).toString()));
+        if(fields.containsKey(PROP_TYPE))
+            setIsSpecial(Boolean.parseBoolean(fields.get(PROP_TYPE).toString()));
     }
 
     @Override

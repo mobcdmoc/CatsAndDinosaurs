@@ -28,7 +28,7 @@ public interface IDataSource {
     IModel getUser(int id) throws StorageException;
     IModel getUser(String userName, String password) throws StorageException;
     ObservableList<IModel> getUsers() throws StorageException;
-    
+//    ObservableList<IModel> getOrderItems() throws StorageException;
     void saveUser(IModel model) throws StorageException;
     void saveItem(IModel model)throws StorageException;
     void saveMenu(IModel model)throws StorageException;
