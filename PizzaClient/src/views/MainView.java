@@ -31,6 +31,11 @@ public class MainView extends JPanel {
 		});
 		
 		JButton createAccountButton = new JButton("Create Account");
+                createAccountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vc.showCreateAccountView();
+			}
+		});
 		
 		JButton btnMakeOrder = new JButton("Make Order");
 		

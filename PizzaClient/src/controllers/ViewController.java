@@ -25,6 +25,11 @@ public class ViewController {
 		frame.setContentPane(new LoginView());
 		refreshView(frame);
 	}
+        
+        public void showCreateAccountView(){
+		frame.setContentPane(new CreateAccountView());
+		refreshView(frame);
+	}
 	
 	private void refreshView(JFrame f){
 		f.pack();

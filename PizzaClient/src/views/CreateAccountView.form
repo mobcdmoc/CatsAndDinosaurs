@@ -81,14 +81,8 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="firstNameField">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="passwordField">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField2"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="firstNameLabel">
       <Properties>
@@ -122,14 +116,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="lastNameField">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField3"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="emailField">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField5"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lastNameLabel">
       <Properties>

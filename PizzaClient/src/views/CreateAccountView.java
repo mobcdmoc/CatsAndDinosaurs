@@ -5,29 +5,21 @@
  */
 package views;
 
-import controllers.CreateAccountController;
-import controllers.IController;
-import data.IDataSource;
-import javax.swing.JFrame;
+import controllers.ViewController;
 
 /**
  *
  * @author Jacob
  */
 public class CreateAccountView extends javax.swing.JPanel {
+    
+    private static ViewController vc = new ViewController();
 
-    private IController controller;
-    /**
-     * Creates new form CreateAccountView
-     */
     public CreateAccountView() {
         initComponents();
     }
 
-    public void initCustom(JFrame parent, IDataSource client)
-    {
-        controller = new CreateAccountController(client);
-    }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,10 +42,6 @@ public class CreateAccountView extends javax.swing.JPanel {
         lastNameLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
 
-        firstNameField.setText("jTextField1");
-
-        passwordField.setText("jTextField2");
-
         firstNameLabel.setText("First Name:");
 
         passwordLabel.setText("Password:");
@@ -69,10 +57,6 @@ public class CreateAccountView extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Account Creation");
-
-        lastNameField.setText("jTextField3");
-
-        emailField.setText("jTextField5");
 
         lastNameLabel.setText("Last Name: ");
 
@@ -138,6 +122,7 @@ public class CreateAccountView extends javax.swing.JPanel {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
+        vc.showMainView();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 
