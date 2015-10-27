@@ -30,6 +30,14 @@ public class ViewController {
 		frame.setContentPane(new CreateAccountView());
 		refreshView(frame);
 	}
+        
+        public void displayMenu(){
+            MainView mv = new MainView();
+            String menu = "Pizza\nSoda\nBreadsticks";
+            mv.changeDisplayMessage(menu);
+            frame.setContentPane(mv);
+            refreshView(frame);
+        }
 	
 	private void refreshView(JFrame f){
 		f.pack();
