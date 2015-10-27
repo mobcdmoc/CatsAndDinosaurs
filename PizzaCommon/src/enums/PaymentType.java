@@ -10,5 +10,28 @@ package enums;
  * @author Jacob
  */
 public enum PaymentType {
+        Cash(1)
+    ,Credit(2)
+    ,Debit(3);
     
+    
+    
+    private int value;
+    PaymentType(int value)
+    {
+        this.value = value;
+    }
+    public int getValue()
+    {
+        return value;
+    }
+    public static ItemType getItemType(int value)
+    {
+        for(ItemType type : ItemType.values())
+        {
+            if(type.getValue() == value)
+                return type;
+        }
+        return null;
+    }
 }
