@@ -20,8 +20,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import models.EmployeeModel;
@@ -325,7 +326,7 @@ public class PizzaService {
 //    }
 
     
-    @PUT
+    @POST
     @Consumes(value = "application/json")
     @Path(value = "/Save/Item/")
     @Asynchronous
@@ -345,7 +346,7 @@ public class PizzaService {
         }
     }
 
-    @PUT
+    @POST
     @Consumes(value = "application/json")
     @Path(value = "/Save/Menu/")
     @Asynchronous
@@ -365,7 +366,7 @@ public class PizzaService {
         }
     }
 
-    @PUT
+    @POST
     @Consumes(value = "application/json")
     @Path(value = "/Save/Order/")
     @Asynchronous
@@ -385,7 +386,7 @@ public class PizzaService {
         }
     }
 
-    @PUT
+    @POST
     @Consumes(value = "application/json")
     @Path(value = "/Save/User/")
     @Asynchronous
