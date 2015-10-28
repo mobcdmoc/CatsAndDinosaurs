@@ -143,7 +143,7 @@ public class UserModel extends AbstractModel {
     }
 
     @Override
-    public void get(int id) {
+    public void getById(int id) {
         try
         {
             source.getUser(id);
@@ -189,11 +189,11 @@ public class UserModel extends AbstractModel {
     
     public void get(String username, String password){
         try {
-            ObservableList<IModel> users = source.getUsers();
+            ListModel<IModel> users = source.getUsers();
             users.stream().forEach((model) -> {
                 if(((UserModel)model).getUserName().equals(username) &&
                    ((UserModel)model).getPassword().equals(password))
-                        get(((UserModel)model).getId());
+                        getById(((UserModel)model).getId());
             });
         } catch (StorageException ex) {
            
