@@ -77,14 +77,12 @@ public class PizzaServiceClient implements IDataSource {
     }
 
     @Override
-    public ListModel<IModel> getUsers() throws ClientErrorException, StorageException {
+    public ArrayList<IModel> getUsers() throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Users");
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
         ArrayList<IModel> models = gson.fromJson(resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class), new TypeToken<ArrayList<UserModel>>(){}.getType());
-        ListModel<IModel> rtn = new ListModel();
-        models.stream().forEach((x) -> {rtn.add(x);});
-        return rtn;
+        return models;
     } 
     
 //    @Override
@@ -103,40 +101,37 @@ public class PizzaServiceClient implements IDataSource {
     }
 
     @Override
-    public ListModel<IModel> getOrders() throws ClientErrorException, StorageException {
+    public ArrayList<IModel> getOrders() throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Orders");
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        ArrayList<ItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
-        ListModel<IModel> rtn = new ListModel();
-        models.stream().forEach((x) -> {rtn.add(x);});
-        return rtn;
+        ArrayList<IModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
+        return models;
     }
 
     @Override
-    public ListModel<IModel> getOrders(int id) throws StorageException {
+    public ArrayList<IModel> getOrders(int id) throws StorageException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("Get/Orders/{0}",new Object[] {id}));
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        ArrayList<ItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
-        ListModel<IModel> rtn = new ListModel();
-        models.stream().forEach((x) -> {rtn.add(x);});
-        return rtn;
+        ArrayList<IModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
+        return models;
     }
     @Override
     public void saveMenu(IModel requestEntity) throws ClientErrorException, StorageException {
-        webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+        MenuModel m = (MenuModel)requestEntity;
+        String json = gson.toJson(m.getItems());
+        
+        webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(json, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
     @Override
-    public ListModel<IModel> getItems() throws ClientErrorException, StorageException {
+    public ArrayList<IModel> getItems() throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Items");
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        ArrayList<ItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<ItemModel>>(){}.getType());
-        ListModel<IModel> rtn = new ListModel();
-        models.stream().forEach((x) -> {rtn.add(x);});
-        return rtn;
+        ArrayList<IModel> models = gson.fromJson(json, new TypeToken<ArrayList<ItemModel>>(){}.getType());
+        return models;
     }
 
     @Override
@@ -150,7 +145,7 @@ public class PizzaServiceClient implements IDataSource {
     @Override
     public MenuModel getMenu() throws ClientErrorException, StorageException {
         
-        ListModel<IModel> items = getItems();
+        ArrayList<IModel> items = getItems();
         MenuModel rtn = new MenuModel();
         rtn.setItems(items);
         return rtn;

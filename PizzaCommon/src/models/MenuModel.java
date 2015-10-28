@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /**
@@ -18,23 +20,24 @@ import javax.swing.DefaultListModel;
  */
 public class MenuModel extends AbstractModel {
     public static final String PROP_ITEMS = "items";
-    private ListModel<IModel> items;
+    private ArrayList<IModel> items;
     
-    private DefaultListModel combined;
-    private ArrayList<Integer> ids = new ArrayList<>();
-    private DefaultListModel names;
-    private DefaultListModel prices;
-    private DefaultListModel specialPrice;
-    private DefaultListModel isSpecial;
+    private transient DefaultListModel combined;
+    private transient ArrayList<Integer> ids = new ArrayList<>();
+    private transient DefaultListModel<String> names;
+    private transient DefaultListModel<Double> prices;
+    private transient DefaultListModel<Double> specialPrice;
+    private transient DefaultListModel<Boolean> isSpecial;
+    private transient ArrayList<Boolean> isActive = new ArrayList<>();
+    private transient  ArrayList<Boolean> updated = new ArrayList<>();
     
-    private ArrayList<Integer> toRemove = new ArrayList<>();
     
     public MenuModel() {
         super();
-        items = new ListModel<>();
+        items = new ArrayList<>();
     }
     
-    public void init(DefaultListModel combined, DefaultListModel names, DefaultListModel prices, DefaultListModel specialPrice,DefaultListModel isSpecial )
+    public void init(DefaultListModel<String> combined, DefaultListModel<String> names, DefaultListModel<Double> prices, DefaultListModel<Double> specialPrice,DefaultListModel<Boolean> isSpecial )
     {
         this.combined= combined;
         this.names = names;
@@ -55,31 +58,41 @@ public class MenuModel extends AbstractModel {
         m.setName(name);
         m.setPrice(price);
         m.setIsActive(true);
-        items.add(m);
         
         
         ids.add(0);
         names.addElement(name);
         prices.addElement(price);
-        specialPrice.addElement(0);
+        specialPrice.addElement(0.0);
         isSpecial.addElement(false);
-        
+        isActive.add(true);
+        updated.add(true);
         int i = ids.size()-1;
         
         combined.addElement(java.text.MessageFormat.format("{0} | {1} | {2} | {3}", names.get(i), prices.get(i), specialPrice.get(i), isSpecial.get(i)));
     }
-    
-    
+   
     public void remove(int[] indices)
     {
         Arrays.sort(indices);
         for(int j = indices.length-1; j >= 0; j--)
         {
+            
             int i = indices[j];
+            
+            ItemModel m;
+            
             if(ids.get(i) != 0)
             {
-                ItemModel m = (ItemModel)items.get(i);
+                m = new ItemModel();
+                m.setId(ids.get(i));
+                m.setName((String)names.get(i));
+                m.setPrice(prices.get(i));
+                m.setSpecialPrice(specialPrice.get(i));
+                m.setIsSpecial(isSpecial.get(i));
+                m.setType(4);
                 m.setIsActive(false);
+                items.add(m);
             }
             combined.remove(i);
             ids.remove(i);
@@ -87,16 +100,17 @@ public class MenuModel extends AbstractModel {
             prices.remove(i);
             specialPrice.remove(i);
             isSpecial.remove(i);
+            updated.remove(i);
         }
     }
     
-    public ListModel<IModel> getItems()
+    public ArrayList<IModel> getItems()
     {
         return items;
     }
-    public void setItems(ListModel<IModel> value)
+    public void setItems(ArrayList<IModel> value)
     {
-        ListModel<IModel> oldValue = items;
+        ArrayList<IModel> oldValue = items;
         items = value;
         propertySupport.firePropertyChange(PROP_ITEMS, oldValue, items);
     }
@@ -105,6 +119,7 @@ public class MenuModel extends AbstractModel {
     {
         specialPrice.set(index,price);
         isSpecial.set(index,true);
+        updated.set(index, true);
         updateCombined(index);
     }
     
@@ -113,6 +128,7 @@ public class MenuModel extends AbstractModel {
         for(int i = 0; i < indecies.length; i++)
         {
             isSpecial.set(indecies[i], false);
+            updated.set(indecies[i], true);
             updateCombined(indecies[i]);
         }
     }
@@ -123,12 +139,26 @@ public class MenuModel extends AbstractModel {
         
         for(int i = 0; i < ids.size(); i++)
         {
-            ItemModel m;
-            if(ids.get(i) != 0)
+            if(updated.get(i))
             {
-                //already exists
-//                m = ((ItemModel)items.get(i)).getId();
+                ItemModel m = new ItemModel();
+                if(ids.get(i) != 0)
+                    m.setId(ids.get(i));
+                else
+                    m.setId(0);
+                m.setName((String)names.get(i));
+                m.setPrice(prices.get(i));
+                m.setSpecialPrice(specialPrice.get(i));
+                m.setIsSpecial(isSpecial.get(i));
+                m.setIsActive(true);
+                m.setType(4);
+                items.add(m);
             }
+        }
+        try {
+            source.saveMenu(this);
+        } catch (StorageException ex) {
+            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -136,10 +166,10 @@ public class MenuModel extends AbstractModel {
     public void getById(int id) {
         try
         {
-            ListModel<IModel> ms = source.getItems();
+            ArrayList<IModel> ms = source.getItems();
             items.clear();
             
-            for(int i = 0; i< ms.getSize(); i++)
+            for(int i = 0; i< ms.size(); i++)
             {
                 ItemModel model = ((ItemModel)ms.get(i));
                 ids.add(model.getId());
@@ -151,11 +181,10 @@ public class MenuModel extends AbstractModel {
         
                 combined.addElement(java.text.MessageFormat.format("{0} | {1} | {2} | {3}", names.get(index), prices.get(index), specialPrice.get(index), isSpecial.get(index)));
 
-                items.add(model);
             }
         
         } catch (StorageException ex) {
-            //Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, ex);
         }
             
     }
@@ -164,14 +193,15 @@ public class MenuModel extends AbstractModel {
     public void load(HashMap<String, Object> fields) {
     }
 
+    
     @Override
     public void get() {     
         try
         {
-            ListModel<IModel> ms = source.getItems();
+            ArrayList<IModel> ms = source.getItems();
             items.clear();
             
-            for(int i = 0; i< ms.getSize(); i++)
+            for(int i = 0; i< ms.size(); i++)
             {
                 ItemModel model = ((ItemModel)ms.get(i));
                 ids.add(model.getId());
@@ -179,15 +209,15 @@ public class MenuModel extends AbstractModel {
                 prices.addElement(model.getPrice());
                 isSpecial.addElement(model.getIsSpecial());
                 specialPrice.addElement(model.getSpecialPrice());
+                updated.add(false);
                 int index = ids.size()-1;
         
                 combined.addElement(java.text.MessageFormat.format("{0} | {1} | {2} | {3}", names.get(index), prices.get(index), specialPrice.get(index), isSpecial.get(index)));
 
-                items.add(model);
             }
         
         } catch (StorageException ex) {
-            //Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, ex);
         }
             
     }

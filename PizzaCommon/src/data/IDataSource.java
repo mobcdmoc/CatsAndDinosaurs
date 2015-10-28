@@ -21,14 +21,14 @@ public interface IDataSource {
     void load() throws LoadException;
     
     IModel getItem(int id) throws StorageException;
-    ListModel<IModel> getItems() throws StorageException;
+    ArrayList<IModel> getItems() throws StorageException;
     IModel getMenu() throws StorageException;
     IModel getOrder(int id) throws StorageException;
-    ListModel<IModel> getOrders(int id) throws StorageException;
-    ListModel<IModel> getOrders() throws StorageException;//returns only active orders
+    ArrayList<IModel> getOrders(int id) throws StorageException;
+    ArrayList<IModel> getOrders() throws StorageException;//returns only active orders
     IModel getUser(int id) throws StorageException;
     IModel getUser(String userName, String password) throws StorageException;
-    ListModel<IModel> getUsers() throws StorageException;
+    ArrayList<IModel> getUsers() throws StorageException;
 //    ObservableList<IModel> getOrderItems() throws StorageException;
     void saveUser(IModel model) throws StorageException;
     void saveItem(IModel model)throws StorageException;

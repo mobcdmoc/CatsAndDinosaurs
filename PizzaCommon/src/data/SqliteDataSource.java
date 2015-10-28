@@ -14,6 +14,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -89,10 +90,10 @@ public class SqliteDataSource implements IDataSource{
             throw new StorageException("Something went horribly wrong!");
         }
     }
-    private <K extends AbstractModel> ListModel<IModel> executeQueryMultiple (Class<K> modelClass, String query) throws StorageException
+    private <K extends AbstractModel> ArrayList<IModel> executeQueryMultiple (Class<K> modelClass, String query) throws StorageException
     {
         try (Statement cmd = connection.createStatement()) {
-            ListModel<IModel> rtn = new ListModel();
+            ArrayList<IModel> rtn = new ArrayList<>();
             
             ResultSet results = cmd.executeQuery(query);
             while(results.next())
@@ -170,17 +171,17 @@ public class SqliteDataSource implements IDataSource{
     }
     
     @Override
-    public ListModel<IModel> getItems() throws StorageException{
-        String query = "SELECT * FROM Items";
-        ListModel<IModel> rtn = executeQueryMultiple(ItemModel.class, query);
+    public ArrayList<IModel> getItems() throws StorageException{
+        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
+        ArrayList<IModel> rtn = executeQueryMultiple(ItemModel.class, query);
         return rtn;
     }
     
     @Override
     public IModel getMenu() throws StorageException {
-        String query = "SELECT * FROM Items WHERE Type > 3";
+        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
         
-        ListModel<IModel> items = executeQueryMultiple(ItemModel.class, query);
+        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class, query);
         IModel rtn = new MenuModel();
         ((MenuModel)rtn).setItems(items);
         
@@ -208,10 +209,10 @@ public class SqliteDataSource implements IDataSource{
         return rtn;
     }
     @Override
-    public ListModel<IModel> getOrders() throws StorageException {
+    public ArrayList<IModel> getOrders() throws StorageException {
         String query = "SELECT * FROM Orders";
         
-        ListModel<IModel> orders = executeQueryMultiple(OrderModel.class, query);
+        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
         
 //        for(IModel model : orders)
 //        {
@@ -227,12 +228,12 @@ public class SqliteDataSource implements IDataSource{
     }
 
     @Override
-    public ListModel<IModel> getOrders(int id) throws StorageException {
+    public ArrayList<IModel> getOrders(int id) throws StorageException {
         StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE UserId = '");
         query.append(id);
         query.append("'");
         
-        ListModel<IModel> orders = executeQueryMultiple(OrderModel.class, query.toString());
+        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query.toString());
         
 //        for(IModel model : orders)
 //        {
@@ -248,10 +249,10 @@ public class SqliteDataSource implements IDataSource{
     }
 
     @Override
-    public ListModel<IModel> getUsers() throws StorageException {
+    public ArrayList<IModel> getUsers() throws StorageException {
         String query = "SELECT * FROM Users";
         
-        ListModel<IModel> rtn = executeQueryMultiple(UserModel.class, query);
+        ArrayList<IModel> rtn = executeQueryMultiple(UserModel.class, query);
         return rtn;
     }
     
@@ -295,13 +296,14 @@ public class SqliteDataSource implements IDataSource{
         StringBuilder query = new StringBuilder();
         if(m.getId() < 1)
         {
-            query.append("INSERT INTO Items (Name,Description,Price,Type,SpecialPrice,IsSpecial) VALUES ('");
+            query.append("INSERT INTO Items (Name,Description,Price,Type,SpecialPrice,IsSpecial,IsActive) VALUES ('");
             query.append(m.getName()).append("', '");
             query.append(m.getDescription()).append("', '");
             query.append(m.getPrice()).append("', '");
+            query.append(m.getType().getValue()).append("', '");
             query.append(m.getSpecialPrice()).append("', '");
             query.append(m.getIsSpecial()).append("', '");
-            query.append(m.getType().getValue()).append("')");
+            query.append(m.getIsActive()).append("')");
         }
         else
         {
@@ -310,7 +312,9 @@ public class SqliteDataSource implements IDataSource{
             query.append(m.getDescription()).append("', Price = '");
             query.append(m.getPrice()).append("', IsSpecial = '");
             query.append(m.getIsSpecial()).append("', SpecialPrice = '");
-            query.append(m.getSpecialPrice()).append("', Type = '");
+            query.append(m.getSpecialPrice()).append("', IsSpecial = '");
+            query.append(m.getIsSpecial()).append("', IsActive = '");
+            query.append(m.getIsActive()).append("', Type = '");
             query.append(m.getType().getValue()).append("' WHERE Id = '");
             query.append(m.getId()).append("'");
         }
@@ -322,7 +326,7 @@ public class SqliteDataSource implements IDataSource{
     public void saveMenu(IModel model) throws StorageException {
         MenuModel m = (MenuModel)model;
         
-        for(int i = 0; i< m.getItems().getSize(); i++)
+        for(int i = 0; i< m.getItems().size(); i++)
         {
             IModel n = (IModel)m.getItems().get(i);
             saveItem(n);
