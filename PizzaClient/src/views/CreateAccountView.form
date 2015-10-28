@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="controllers.CreateAccountController" name="controller">
+    </Component>
+  </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -81,8 +85,18 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="firstNameField">
+      <BindingProperties>
+        <BindingProperty name="text" source="controller" sourcePath="${model.firstName}" target="firstNameField" targetPath="text" updateStrategy="0" immediately="false">
+          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+        </BindingProperty>
+      </BindingProperties>
     </Component>
     <Component class="javax.swing.JTextField" name="passwordField">
+      <BindingProperties>
+        <BindingProperty name="text" source="controller" sourcePath="${model.password}" target="passwordField" targetPath="text" updateStrategy="0" immediately="false">
+          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+        </BindingProperty>
+      </BindingProperties>
     </Component>
     <Component class="javax.swing.JLabel" name="firstNameLabel">
       <Properties>
@@ -119,8 +133,18 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="lastNameField">
+      <BindingProperties>
+        <BindingProperty name="text" source="controller" sourcePath="${model.lastName}" target="lastNameField" targetPath="text" updateStrategy="0" immediately="false">
+          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+        </BindingProperty>
+      </BindingProperties>
     </Component>
     <Component class="javax.swing.JTextField" name="userNameField">
+      <BindingProperties>
+        <BindingProperty name="text" source="controller" sourcePath="${model.userName}" target="userNameField" targetPath="text" updateStrategy="0" immediately="false">
+          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+        </BindingProperty>
+      </BindingProperties>
     </Component>
     <Component class="javax.swing.JLabel" name="lastNameLabel">
       <Properties>

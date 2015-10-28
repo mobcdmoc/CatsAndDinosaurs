@@ -6,6 +6,7 @@
 package controllers;
 
 import data.IDataSource;
+import models.IModel;
 import models.UserModel;
 
 /**
@@ -38,6 +39,7 @@ public class LoginController extends AbstractController{
 
     public void get(String username, String password){
         ((UserModel)model).get(username, password);
+        //user = new model;
     }
     
     @Override

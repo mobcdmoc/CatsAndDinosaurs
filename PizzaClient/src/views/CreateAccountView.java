@@ -17,7 +17,6 @@ import data.PizzaServiceClient;
 public class CreateAccountView extends javax.swing.JPanel {
     
     private static ViewController vc = new ViewController();
-    private controllers.CreateAccountController controller;
     private IDataSource source;
     
     public CreateAccountView() {
@@ -35,7 +34,9 @@ public class CreateAccountView extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        controller = new controllers.CreateAccountController();
         firstNameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JTextField();
         firstNameLabel = new javax.swing.JLabel();
@@ -47,6 +48,12 @@ public class CreateAccountView extends javax.swing.JPanel {
         userNameField = new javax.swing.JTextField();
         lastNameLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.firstName}"), firstNameField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.password}"), passwordField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         firstNameLabel.setText("First Name:");
 
@@ -68,6 +75,12 @@ public class CreateAccountView extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Account Creation");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.lastName}"), lastNameField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.userName}"), userNameField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         lastNameLabel.setText("Last Name: ");
 
@@ -129,11 +142,12 @@ public class CreateAccountView extends javax.swing.JPanel {
                     .addComponent(cancelButton))
                 .addContainerGap())
         );
+
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     public void initCustom(){
         source = new PizzaServiceClient();
-        controller = new CreateAccountController();
         controller.init(source);
         //controller.get();
     }
@@ -144,16 +158,14 @@ public class CreateAccountView extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        controller.submit(userNameField.getText(),passwordField.getText(),firstNameField.getText(),lastNameField.getText());
-        
-        
-        
+        controller.submit();
         vc.showMainView();
     }//GEN-LAST:event_submitButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
+    private controllers.CreateAccountController controller;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel firstNameLabel;
@@ -164,5 +176,6 @@ public class CreateAccountView extends javax.swing.JPanel {
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JButton submitButton;
     private javax.swing.JTextField userNameField;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

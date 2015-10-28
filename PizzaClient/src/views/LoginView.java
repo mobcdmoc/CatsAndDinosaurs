@@ -9,6 +9,7 @@ import controllers.LoginController;
 import controllers.ViewController;
 import data.IDataSource;
 import data.PizzaServiceClient;
+import models.UserModel;
 
 /**
  *
@@ -23,6 +24,7 @@ public class LoginView extends javax.swing.JPanel {
     ViewController vc = new ViewController();
     private controllers.LoginController controller;
     private IDataSource source;
+
     
     public LoginView() {
         initComponents();
@@ -37,7 +39,9 @@ public class LoginView extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        loginController1 = new controllers.LoginController();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -53,6 +57,9 @@ public class LoginView extends javax.swing.JPanel {
 
         jLabel3.setText("Username:");
 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, loginController1, org.jdesktop.beansbinding.ELProperty.create("${username}"), username, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         submit.setText("Submit");
         submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,6 +73,9 @@ public class LoginView extends javax.swing.JPanel {
                 cancelActionPerformed(evt);
             }
         });
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, loginController1, org.jdesktop.beansbinding.ELProperty.create("${password}"), password, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -111,6 +121,8 @@ public class LoginView extends javax.swing.JPanel {
                     .addComponent(cancel))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     private void initCustom()
@@ -118,14 +130,15 @@ public class LoginView extends javax.swing.JPanel {
         source = new PizzaServiceClient();
         controller = new LoginController();
         controller.init(source);
-        //controller.get();
+        controller.get();
     }
     
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
-        String usrStr = username.getText();
-        String psswrdStr = password.getText();
-        controller.get(usrStr,psswrdStr);
+        //String usrStr = username.getText();
+        //String psswrdStr = password.getText();
+        //user = controller.get(usrStr,psswrdStr);
+        //vc.updateUser(user);
         vc.showMainView();
     }//GEN-LAST:event_submitActionPerformed
 
@@ -140,8 +153,10 @@ public class LoginView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private controllers.LoginController loginController1;
     private javax.swing.JTextField password;
     private javax.swing.JButton submit;
     private javax.swing.JTextField username;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

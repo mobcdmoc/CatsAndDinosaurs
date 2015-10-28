@@ -25,4 +25,9 @@ public class MainWindow {
 	public static JFrame getFrame(){
 		return f;
 	}
+        
+        public static void setViewController(ViewController VC){
+            vc = VC;
+            vc.showMainView();
+        }
 }

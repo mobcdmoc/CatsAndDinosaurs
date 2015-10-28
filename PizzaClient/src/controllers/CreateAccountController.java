@@ -26,12 +26,7 @@ public class CreateAccountController extends AbstractController{
         model.init(source);
     }
     
-    public void submit(String un, String pw, String fn, String ln) {
-        ((UserModel)model).setUserName(un);
-        ((UserModel)model).setPassword(pw);
-        ((UserModel)model).setFirstName(fn);
-        ((UserModel)model).setLastName(ln);
-        ((UserModel)model).setAuthLevel(1);
+    public void submit() {
         model.save();
     }
 
@@ -47,11 +42,6 @@ public class CreateAccountController extends AbstractController{
 
     @Override
     public void runCommand(String command, Object input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void submit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

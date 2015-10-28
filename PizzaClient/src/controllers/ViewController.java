@@ -6,16 +6,19 @@
 package controllers;
 
 import javax.swing.JFrame;
+import models.UserModel;
 import views.*;
 
-public class ViewController {
+public class ViewController extends AbstractController{
 	
 	JFrame frame;
 	
 	public ViewController(){
-		frame = MainWindow.getFrame();
+            super();
+            model = new UserModel();
+            frame = MainWindow.getFrame();
 	}
-
+        
 	public void showMainView(){
 		frame.setContentPane(new MainView());
 		refreshView(frame);
@@ -90,5 +93,27 @@ public class ViewController {
             f.pack();
             f.validate();
             f.setVisible(true);
-	}
+        }
+
+    @Override
+    public void submit() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void get() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onClose() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void runCommand(String command, Object input) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        
 }
+
