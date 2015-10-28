@@ -11,6 +11,8 @@ import java.beans.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -34,6 +36,9 @@ public class MenuModel extends AbstractModel {
         items = FXCollections.observableArrayList();
     }
     
+    
+    
+    
     public ObservableList<IModel> getItems()
     {
         return items;
@@ -52,17 +57,16 @@ public class MenuModel extends AbstractModel {
 
     @Override
     public IModel get(int id) {
-        try
-        {
-            ObservableList i = dataSource.getItems();
-            items = i;
-            return this;
+        ObservableList<IModel> i;
+        try {
+            i = source.getItems();
+            
+        } catch (StorageException ex) {
+            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        catch(StorageException e)
-        {
-            //eat it
-        }
-        return null;
+            
+        
+        return this;
     }
 
     @Override
@@ -75,8 +79,12 @@ public class MenuModel extends AbstractModel {
     public IModel get() {
         try
         {
-            ObservableList i = dataSource.getItems();
-            items = i;
+            ObservableList<IModel> i = source.getItems();
+            
+            i.stream().forEach((model) -> {
+                items.add(model);
+            });
+            
             return this;
         }
         catch(StorageException e)

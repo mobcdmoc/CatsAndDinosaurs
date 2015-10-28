@@ -132,7 +132,7 @@ public class ItemModel extends AbstractModel {
     public void save() {
         try
         {
-            dataSource.saveItem(this);
+            source.saveItem(this);
         }
         catch(Exception e)
         {
@@ -145,7 +145,7 @@ public class ItemModel extends AbstractModel {
     public IModel get(int id) {
         try
         {
-            return dataSource.getItem(id);
+            return source.getItem(id);
         }
         catch(Exception e)
         {

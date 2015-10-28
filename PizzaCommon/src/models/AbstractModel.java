@@ -16,7 +16,7 @@ import java.util.HashMap;
  * @author Jacob
  */
 public abstract class AbstractModel implements IModel, Serializable{
-    protected transient IDataSource dataSource;
+    protected transient IDataSource source;
     
     protected transient PropertyChangeSupport propertySupport;
     
@@ -26,7 +26,13 @@ public abstract class AbstractModel implements IModel, Serializable{
     }
     public AbstractModel(IDataSource source)
     {
-        dataSource = source;
+        this();
+        this.source = source;
+    }
+    
+    public void init(IDataSource source)
+    {
+        this.source = source;
     }
     
     public void addPropertyChangeListener(PropertyChangeListener listener) {
