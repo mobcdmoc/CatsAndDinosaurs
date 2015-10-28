@@ -28,6 +28,7 @@ import javax.ws.rs.container.Suspended;
 import models.EmployeeModel;
 import models.IModel;
 import models.ItemModel;
+import models.ListModel;
 import models.MenuModel;
 import models.OrderModel;
 import models.UserModel;
@@ -99,7 +100,7 @@ public class PizzaService {
     private String doGetOrders() {
         try
         {
-            ObservableList<IModel> model = dataStorage.getOrders();
+            ListModel<IModel> model = dataStorage.getOrders();
             
             if(model.size() <1)
                 return null;
@@ -123,7 +124,7 @@ public class PizzaService {
     private String doGetOrders(@PathParam(value="id") int id) {
         try
         {
-            ObservableList<IModel> model = dataStorage.getOrders(id);
+            ListModel<IModel> model = dataStorage.getOrders(id);
             if(model.size() <1)
                 return null;
             String results = gson.toJson(model);
@@ -205,7 +206,7 @@ public class PizzaService {
         String results = "";
         try
         {
-            ObservableList<IModel> model = dataStorage.getUsers();
+            ListModel<IModel> model = dataStorage.getUsers();
             results = gson.toJson(model);
             
             return results;
@@ -251,7 +252,7 @@ public class PizzaService {
     private String doGetItems() {
         try
         {
-            ObservableList<IModel> model = dataStorage.getItems();
+            ListModel<IModel> model = dataStorage.getItems();
             String results = gson.toJson(model);
             return results;
         }
