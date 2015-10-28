@@ -6,6 +6,7 @@
 package controllers;
 
 import data.IDataSource;
+import models.UserModel;
 
 /**
  *
@@ -16,18 +17,29 @@ public class LoginController extends AbstractController{
     public LoginController()
     {
         super();
+        model = new UserModel();
+    }
+    
+    public void init(IDataSource source)
+    {
+        this.source = source;
+        model.init(source);
     }
     
     @Override
     public void submit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        model.save();
     }
 
     @Override
     public void get() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        model.get();
     }
 
+    public void get(String username, String password){
+        ((UserModel)model).get(username, password);
+    }
+    
     @Override
     public void onClose() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

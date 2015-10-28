@@ -6,9 +6,13 @@
 package models;
 
 import exceptions.LoadException;
+import exceptions.StorageException;
 import java.beans.*;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -125,15 +129,30 @@ public class UserModel extends AbstractModel {
     //</editor-fold>
     
     
-    
     @Override
     public void save() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            source.saveUser(this);
+        }
+        catch(Exception e)
+        {
+            //TODO: Do something here
+            //Eat it.
+        }
     }
 
     @Override
     public void get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            source.getUser(id);
+        }
+        catch(Exception e)
+        {
+            //TODO: Do something here
+            //Eat it.
+        }
     }
 
     @Override
@@ -166,6 +185,19 @@ public class UserModel extends AbstractModel {
     @Override
     public void get() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void get(String username, String password){
+        try {
+            ObservableList<IModel> users = source.getUsers();
+            users.stream().forEach((model) -> {
+                if(((UserModel)model).getUserName().equals(username) &&
+                   ((UserModel)model).getPassword().equals(password))
+                        get(((UserModel)model).getId());
+            });
+        } catch (StorageException ex) {
+           
+        }
     }
     
 }
