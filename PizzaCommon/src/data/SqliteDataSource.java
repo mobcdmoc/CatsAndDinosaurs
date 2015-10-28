@@ -214,15 +214,23 @@ public class SqliteDataSource implements IDataSource{
         
         ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
         
-//        for(IModel model : orders)
-//        {
-//            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-//            itemQuery.append(((OrderModel)model).getId());
-//            itemQuery.append("'");
+        for(IModel model : orders)
+        {
+            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+            itemQuery.append(((OrderModel)model).getId());
+            itemQuery.append("'");
         
-//            ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-//            ((OrderModel)model).setItems(FXCollections.observableArrayList(items));
-//        }
+            ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+            ArrayList<String> itemNames = new ArrayList<>();
+            ArrayList<Integer> itemIds = new ArrayList<>();
+            items.stream().forEach((x) -> 
+            { 
+                itemNames.add(((ItemModel)x).getName()); 
+                itemIds.add((Integer)((ItemModel)x).getId());
+            });
+            ((OrderModel)model).setItems(itemNames);
+            ((OrderModel)model).setItemIds(itemIds);
+        }
         
         return orders;
     }

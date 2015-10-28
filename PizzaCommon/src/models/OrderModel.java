@@ -9,6 +9,7 @@ import enums.OrderStatus;
 import exceptions.LoadException;
 import java.beans.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,8 @@ public class OrderModel extends AbstractModel{
     public static final transient String PROP_USER = "user";
     public static final transient String PROP_STATUS = "status";
     public static final transient String PROP_ITEMS = "items";
+    public static final transient String PROP_ITEMIDS = "itemIds";
+    public static final transient String PROP_ITEMPRICES = "itemPrices";
     public static final transient String PROP_TOTAL = "total";
     public static final transient String PROP_PAYMENTID = "paymentID";
     
@@ -30,6 +33,10 @@ public class OrderModel extends AbstractModel{
     private int status;
     private int paymentID; //int stores the associated payment ID
 
+    private ArrayList<String> items;
+    private ArrayList<Integer> itemIds;
+    private transient ArrayList<Double> itemPrices;
+    
     public int getPaymentID() {
         return paymentID;
     }
@@ -41,12 +48,12 @@ public class OrderModel extends AbstractModel{
         propertySupport.firePropertyChange(PROP_ID, oldValue, id);
     }
     
-    private transient ObservableList<IModel> items;
     
     
     public OrderModel() {
         super();
-        items = FXCollections.observableArrayList();
+        items = new ArrayList<String>();
+        itemIds = new ArrayList<Integer>();
     }
     
     //<editor-fold desc="Id">
@@ -86,28 +93,40 @@ public class OrderModel extends AbstractModel{
     }
     //</editor-fold>
     //<editor-fold desc="Items">
-    public ObservableList<IModel> getItems()
+    public ArrayList<String> getItems()
     {
         return items;
     }
-    public void setItems (ObservableList<IModel> value)
+    public void setItems (ArrayList<String> value)
     {
-        ObservableList<IModel> oldValue = items;
+        ArrayList<String> oldValue = items;
         items = value;
         propertySupport.firePropertyChange(PROP_ITEMS, oldValue, items);
+    }
+    //</editor-fold>
+    //<editor-fold desc="Items">
+    public ArrayList<Integer> getItemIds()
+    {
+        return itemIds;
+    }
+    public void setItemIds (ArrayList<Integer> value)
+    {
+        ArrayList<Integer> oldValue = itemIds;
+        itemIds = value;
+        propertySupport.firePropertyChange(PROP_ITEMS, oldValue, itemIds);
     }
     //</editor-fold>
     //<editor-fold desc="Total">
     public double getTotal()
     {
         double t = 0;
-        for(IModel item : items)
+        for(Double price : itemPrices)
         {
-            t += ((ItemModel)item).getPrice();
-        }
-        
+           t += price;        
+        }    
         return t;
     }
+    
     public void setTotal (double value)
     {
     }
@@ -139,7 +158,11 @@ public class OrderModel extends AbstractModel{
         if(fields.containsKey(PROP_STATUS+"id"))
             setStatus(Integer.parseInt(fields.get(PROP_STATUS+"id").toString()));
         if(fields.containsKey(PROP_PAYMENTID+"id"))
-            setStatus(Integer.parseInt(fields.get(PROP_STATUS+"id").toString()));
+            setStatus(Integer.parseInt(fields.get(PROP_PAYMENTID+"id").toString()));
+//        if(fields.containsKey(PROP_ITEMS))
+//            setStatus(Integer.parseInt(fields.get(PROP_ITEMS).toString()));
+//        if(fields.containsKey(PROP_ITEMIDS))
+//            setStatus(Integer.parseInt(fields.get(PROP_ITEMIDS).toString()));
     }
 
     @Override
