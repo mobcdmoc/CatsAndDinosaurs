@@ -71,12 +71,14 @@ public class PizzaServiceClient implements IDataSource {
     }
 
     @Override
-    public ObservableList<IModel> getUsers() throws ClientErrorException, StorageException {
+    public ListModel<IModel> getUsers() throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Users");
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
         ArrayList<IModel> models = gson.fromJson(resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class), new TypeToken<ArrayList<UserModel>>(){}.getType());
-        return FXCollections.observableArrayList(models);
+        ListModel<IModel> rtn = new ListModel();
+        models.stream().forEach((x) -> {rtn.add(x);});
+        return rtn;
     } 
     
 //    @Override
@@ -95,21 +97,25 @@ public class PizzaServiceClient implements IDataSource {
     }
 
     @Override
-    public ObservableList<IModel> getOrders() throws ClientErrorException, StorageException {
+    public ListModel<IModel> getOrders() throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Orders");
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
         ArrayList<ItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
-        return FXCollections.observableArrayList(models);
+        ListModel<IModel> rtn = new ListModel();
+        models.stream().forEach((x) -> {rtn.add(x);});
+        return rtn;
     }
 
     @Override
-    public ObservableList<IModel> getOrders(int id) throws StorageException {
+    public ListModel<IModel> getOrders(int id) throws StorageException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("Get/Orders/{0}",new Object[] {id}));
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
         ArrayList<ItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
-        return FXCollections.observableArrayList(models);
+        ListModel<IModel> rtn = new ListModel();
+        models.stream().forEach((x) -> {rtn.add(x);});
+        return rtn;
     }
     @Override
     public void saveMenu(IModel requestEntity) throws ClientErrorException, StorageException {
@@ -117,12 +123,14 @@ public class PizzaServiceClient implements IDataSource {
     }
 
     @Override
-    public ObservableList<IModel> getItems() throws ClientErrorException, StorageException {
+    public ListModel<IModel> getItems() throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Items");
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
         ArrayList<ItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<ItemModel>>(){}.getType());
-        return FXCollections.observableArrayList(models);
+        ListModel<IModel> rtn = new ListModel();
+        models.stream().forEach((x) -> {rtn.add(x);});
+        return rtn;
     }
 
     @Override
@@ -136,7 +144,7 @@ public class PizzaServiceClient implements IDataSource {
     @Override
     public MenuModel getMenu() throws ClientErrorException, StorageException {
         
-        ObservableList<IModel> items = getItems();
+        ListModel<IModel> items = getItems();
         MenuModel rtn = new MenuModel();
         rtn.setItems(items);
         return rtn;

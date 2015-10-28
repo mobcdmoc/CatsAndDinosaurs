@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javafx.collections.ObservableList;
 import models.IModel;
+import models.ListModel;
 
 /**
  *
@@ -20,14 +21,14 @@ public interface IDataSource {
     void load() throws LoadException;
     
     IModel getItem(int id) throws StorageException;
-    ObservableList<IModel> getItems() throws StorageException;
+    ListModel<IModel> getItems() throws StorageException;
     IModel getMenu() throws StorageException;
     IModel getOrder(int id) throws StorageException;
-    ObservableList<IModel> getOrders(int id) throws StorageException;
-    ObservableList<IModel> getOrders() throws StorageException;//returns only active orders
+    ListModel<IModel> getOrders(int id) throws StorageException;
+    ListModel<IModel> getOrders() throws StorageException;//returns only active orders
     IModel getUser(int id) throws StorageException;
     IModel getUser(String userName, String password) throws StorageException;
-    ObservableList<IModel> getUsers() throws StorageException;
+    ListModel<IModel> getUsers() throws StorageException;
 //    ObservableList<IModel> getOrderItems() throws StorageException;
     void saveUser(IModel model) throws StorageException;
     void saveItem(IModel model)throws StorageException;

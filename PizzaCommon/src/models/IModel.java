@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public interface IModel {
     public void save();
-    public void get(int id);
+    public void getById(int id);
     public void get();
     public void init(IDataSource source);
     /*

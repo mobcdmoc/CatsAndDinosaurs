@@ -25,6 +25,7 @@ public class ItemModel extends AbstractModel {
     
     public static final transient String PROP_SPECIALPRICE = "SpecialPrice";
     public static final transient String PROP_ISSPECIAL = "IsSpecial";
+    public static final transient String PROP_ISACTIVE = "IsSpecial";
     
     private int id;
     private String name;
@@ -33,7 +34,7 @@ public class ItemModel extends AbstractModel {
     private int type;
     private double specialPrice;
     private boolean isSpecial;
-    
+    private boolean isActive;
     public ItemModel() {
         super();
     }
@@ -43,7 +44,7 @@ public class ItemModel extends AbstractModel {
     }
     //<editor-fold desc="id">
     public int getId()
-    {
+    {   
         return id;
     }
     public void setId(int value)
@@ -127,7 +128,18 @@ public class ItemModel extends AbstractModel {
         propertySupport.firePropertyChange(PROP_ISSPECIAL, oldValue, isSpecial);
     }
     //</editor-fold>
-    
+    //<editor-fold desc="IsActive">
+    public boolean getIsActive()
+    {
+        return isActive;
+    }
+    public void setIsActive(boolean value)
+    {
+        boolean oldValue = isActive;
+        isActive = value;
+        propertySupport.firePropertyChange(PROP_ISACTIVE, oldValue, isActive);
+    }
+    //</editor-fold>
     @Override
     public void save() {
         try
@@ -142,7 +154,7 @@ public class ItemModel extends AbstractModel {
     }
 
     @Override
-    public void get(int id) {
+    public void getById(int id) {
         try
         {
             source.getItem(id);
@@ -182,13 +194,14 @@ public class ItemModel extends AbstractModel {
             setType(Integer.parseInt(fields.get(PROP_TYPE).toString()));
         if(fields.containsKey(PROP_SPECIALPRICE))
             setSpecialPrice(Double.parseDouble(fields.get(PROP_SPECIALPRICE).toString()));
-        if(fields.containsKey(PROP_TYPE))
-            setIsSpecial(Boolean.parseBoolean(fields.get(PROP_TYPE).toString()));
+        if(fields.containsKey(PROP_ISSPECIAL))
+            setIsSpecial(Boolean.parseBoolean(fields.get(PROP_ISSPECIAL).toString()));
+        if(fields.containsKey(PROP_ISACTIVE))
+            setIsSpecial(Boolean.parseBoolean(fields.get(PROP_ISACTIVE).toString()));
     }
 
     @Override
     public void get() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

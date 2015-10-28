@@ -14,6 +14,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.MessageFormat;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,10 +89,10 @@ public class SqliteDataSource implements IDataSource{
             throw new StorageException("Something went horribly wrong!");
         }
     }
-    private <K extends AbstractModel> ObservableList<IModel> executeQueryMultiple (Class<K> modelClass, String query) throws StorageException
+    private <K extends AbstractModel> ListModel<IModel> executeQueryMultiple (Class<K> modelClass, String query) throws StorageException
     {
         try (Statement cmd = connection.createStatement()) {
-            ObservableList<IModel> rtn = FXCollections.observableArrayList();
+            ListModel<IModel> rtn = new ListModel();
             
             ResultSet results = cmd.executeQuery(query);
             while(results.next())
@@ -163,15 +164,15 @@ public class SqliteDataSource implements IDataSource{
     {
         StringBuilder query = new StringBuilder("SELECT * FROM Items WHERE Id = '");
         query.append(id);
-        query.append("'");
+        query.append("' AND IsActive = 'true'");
         IModel rtn = executeQuery(ItemModel.class,query.toString());
         return rtn;
     }
     
     @Override
-    public ObservableList<IModel> getItems() throws StorageException{
+    public ListModel<IModel> getItems() throws StorageException{
         String query = "SELECT * FROM Items";
-        ObservableList<IModel> rtn = FXCollections.observableArrayList(executeQueryMultiple(ItemModel.class, query));
+        ListModel<IModel> rtn = executeQueryMultiple(ItemModel.class, query);
         return rtn;
     }
     
@@ -179,9 +180,9 @@ public class SqliteDataSource implements IDataSource{
     public IModel getMenu() throws StorageException {
         String query = "SELECT * FROM Items WHERE Type > 3";
         
-        ObservableList<IModel> items = executeQueryMultiple(ItemModel.class, query);
+        ListModel<IModel> items = executeQueryMultiple(ItemModel.class, query);
         IModel rtn = new MenuModel();
-        ((MenuModel)rtn).setItems(FXCollections.observableArrayList(items));
+        ((MenuModel)rtn).setItems(items);
         
         return rtn;
     }
@@ -207,10 +208,10 @@ public class SqliteDataSource implements IDataSource{
         return rtn;
     }
     @Override
-    public ObservableList<IModel> getOrders() throws StorageException {
+    public ListModel<IModel> getOrders() throws StorageException {
         String query = "SELECT * FROM Orders";
         
-        ObservableList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
+        ListModel<IModel> orders = executeQueryMultiple(OrderModel.class, query);
         
 //        for(IModel model : orders)
 //        {
@@ -226,12 +227,12 @@ public class SqliteDataSource implements IDataSource{
     }
 
     @Override
-    public ObservableList<IModel> getOrders(int id) throws StorageException {
+    public ListModel<IModel> getOrders(int id) throws StorageException {
         StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE UserId = '");
         query.append(id);
         query.append("'");
         
-        ObservableList<IModel> orders = executeQueryMultiple(OrderModel.class, query.toString());
+        ListModel<IModel> orders = executeQueryMultiple(OrderModel.class, query.toString());
         
 //        for(IModel model : orders)
 //        {
@@ -247,10 +248,10 @@ public class SqliteDataSource implements IDataSource{
     }
 
     @Override
-    public ObservableList<IModel> getUsers() throws StorageException {
+    public ListModel<IModel> getUsers() throws StorageException {
         String query = "SELECT * FROM Users";
         
-        ObservableList<IModel> rtn = executeQueryMultiple(UserModel.class, query);
+        ListModel<IModel> rtn = executeQueryMultiple(UserModel.class, query);
         return rtn;
     }
     
@@ -320,9 +321,11 @@ public class SqliteDataSource implements IDataSource{
     @Override
     public void saveMenu(IModel model) throws StorageException {
         MenuModel m = (MenuModel)model;
-        for(IModel item : m.getItems())
+        
+        for(int i = 0; i< m.getItems().getSize(); i++)
         {
-            saveItem(item);
+            IModel n = (IModel)m.getItems().get(i);
+            saveItem(n);
         }
     }
 

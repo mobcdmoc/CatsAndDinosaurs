@@ -79,7 +79,7 @@ public class PaymentModel extends AbstractModel {
     }
 
     @Override
-    public void get(int id) {
+    public void getById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
