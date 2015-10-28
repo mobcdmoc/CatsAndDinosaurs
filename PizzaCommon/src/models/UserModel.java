@@ -9,6 +9,7 @@ import exceptions.LoadException;
 import exceptions.StorageException;
 import java.beans.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -138,7 +139,7 @@ public class UserModel extends AbstractModel {
         catch(Exception e)
         {
             //TODO: Do something here
-            //Eat it.
+            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -151,7 +152,7 @@ public class UserModel extends AbstractModel {
         catch(Exception e)
         {
             //TODO: Do something here
-            //Eat it.
+            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -189,7 +190,7 @@ public class UserModel extends AbstractModel {
     
     public void get(String username, String password){
         try {
-            ListModel<IModel> users = source.getUsers();
+            ArrayList<IModel> users = source.getUsers();
             users.stream().forEach((model) -> {
                 if(((UserModel)model).getUserName().equals(username) &&
                    ((UserModel)model).getPassword().equals(password))

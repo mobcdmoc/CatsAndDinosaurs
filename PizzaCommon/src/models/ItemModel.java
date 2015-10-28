@@ -11,6 +11,8 @@ import exceptions.LoadException;
 import java.beans.*;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,9 +25,9 @@ public class ItemModel extends AbstractModel {
     public static final transient String PROP_PRICE = "price";
     public static final transient String PROP_TYPE = "type";
     
-    public static final transient String PROP_SPECIALPRICE = "SpecialPrice";
-    public static final transient String PROP_ISSPECIAL = "IsSpecial";
-    public static final transient String PROP_ISACTIVE = "IsSpecial";
+    public static final transient String PROP_SPECIALPRICE = "specialPrice";
+    public static final transient String PROP_ISSPECIAL = "isSpecial";
+    public static final transient String PROP_ISACTIVE = "isActive";
     
     private int id;
     private String name;
@@ -149,7 +151,8 @@ public class ItemModel extends AbstractModel {
         catch(Exception e)
         {
             //TODO: Do something here
-            //Eat it.
+            
+            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -162,7 +165,7 @@ public class ItemModel extends AbstractModel {
         catch(Exception e)
         {
             //TODO: Do something here
-            //Eat it.
+            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -192,12 +195,12 @@ public class ItemModel extends AbstractModel {
             setPrice(Double.parseDouble(fields.get(PROP_PRICE).toString()));
         if(fields.containsKey(PROP_TYPE))
             setType(Integer.parseInt(fields.get(PROP_TYPE).toString()));
-        if(fields.containsKey(PROP_SPECIALPRICE))
-            setSpecialPrice(Double.parseDouble(fields.get(PROP_SPECIALPRICE).toString()));
-        if(fields.containsKey(PROP_ISSPECIAL))
-            setIsSpecial(Boolean.parseBoolean(fields.get(PROP_ISSPECIAL).toString()));
-        if(fields.containsKey(PROP_ISACTIVE))
-            setIsSpecial(Boolean.parseBoolean(fields.get(PROP_ISACTIVE).toString()));
+        if(fields.containsKey(PROP_SPECIALPRICE.toLowerCase()))
+            setSpecialPrice(Double.parseDouble(fields.get(PROP_SPECIALPRICE.toLowerCase()).toString()));
+        if(fields.containsKey(PROP_ISSPECIAL.toLowerCase()))
+            setIsSpecial(Boolean.parseBoolean(fields.get(PROP_ISSPECIAL.toLowerCase()).toString()));
+        if(fields.containsKey(PROP_ISACTIVE.toLowerCase()))
+            setIsActive(Boolean.parseBoolean(fields.get(PROP_ISACTIVE.toLowerCase()).toString()));
     }
 
     @Override
