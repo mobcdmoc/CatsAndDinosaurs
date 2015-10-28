@@ -22,14 +22,14 @@ public class MenuModel extends AbstractModel {
     public static final String PROP_ITEMS = "items";
     private ArrayList<IModel> items;
     
-    private DefaultListModel combined;
-    private ArrayList<Integer> ids = new ArrayList<>();
-    private DefaultListModel<String> names;
-    private DefaultListModel<Double> prices;
-    private DefaultListModel<Double> specialPrice;
-    private DefaultListModel<Boolean> isSpecial;
-    private ArrayList<Boolean> isActive = new ArrayList<>();
-    private ArrayList<Boolean> updated = new ArrayList<>();
+    private transient DefaultListModel combined;
+    private transient ArrayList<Integer> ids = new ArrayList<>();
+    private transient DefaultListModel<String> names;
+    private transient DefaultListModel<Double> prices;
+    private transient DefaultListModel<Double> specialPrice;
+    private transient DefaultListModel<Boolean> isSpecial;
+    private transient ArrayList<Boolean> isActive = new ArrayList<>();
+    private transient  ArrayList<Boolean> updated = new ArrayList<>();
     
     
     public MenuModel() {
