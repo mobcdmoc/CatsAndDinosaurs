@@ -56,7 +56,7 @@ public class MenuModel extends AbstractModel {
     }
 
     @Override
-    public IModel get(int id) {
+    public void get(int id) {
         ObservableList<IModel> i;
         try {
             i = source.getItems();
@@ -65,8 +65,6 @@ public class MenuModel extends AbstractModel {
             Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-        
-        return this;
     }
 
     @Override
@@ -76,7 +74,7 @@ public class MenuModel extends AbstractModel {
     }
 
     @Override
-    public IModel get() {
+    public void get() {
         try
         {
             ObservableList<IModel> i = source.getItems();
@@ -85,12 +83,10 @@ public class MenuModel extends AbstractModel {
                 items.add(model);
             });
             
-            return this;
         }
         catch(StorageException e)
         {
             //eat it
         }
-        return null;
     }
 }

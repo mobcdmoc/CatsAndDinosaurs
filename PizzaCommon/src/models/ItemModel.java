@@ -142,17 +142,16 @@ public class ItemModel extends AbstractModel {
     }
 
     @Override
-    public IModel get(int id) {
+    public void get(int id) {
         try
         {
-            return source.getItem(id);
+            source.getItem(id);
         }
         catch(Exception e)
         {
             //TODO: Do something here
             //Eat it.
         }
-        return null;
     }
 
     @Override
@@ -188,7 +187,7 @@ public class ItemModel extends AbstractModel {
     }
 
     @Override
-    public IModel get() {
+    public void get() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

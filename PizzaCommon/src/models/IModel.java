@@ -15,8 +15,8 @@ import java.util.HashMap;
  */
 public interface IModel {
     public void save();
-    public IModel get(int id);
-    public IModel get();
+    public void get(int id);
+    public void get();
     public void init(IDataSource source);
     /*
     The load method takes a hashmap of string object and 

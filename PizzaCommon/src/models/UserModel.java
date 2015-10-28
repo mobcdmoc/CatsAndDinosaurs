@@ -132,7 +132,7 @@ public class UserModel extends AbstractModel {
     }
 
     @Override
-    public IModel get(int id) {
+    public void get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -164,7 +164,7 @@ public class UserModel extends AbstractModel {
     }
 
     @Override
-    public IModel get() {
+    public void get() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
