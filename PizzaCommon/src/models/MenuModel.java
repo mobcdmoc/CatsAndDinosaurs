@@ -123,13 +123,11 @@ public class MenuModel extends AbstractModel {
         
         for(int i = 0; i < ids.size(); i++)
         {
-            
+            ItemModel m;
             if(ids.get(i) != 0)
             {
                 //already exists
-//                ItemModel m = ((ItemModel)items.get(i)).getId();
-//                
-//                continue;
+//                m = ((ItemModel)items.get(i)).getId();
             }
         }
     }

@@ -67,6 +67,12 @@ public class PizzaServiceClient implements IDataSource {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("Get/User/{0}/{1}", new Object[]{username, password}));
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+        if(json == null)
+        {
+            UserModel m = new UserModel();
+            m.setId(-1);
+            return m;
+        }
         return gson.fromJson(json, UserModel.class);
     }
 
