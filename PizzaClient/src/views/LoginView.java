@@ -5,7 +5,10 @@
  */
 package views;
 
+import controllers.LoginController;
 import controllers.ViewController;
+import data.IDataSource;
+import data.PizzaServiceClient;
 
 /**
  *
@@ -18,9 +21,12 @@ public class LoginView extends javax.swing.JPanel {
      */
     
     ViewController vc = new ViewController();
+    private controllers.LoginController controller;
+    private IDataSource source;
     
     public LoginView() {
         initComponents();
+        initCustom();
     }
 
     /**
@@ -107,10 +113,19 @@ public class LoginView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initCustom()
+    {
+        source = new PizzaServiceClient();
+        controller = new LoginController();
+        controller.init(source);
+        //controller.get();
+    }
+    
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
         String usrStr = username.getText();
         String psswrdStr = password.getText();
+        controller.get(usrStr,psswrdStr);
         vc.showMainView();
     }//GEN-LAST:event_submitActionPerformed
 

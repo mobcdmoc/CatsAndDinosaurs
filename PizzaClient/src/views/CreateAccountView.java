@@ -5,7 +5,10 @@
  */
 package views;
 
+import controllers.CreateAccountController;
 import controllers.ViewController;
+import data.IDataSource;
+import data.PizzaServiceClient;
 
 /**
  *
@@ -14,9 +17,12 @@ import controllers.ViewController;
 public class CreateAccountView extends javax.swing.JPanel {
     
     private static ViewController vc = new ViewController();
-
+    private controllers.CreateAccountController controller;
+    private IDataSource source;
+    
     public CreateAccountView() {
         initComponents();
+        initCustom();
     }
 
 
@@ -38,7 +44,7 @@ public class CreateAccountView extends javax.swing.JPanel {
         cancelButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         lastNameField = new javax.swing.JTextField();
-        emailField = new javax.swing.JTextField();
+        userNameField = new javax.swing.JTextField();
         lastNameLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
 
@@ -47,6 +53,11 @@ public class CreateAccountView extends javax.swing.JPanel {
         passwordLabel.setText("Password:");
 
         submitButton.setText("Submit");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,7 +86,7 @@ public class CreateAccountView extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(submitButton))
                     .addComponent(firstNameField, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(emailField)
+                    .addComponent(userNameField)
                     .addComponent(lastNameField)
                     .addComponent(passwordField)
                     .addGroup(layout.createSequentialGroup()
@@ -107,7 +118,7 @@ public class CreateAccountView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(emailLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -120,15 +131,29 @@ public class CreateAccountView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void initCustom(){
+        source = new PizzaServiceClient();
+        controller = new CreateAccountController();
+        controller.init(source);
+        //controller.get();
+    }
+    
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
         vc.showMainView();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        controller.submit(userNameField.getText(),passwordField.getText(),firstNameField.getText(),lastNameField.getText());
+        
+        
+        
+        vc.showMainView();
+    }//GEN-LAST:event_submitButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
-    private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel firstNameLabel;
@@ -138,5 +163,6 @@ public class CreateAccountView extends javax.swing.JPanel {
     private javax.swing.JTextField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JButton submitButton;
+    private javax.swing.JTextField userNameField;
     // End of variables declaration//GEN-END:variables
 }
