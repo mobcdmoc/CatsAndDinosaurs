@@ -1,0 +1,20 @@
+UNIT TEST CASES
+
+User Action: Run JUnit Test Suite
+
+UserModel:
+UserModelCtor : Tests correct usage of Constructor. PostCondition: A new UserModel is created. Priority: Medium. Cleanup: N/A.
+UserModelGetId: Tests correct usage of getId method. PostCondition: A new UserModel is created with a default ID of 0. Priority: Medium. Cleanup: N/A.
+UserModelSetId: Tests correct usage of setId method. PostCondition: A new UserModel is created, the ID is set to 3, and an ID of 3 is returned. Priority: Medium. Cleanup: N/A.
+UserModelGetUserName: Tests correct usage of getUserName method. PostCondition: A new UserModel is created with a default UserName of null. Priority: Medium. Cleanup: N/A.
+UserModelSetUserName: Tests correct usage of setUserName method. PostCondition: A new UserModel is created, the UserName is set to "uname", and the same UserName of "uname" is returned. Priority: Medium. Cleanup: N/A.
+UserModelGetFirstName: Tests correct usage of getFirstName method. PostCondition: A new UserModel is created with a default FirstName of null. Priority: Medium. Cleanup: N/A.
+UserModelSetFirstName: Tests correct usage of setFirstName method. PostCondition: A new UserModel is created, the FirstName is set to "Tom", and the same FirstName of "Tom" is returned. Priority: Medium. Cleanup: N/A.
+UserModelGetMiddleName: Tests correct usage of getMiddleName method. PostCondition: A new UserModel is created with a default MiddleName of null. Priority: Medium. Cleanup: N/A.
+UserModelSetMiddleName: Tests correct usage of setMiddleName method. PostCondition: A new UserModel is created, the MiddleName is set to "Fing", and the same MiddleName of "Fing" is returned. Priority: Medium. Cleanup: N/A.
+UserModelGetLastName: Tests correct usage of getLastName method. PostCondition: A new UserModel is created with a default LastName of null. Priority: Medium. Cleanup: N/A.
+UserModelSetLastName: Tests correct usage of setLastName method. PostCondition: A new UserModel is created, the LastName is set to "Brady", and the same LastName of "Brady" is returned. Priority: Medium. Cleanup: N/A.
+UserModelGetAddress: Tests correct usage of getAddress method. PostCondition: A new UserModel is created with a default address of 0. Priority: Medium. Cleanup: N/A.
+UserModelSetAddress: Tests correct usage of setAddress method. PostCondition: A new UserModel is created, the address is set to 315, and an address of 315 is returned. Priority: Medium. Cleanup: N/A.
+UserModelGetAuthLevel: Tests correct usage of getAuthLevel method. PostCondition: A new UserModel is created with a default authLevel of 0. Priority: Medium. Cleanup: N/A.
+UserModelSetAuthLevel: Tests correct usage of setAuthLevel method. PostCondition: A new UserModel is created, the authLevel is set to 2, and an authLevel of 2 is returned. Priority: Medium. Cleanup: N/A.
