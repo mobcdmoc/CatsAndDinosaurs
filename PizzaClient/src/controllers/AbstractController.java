@@ -27,8 +27,17 @@ public abstract class AbstractController implements IController, Serializable
     
     protected IDataSource source;
     
-    public AbstractController(IDataSource source) {
+    public AbstractController()
+    {
         propertySupport = new PropertyChangeSupport(this);
+    }
+    
+//    public AbstractController(IDataSource source) {
+//        this();
+//        this.source = source;
+//    }
+    public void init(IDataSource source)
+    {
         this.source = source;
     }
     

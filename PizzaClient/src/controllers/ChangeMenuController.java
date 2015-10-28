@@ -6,6 +6,7 @@
 package controllers;
 
 import data.IDataSource;
+import models.MenuModel;
 
 /**
  *
@@ -13,19 +14,30 @@ import data.IDataSource;
  */
 public class ChangeMenuController extends AbstractController{
 
-    public ChangeMenuController(IDataSource source)
+    public ChangeMenuController()
     {
-        super(source);
+        super();
+        model = new MenuModel();
+    }
+    
+    public void init(IDataSource source)
+    {
+        this.source = source;
+        model.init(source);
+    }
+    public void load()
+    {
+        
     }
     
     @Override
     public void submit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        model.save();
     }
 
     @Override
     public void get() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        model.get();
     }
 
     @Override

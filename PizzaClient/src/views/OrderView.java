@@ -158,7 +158,8 @@ public class OrderView extends javax.swing.JPanel {
 
     public void initCustom(JFrame parent, IDataSource client)
     {
-        controller = new OrderController(client);
+        controller = new OrderController();
+        controller.init(client);
         this.parent = parent;
     }
     

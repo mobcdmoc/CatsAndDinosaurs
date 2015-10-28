@@ -14,8 +14,8 @@ import java.io.Serializable;
  * @author Jacob
  */
 public class EmployeeManagerController extends AbstractController {
-    public EmployeeManagerController(IDataSource source) {
-        super(source);
+    public EmployeeManagerController() {
+        super();
     }
     
     @Override

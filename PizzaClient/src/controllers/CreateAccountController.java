@@ -13,9 +13,9 @@ import data.IDataSource;
  */
 public class CreateAccountController extends AbstractController{
 
-    public CreateAccountController(IDataSource source)
+    public CreateAccountController()
     {
-        super(source);
+        super();
     }
     
     @Override

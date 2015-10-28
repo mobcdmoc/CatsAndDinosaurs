@@ -6,6 +6,8 @@
 package views;
 
 import controllers.ViewController;
+import data.IDataSource;
+import data.PizzaServiceClient;
 
 /**
  *
@@ -14,11 +16,13 @@ import controllers.ViewController;
 public class ChangeMenuView extends javax.swing.JPanel {
 
     ViewController vc = new ViewController();
+    private IDataSource source;
     /**
      * Creates new form ChangeMenuView
      */
     public ChangeMenuView() {
         initComponents();
+        initCustom();
     }
 
     /**
@@ -30,6 +34,7 @@ public class ChangeMenuView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        controller = new controllers.ChangeMenuController();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -123,13 +128,12 @@ public class ChangeMenuView extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(specialButton)
                         .addGap(34, 34, 34))))
         );
@@ -177,8 +181,16 @@ public class ChangeMenuView extends javax.swing.JPanel {
     }//GEN-LAST:event_doneActionPerformed
 
 
+    
+    private void initCustom()
+    {
+        source = new PizzaServiceClient();
+        controller.init(source);
+        controller.get();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addItemButton;
+    private controllers.ChangeMenuController controller;
     private javax.swing.JButton done;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;

@@ -13,9 +13,9 @@ import data.IDataSource;
  */
 public class PaymentController extends AbstractController {
 
-    public PaymentController(IDataSource source)
+    public PaymentController()
     {
-        super(source);
+        super();
     }
     
     @Override

@@ -13,8 +13,8 @@ import java.beans.*;
  * @author Jacob
  */
 public class MainController extends AbstractController {
-    public MainController(IDataSource source) {
-        super(source);
+    public MainController() {
+        super();
     }
     
     @Override

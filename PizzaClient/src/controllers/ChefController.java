@@ -13,9 +13,9 @@ import data.IDataSource;
  */
 public class ChefController extends AbstractController{
 
-    public ChefController(IDataSource source)
+    public ChefController()
     {
-        super(source);
+        super();
     }
     @Override
     public void submit() {

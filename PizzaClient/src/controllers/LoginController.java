@@ -13,9 +13,9 @@ import data.IDataSource;
  */
 public class LoginController extends AbstractController{
 
-    public LoginController(IDataSource source)
+    public LoginController()
     {
-        super(source);
+        super();
     }
     
     @Override

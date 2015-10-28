@@ -33,13 +33,9 @@ public class OrderController extends AbstractController {
     
     public OrderController()
     {
-        super(null);
-    }
-    public OrderController(IDataSource source)
-    {
-       super(source);
-       menu = new MenuModel(source);
-       menu = menu.get();
+        super();
+//        menu = new MenuModel(source);
+//        menu = menu.get();
     }
     
     @Override

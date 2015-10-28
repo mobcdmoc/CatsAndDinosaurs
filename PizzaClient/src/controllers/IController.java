@@ -5,6 +5,8 @@
  */
 package controllers;
 
+import data.IDataSource;
+
 /**
  *
  * @author Jacob
@@ -16,7 +18,9 @@ public interface IController {
     void get();
     //should be run onclose
     void onClose();
-    
+    //Initializes the controller
+    void init(IDataSource source);
+   
     /*
     The run command method is ment to handle requests that may not be a part 
     of all controllers, this would be something such as an add or remove.
