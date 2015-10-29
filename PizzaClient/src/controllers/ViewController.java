@@ -15,6 +15,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import models.IModel;
 import models.ItemModel;
+import models.OrderModel;
 import models.UserModel;
 import views.*;
 
@@ -23,7 +24,13 @@ public class ViewController extends AbstractController{
 	JFrame frame;
 	
         private IDataSource source;
-        private DefaultListModel<String> menu;
+        
+        private IModel orderModel;
+
+        private  DefaultListModel<String> menu;
+        
+        
+        
         public ViewController()
         {
             super();
@@ -54,7 +61,15 @@ public class ViewController extends AbstractController{
             menu = menuListModel;
             displayMenu();
 	}
-        
+        public  DefaultListModel getMenu()
+        {
+            return menu;
+        }
+                
+        public void setOrderModel(IModel model)
+        {
+            orderModel = model;
+        }
 	public void showMainView(){
 		frame.setContentPane(new MainView());
 		refreshView(frame);
@@ -76,7 +91,7 @@ public class ViewController extends AbstractController{
         }
         
         public void showOrderView(){
-            OrderView ov = new OrderView(this);
+            OrderView ov = new OrderView(source,this);
             
             //String[] menArr = {"Pizza", "Soda", "Breadsticks"};
 //            String[] ordArr = {"Soda"};

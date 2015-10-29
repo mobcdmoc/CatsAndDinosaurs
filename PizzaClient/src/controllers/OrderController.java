@@ -6,6 +6,10 @@
 package controllers;
 
 import data.IDataSource;
+import exceptions.StorageException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import models.IModel;
 import models.MenuModel;
 import models.OrderModel;
@@ -30,12 +34,30 @@ public class OrderController extends AbstractController {
         menu = value;
         propertySupport.firePropertyChange(PROP_MENU, oldValue, menu);
     }
+    public void init(DefaultListModel menu, DefaultListModel order)
+    {
+        
+        try {
+            ((OrderModel)model).init(source, menu, order);
+        } catch (StorageException ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void addItems(int[] indices)
+    {
+        ((OrderModel)model).addItems(indices);
+    }
+    public void removeItems(int[] indices)
+    {
+        ((OrderModel)model).removeItems(indices);
+    }
     
     public OrderController()
     {
         super();
-//        menu = new MenuModel(source);
-//        menu = menu.get();
+        model = new OrderModel();
     }
     
     @Override
