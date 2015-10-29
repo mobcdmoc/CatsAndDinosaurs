@@ -29,12 +29,12 @@ public class ViewController extends AbstractController{
 
         private  DefaultListModel<String> menu;
         
-        
-        
         public ViewController()
         {
             super();
             model = new UserModel();
+            ((UserModel)model).setUserName("Guest");
+            ((UserModel)model).setAuthLevel(5);
             frame = MainWindow.getFrame();
             try
             {
@@ -144,6 +144,10 @@ public class ViewController extends AbstractController{
             f.setVisible(true);
         }
 
+        public void updateUser(UserModel newUser){
+            model = newUser;
+        }
+        
     @Override
     public void submit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

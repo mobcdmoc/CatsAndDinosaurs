@@ -138,8 +138,9 @@ public class LoginView extends javax.swing.JPanel {
         // TODO add your handling code here:
         //String usrStr = username.getText();
         //String psswrdStr = password.getText();
-        //user = controller.get(usrStr,psswrdStr);
-        //vc.updateUser(user);
+        controller.get();
+        UserModel newUser = controller.getUser();
+        vc.updateUser(newUser);
         vc.showMainView();
     }//GEN-LAST:event_submitActionPerformed
 
