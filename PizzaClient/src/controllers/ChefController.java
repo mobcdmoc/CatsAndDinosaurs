@@ -23,8 +23,10 @@ import models.OrderModel;
  */
 public class ChefController extends AbstractController{
 
-    ArrayList<IModel> orders = new ArrayList<IModel>();
-    ArrayList<OrderModel> sd = new ArrayList<OrderModel>();
+    private ArrayList<IModel> orders = new ArrayList<IModel>();
+    private ArrayList<OrderModel> sd = new ArrayList<OrderModel>();
+    private ArrayList<OrderModel> removed = new ArrayList<OrderModel>();
+    private DefaultListModel<String> orderElements;
     
     public ChefController(IDataSource source)
     {
@@ -38,12 +40,19 @@ public class ChefController extends AbstractController{
         catch(Exception e){
             e.printStackTrace(System.out);
         }
+        
+        if (orders == null)
+            orders = new ArrayList<IModel>();
+        else{
+            orders.stream().forEach((O)-> {O.init(source);});
+        }
     }
     
     public void init(DefaultListModel ordersList){
         //items.stream().forEach((x) -> { menu.addElement(((ItemModel)x).getName());});
 
         String orderString = "";
+        orderElements = ordersList;
         
         for(IModel im : orders){
             OrderModel om = (OrderModel)im;
@@ -62,7 +71,7 @@ public class ChefController extends AbstractController{
                 orderString += str + " | ";
             }
             
-            ordersList.addElement(orderString);
+            orderElements.addElement(orderString);
         }
     }
     
@@ -72,14 +81,18 @@ public class ChefController extends AbstractController{
             for (int i : toRemove){
                 OrderModel om = sd.get(i);
                 om.setStatus(4);
-                om.save();
+                removed.add(om);
+                sd.remove(om);
+                orderElements.remove(i);
             }
         }
     }
     
     @Override
     public void submit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(OrderModel ty : removed){
+            ty.save();
+        }
     }
 
     @Override
