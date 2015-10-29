@@ -90,5 +90,10 @@ public class TestIDataSource implements IDataSource {
     public void saveOrder(IModel model) throws StorageException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void savePayment(IModel model) throws StorageException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

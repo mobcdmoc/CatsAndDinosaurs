@@ -46,7 +46,7 @@ public class PaymentModelTest {
      */
     @Test
     public void PaymentModelGetId() {
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         assertEquals(0,m.getId());
     }
@@ -56,7 +56,7 @@ public class PaymentModelTest {
      */
     @Test
     public void PaymentModelSetId() {
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         assertEquals(0,m.getId());
         m.setId(3);
@@ -68,7 +68,7 @@ public class PaymentModelTest {
      */
     @Test
     public void PaymentModelGetType() {
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         assertEquals(null,m.getType());
     }
@@ -79,7 +79,7 @@ public class PaymentModelTest {
     @Test
     public void PaymentModelSetType() {
         PaymentType type = null;
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         m.setType(type);
         assertEquals(type,m.getType());
@@ -90,7 +90,7 @@ public class PaymentModelTest {
      */
     @Test
     public void PaymentModelIsApproved() {
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         assertEquals(false,m.isApproved());
     }
@@ -101,7 +101,7 @@ public class PaymentModelTest {
     @Test
     public void PaymentModelSetApproved() {
         boolean approved = true;
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         m.setApproved(approved);
         assertEquals(approved,m.isApproved());
@@ -112,7 +112,7 @@ public class PaymentModelTest {
      */
     @Test
     public void PaymentModelGetTotal() {
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         double val = 0.0;
         assertEquals(val,m.getTotal(),0.0);
@@ -124,7 +124,7 @@ public class PaymentModelTest {
     @Test
     public void PaymentModelSetTotal() {
         double total = 0.0;
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         m.setTotal(total);
         assertEquals(total,m.getTotal(),0.0);
@@ -135,7 +135,7 @@ public class PaymentModelTest {
      */
     @Test
     public void PaymentModelSave() {
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         m.init(new TestIDataSource());
         m.save();
@@ -147,7 +147,7 @@ public class PaymentModelTest {
     @Test
     public void PaymentModelGetById() {
         int id = 0;
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         m.getById(id);
     }
@@ -158,7 +158,7 @@ public class PaymentModelTest {
     @Test
     public void PaymentModelLoad() throws Exception {
         HashMap<String, Object> fields = null;
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         m.load(fields);
     }
@@ -168,7 +168,7 @@ public class PaymentModelTest {
      */
     @Test
     public void PaymentModelGet() {
-        PaymentModel m = new PaymentModel();
+        PaymentModel m = new PaymentModel(null);
         assertNotNull(m);
         m.get();
     }

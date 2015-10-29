@@ -175,4 +175,9 @@ public class PizzaServiceClient implements IDataSource {
 //        return model;
 //    }
 
+    @Override
+    public void savePayment(IModel requestEntity) throws ClientErrorException, StorageException {
+        webTarget.path("Save/Payment").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+    }
+
 }

@@ -34,4 +34,5 @@ public interface IDataSource {
     void saveItem(IModel model)throws StorageException;
     void saveMenu(IModel model)throws StorageException;
     void saveOrder(IModel model)throws StorageException;
+    void savePayment(IModel model) throws StorageException;
 }
