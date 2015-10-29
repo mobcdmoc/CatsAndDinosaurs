@@ -60,7 +60,7 @@ public class PaymentView extends javax.swing.JPanel {
         expMonth = new javax.swing.JTextField();
         expYear = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        secCode = new javax.swing.JTextField();
         paymentType = new javax.swing.JComboBox();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
@@ -105,7 +105,7 @@ public class PaymentView extends javax.swing.JPanel {
 
         jLabel11.setText("Security Code:");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.sec}"), jTextField3, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.sec}"), secCode, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         paymentType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cash", "Credit Card" }));
@@ -142,7 +142,7 @@ public class PaymentView extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(secCode, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -215,7 +215,7 @@ public class PaymentView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(secCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
@@ -228,8 +228,23 @@ public class PaymentView extends javax.swing.JPanel {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         
+        if(cardNameField.getText().trim().equals(""))
+            return;
         //gather info, and send to service.
-        
+        try
+        {
+            Integer tmp = 0;
+            tmp = Integer.parseInt(cardNumberField.getText());
+            tmp = Integer.parseInt(expDay.getText());
+            tmp = Integer.parseInt(expMonth.getText());
+            tmp = Integer.parseInt(expYear.getText());
+            tmp = Integer.parseInt(secCode.getText());
+        }
+        catch(Exception e)
+        {
+            //Eat it. this i gross but in the interest of time it works
+            return;
+        }
         controller.submit();
         vc.setOrderModel(null);
         vc.showMainView();
@@ -264,9 +279,9 @@ public class PaymentView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private controllers.PaymentController paymentController1;
     private javax.swing.JComboBox paymentType;
+    private javax.swing.JTextField secCode;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel totalDue;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
