@@ -147,7 +147,17 @@ public class UserModel extends AbstractModel {
     public void getById(int id) {
         try
         {
-            source.getUser(id);
+            UserModel tempUser = new UserModel();
+            tempUser = ((UserModel)source.getUser(id));
+            setId(tempUser.getId());
+            setUserName(tempUser.getUserName());
+            setPassword(tempUser.getPassword());
+            setFirstName(tempUser.getFirstName());
+            setLastName(tempUser.getLastName());
+            setMiddleName(tempUser.getMiddleName());
+            setAddress(tempUser.getAddress());
+            setAuthLevel(tempUser.getAuthLevel());
+            
         }
         catch(Exception e)
         {
@@ -183,13 +193,11 @@ public class UserModel extends AbstractModel {
             setAuthLevel(Integer.parseInt(fields.get(PROP_AUTHLEVEL.toLowerCase()+"id").toString()));
     }
 
-    @Override
-    public void get() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public void get(String username, String password){
+    public void getByAccount() {
         try {
+            setId(-1);
+            String username = getUserName();
+            String password = getPassword();
             ArrayList<IModel> users = source.getUsers();
             users.stream().forEach((model) -> {
                 if(((UserModel)model).getUserName().equals(username) &&
@@ -199,6 +207,11 @@ public class UserModel extends AbstractModel {
         } catch (StorageException ex) {
            
         }
+    }
+    
+    @Override
+    public void get(){
+        return;
     }
     
 }

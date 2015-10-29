@@ -34,12 +34,11 @@ public class LoginController extends AbstractController{
 
     @Override
     public void get() {
-        model.get();
+        ((UserModel)model).getByAccount();
     }
-
-    public void get(String username, String password){
-        ((UserModel)model).get(username, password);
-        //user = new model;
+    
+    public UserModel getUser(){
+        return ((UserModel)model);
     }
     
     @Override
