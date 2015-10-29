@@ -48,8 +48,10 @@ public class PaymentModel extends AbstractModel {
     {
             super();
             order = orderModel;
-            
-            setTotal(((OrderModel)order).getTotal());
+            if(orderModel != null)
+                setTotal(((OrderModel)order).getTotal());
+            else 
+                setTotal(0);
     }
 
     public int getId() {
