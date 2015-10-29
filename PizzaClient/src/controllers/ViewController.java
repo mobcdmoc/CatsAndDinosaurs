@@ -107,7 +107,7 @@ public class ViewController extends AbstractController{
         }
         
         public void showChefView(){
-            frame.setContentPane(new ChefView(this));
+            frame.setContentPane(new ChefView(this, source));
             refreshView(frame);
         }
         

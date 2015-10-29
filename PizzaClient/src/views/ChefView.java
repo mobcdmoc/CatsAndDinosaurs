@@ -5,7 +5,12 @@
  */
 package views;
 
+import controllers.ChefController;
 import controllers.ViewController;
+import data.IDataSource;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import models.IModel;
 
 /**
  *
@@ -14,13 +19,18 @@ import controllers.ViewController;
 public class ChefView extends javax.swing.JPanel {
 
     ViewController vc;
+    ChefController controller;
+    IDataSource source;
+    ArrayList<IModel> iOrders;
+    DefaultListModel<String> orders = new DefaultListModel<>();
     /**
      * Creates new form ChefView
      */
-    public ChefView(ViewController vc) {
+    public ChefView(ViewController vc, IDataSource source) {
         this.vc = vc;
+        this.source = source;
         initComponents();
-        
+        initCustoms();
     }
 
     /**
@@ -32,22 +42,17 @@ public class ChefView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        orders = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
         markDone = new javax.swing.JButton();
         done = new javax.swing.JButton();
-
-        orders.setEditable(false);
-        orders.setColumns(20);
-        orders.setLineWrap(true);
-        orders.setRows(5);
-        jScrollPane1.setViewportView(orders);
-
-        jLabel1.setText("Selected Item:");
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ordersList = new javax.swing.JList();
 
         markDone.setText("Mark Done");
+        markDone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                markDoneActionPerformed(evt);
+            }
+        });
 
         done.setText("Done");
         done.addActionListener(new java.awt.event.ActionListener() {
@@ -56,39 +61,33 @@ public class ChefView extends javax.swing.JPanel {
             }
         });
 
+        jScrollPane2.setViewportView(ordersList);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(300, Short.MAX_VALUE)
+                .addComponent(done)
+                .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
                         .addComponent(markDone)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(done)
-                .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(markDone)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(markDone)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(done)
                 .addGap(35, 35, 35))
         );
@@ -99,13 +98,23 @@ public class ChefView extends javax.swing.JPanel {
         vc.showMainView();
     }//GEN-LAST:event_doneActionPerformed
 
+    private void markDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_markDoneActionPerformed
+        // TODO add your handling code here:
+        int[] completed = ordersList.getSelectedIndices();
+        controller.removeOrders(completed);
+        vc.showChefView();
+    }//GEN-LAST:event_markDoneActionPerformed
+
+    private void initCustoms(){
+        controller = new ChefController(source);
+        controller.init(orders);
+        ordersList.setModel(orders);
+   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton done;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton markDone;
-    private javax.swing.JTextArea orders;
+    private javax.swing.JList ordersList;
     // End of variables declaration//GEN-END:variables
 }
