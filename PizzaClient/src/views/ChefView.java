@@ -18,11 +18,11 @@ import models.IModel;
  */
 public class ChefView extends javax.swing.JPanel {
 
-    ViewController vc;
-    ChefController controller;
-    IDataSource source;
-    ArrayList<IModel> iOrders;
-    DefaultListModel<String> orders = new DefaultListModel<>();
+    private ViewController vc;
+    private ChefController controller;
+    private IDataSource source;
+    private ArrayList<IModel> iOrders;
+    private DefaultListModel<String> orders = new DefaultListModel<>();
     /**
      * Creates new form ChefView
      */
@@ -44,7 +44,7 @@ public class ChefView extends javax.swing.JPanel {
 
         markDone = new javax.swing.JButton();
         done = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         ordersList = new javax.swing.JList();
 
         markDone.setText("Mark Done");
@@ -61,7 +61,10 @@ public class ChefView extends javax.swing.JPanel {
             }
         });
 
-        jScrollPane2.setViewportView(ordersList);
+        ordersList.setModel(
+            orders
+        );
+        jScrollPane1.setViewportView(ordersList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -74,18 +77,18 @@ public class ChefView extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(markDone)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(markDone)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(done)
@@ -94,7 +97,7 @@ public class ChefView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
-        // TODO add your handling code here:
+        controller.submit();
         vc.showMainView();
     }//GEN-LAST:event_doneActionPerformed
 
@@ -102,18 +105,17 @@ public class ChefView extends javax.swing.JPanel {
         // TODO add your handling code here:
         int[] completed = ordersList.getSelectedIndices();
         controller.removeOrders(completed);
-        vc.showChefView();
     }//GEN-LAST:event_markDoneActionPerformed
 
     private void initCustoms(){
         controller = new ChefController(source);
         controller.init(orders);
-        ordersList.setModel(orders);
+       //ordersList.setModel(orders);
    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton done;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton markDone;
     private javax.swing.JList ordersList;
     // End of variables declaration//GEN-END:variables
