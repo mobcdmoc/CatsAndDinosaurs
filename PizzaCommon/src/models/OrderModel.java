@@ -31,14 +31,16 @@ public class OrderModel extends AbstractModel{
     public static final transient String PROP_ITEMPRICES = "itemPrices";
     public static final transient String PROP_TOTAL = "total";
     public static final transient String PROP_PAYMENTID = "paymentID";
+    public static final transient String PROP_ORDERITEMIDS = "orderItemIds";
     
     private int id;
     private int user;
     private int status;
     private int paymentID; //int stores the associated payment ID
 
-    private ArrayList<String> items;
+    private ArrayList<String> items ;
     private DefaultListModel<String> orderModel;
+    private ArrayList<Integer> orderItemIds = new ArrayList<>();
     private transient ArrayList<Double> receipt = new ArrayList<>();
     
     private DefaultListModel<String> menuModel;
@@ -53,6 +55,17 @@ public class OrderModel extends AbstractModel{
     public DefaultListModel<String> getOrderModel()
     {
         return orderModel;
+    }
+    
+    public ArrayList<Integer> getOrderItemIds()
+    {
+        return orderItemIds;
+    }
+    public void setOrderItemIds(ArrayList<Integer> paymentID) 
+    {
+        ArrayList<Integer> oldValue = orderItemIds;
+        orderItemIds = paymentID;
+        propertySupport.firePropertyChange(PROP_ORDERITEMIDS, oldValue, orderItemIds);
     }
     
     public int getPaymentID() {
@@ -72,6 +85,7 @@ public class OrderModel extends AbstractModel{
         {
             orderModel.addElement(items.get(i));
             receipt.add(menuItemPrices.get(i));
+            orderItemIds.add(menueItemIds.get(i));
         }
         setTotal(calculateTotal());
     }
@@ -83,6 +97,7 @@ public class OrderModel extends AbstractModel{
         {
             orderModel.remove(indices[i]);
             receipt.remove(indices[i]);
+            orderItemIds.remove(indices[i]);
         }
         setTotal(calculateTotal());
     }
@@ -122,6 +137,7 @@ public class OrderModel extends AbstractModel{
         super();
         items = new ArrayList<String>();
         menueItemIds = new ArrayList<Integer>();
+        
     }
     
     //<editor-fold desc="Id">
@@ -139,6 +155,8 @@ public class OrderModel extends AbstractModel{
     //<editor-fold desc="User">
     public int getUser()
     {
+        if(user < 1)
+            return 2;
         return user;
     }
     public void setUser(int value)

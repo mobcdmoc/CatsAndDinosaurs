@@ -154,6 +154,7 @@ public class SqliteDataSource implements IDataSource{
         }
     }
     
+    
 //    @Override
 //    public IModel getEmployee(int id) {
 //        IModel rtn = new MenuModel();
@@ -239,7 +240,7 @@ public class SqliteDataSource implements IDataSource{
     public ArrayList<IModel> getOrders(int id) throws StorageException {
         StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE UserId = '");
         query.append(id);
-        query.append("'");
+        query.append("' AND StatusId < 4");
         
         ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query.toString());
         
@@ -347,9 +348,12 @@ public class SqliteDataSource implements IDataSource{
         StringBuilder query = new StringBuilder();
         if(m.getId() < 1)
         {
-            query.append("INSERT INTO Users (UserId,StatusId) VALUES ('");
+            query.append("INSERT INTO Orders (UserId,StatusId) VALUES ('");
             query.append(m.getUser()).append("', '");
-            query.append(m.getStatus()).append("')");
+            if(m.getStatus() == null)
+                query.append(1).append("')");
+            else               
+                query.append(m.getStatus().getValue()).append("')");
         }
         else
         {
@@ -360,6 +364,21 @@ public class SqliteDataSource implements IDataSource{
         }
        
         executeNonQuery(query.toString());
+        
+        String q = "SELECT Id FROM Orders ORDER BY Id DESC";
+        
+        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, q);
+        int id = ((OrderModel)orders.get(0)).getId();
+        
+        StringBuilder q2 = new StringBuilder();
+        q2.append("INSERT INTO ItemOrder (OrderId,ItemId) VALUES");
+        for(int i = 0; i < m.getOrderItemIds().size(); i++)
+        {
+            q2.append("(").append(id).append(", ").append(m.getOrderItemIds().get(i)).append(")");
+            if(i < m.getOrderItemIds().size()-1)
+                q2.append(",");
+        }
+        executeNonQuery(q2.toString());
     }
 
     @Override
@@ -402,5 +421,19 @@ public class SqliteDataSource implements IDataSource{
 //    public void saveEmployees(Collection<IModel> models) throws StorageException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
+
+    @Override
+    public void savePayment(IModel model) throws StorageException {
+        PaymentModel m = (PaymentModel)model;
+        StringBuilder query = new StringBuilder();
+        query.append("INSERT INTO Payment (CardHolder,CardNumber,ExpDay,ExpMonth,ExpYear,SecCode,Ammount) VALUES ('");
+        query.append(m.getCardHolder()).append("', '");
+        query.append(m.getCardNumber()).append("', '");
+        query.append(m.getDay()).append("', '");
+        query.append(m.getMonth()).append("', '");
+        query.append(m.getYear()).append("', '");
+        query.append(m.getSec()).append("', '");
+        query.append(m.getTotal()).append("')");
+    }
 
 }
