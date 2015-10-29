@@ -29,7 +29,7 @@ public class MenuModel extends AbstractModel {
     private transient DefaultListModel<Double> specialPrice;
     private transient DefaultListModel<Boolean> isSpecial;
     private transient ArrayList<Boolean> isActive = new ArrayList<>();
-    private transient  ArrayList<Boolean> updated = new ArrayList<>();
+    private transient ArrayList<Boolean> updated = new ArrayList<>();
     
     
     public MenuModel() {

@@ -85,11 +85,12 @@ public class OrderModel extends AbstractModel{
         MenuModel menuIModel = (MenuModel)source.getMenu();
         menuIModel.getItems().stream().forEach((x) -> {
             ItemModel item = (ItemModel)x;
-            String itemCard = item.getName() + " | " + item.getPrice() + "$";
+            double price = (item.getIsSpecial() ? item.getSpecialPrice() : item.getPrice());
+            String itemCard = item.getName() + " | " + price + "$";
             menu.addElement(itemCard);
             items.add(itemCard);
             itemIds.add(item.getId());
-            itemPrices.add(item.getPrice());
+            itemPrices.add(price);
         });
     }
     
