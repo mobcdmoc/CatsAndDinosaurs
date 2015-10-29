@@ -159,7 +159,8 @@ public class CreateAccountView extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        controller.submit();
+        
+        controller.submit(vc.getUser().getAuthLevel());
         vc.showMainView();
     }//GEN-LAST:event_submitButtonActionPerformed
 

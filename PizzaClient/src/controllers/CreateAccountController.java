@@ -26,13 +26,22 @@ public class CreateAccountController extends AbstractController{
         model.init(source);
     }
     
-    public void submit() {
+    public void submit(int creatorAuth){
+        if(creatorAuth > 0 & creatorAuth < 5)
+            ((UserModel)model).setAuthLevel(creatorAuth+1);
+        else
+            ((UserModel)model).setAuthLevel(5);
         model.save();
+        }
+
+    @Override
+    public void submit() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void get() {
-         model.get();
+        model.get();
     }
 
     @Override
