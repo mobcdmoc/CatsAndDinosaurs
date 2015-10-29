@@ -5,6 +5,7 @@
  */
 package models;
 
+import java.util.HashMap;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +18,9 @@ import testObjects.TestIDataSource;
  *
  * @author Dan
  */
-public class UserModelTests {
+public class UserModelTest {
     
-    public UserModelTests() {
+    public UserModelTest() {
     }
     
     @BeforeClass
@@ -50,7 +51,6 @@ public class UserModelTests {
     @Test
     public void UserModelGetId()
     {
-         
         UserModel m = new UserModel();
         assertNotNull(m);
         
@@ -60,7 +60,6 @@ public class UserModelTests {
     @Test
     public void UserModelSetId()
     {
-         
         UserModel m = new UserModel();
         assertNotNull(m);
         
@@ -228,12 +227,31 @@ public class UserModelTests {
     @Test
     public void UserModelSave()
     {
-         
         UserModel m = new UserModel();
         assertNotNull(m);
         m.init(new TestIDataSource());
-        
         m.save();
+    }
+    @Test
+    public void UserModelGetById() {
+        int id = 0;
+        UserModel m = new UserModel();
+        assertNotNull(m);
+        m.getById(id);
+    }
+    
+    @Test
+    public void UserModelLoad() throws Exception {
+        HashMap<String, Object> fields = null;
+        UserModel m = new UserModel();
+        assertNotNull(m);
+        m.load(fields);
+    }
+    
+    public void UserModelGet() {
+        UserModel m = new UserModel();
+        assertNotNull(m);
+        m.get();
     }
     
     @Test

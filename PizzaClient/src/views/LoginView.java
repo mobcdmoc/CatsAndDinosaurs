@@ -22,7 +22,6 @@ public class LoginView extends javax.swing.JPanel {
      */
     
     ViewController vc;
-    private controllers.LoginController controller;
     private IDataSource source;
 
     
@@ -42,7 +41,7 @@ public class LoginView extends javax.swing.JPanel {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        loginController1 = new controllers.LoginController();
+        controller = new controllers.LoginController();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -58,7 +57,7 @@ public class LoginView extends javax.swing.JPanel {
 
         jLabel3.setText("Username:");
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, loginController1, org.jdesktop.beansbinding.ELProperty.create("${username}"), username, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.userName}"), username, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         submit.setText("Submit");
@@ -75,7 +74,7 @@ public class LoginView extends javax.swing.JPanel {
             }
         });
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, loginController1, org.jdesktop.beansbinding.ELProperty.create("${password}"), password, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.password}"), password, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -129,9 +128,9 @@ public class LoginView extends javax.swing.JPanel {
     private void initCustom()
     {
         source = new PizzaServiceClient();
-        controller = new LoginController();
+        //controller = new LoginController();
         controller.init(source);
-        controller.get();
+        //controller.get();
     }
     
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
@@ -152,10 +151,10 @@ public class LoginView extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
+    private controllers.LoginController controller;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private controllers.LoginController loginController1;
     private javax.swing.JTextField password;
     private javax.swing.JButton submit;
     private javax.swing.JTextField username;

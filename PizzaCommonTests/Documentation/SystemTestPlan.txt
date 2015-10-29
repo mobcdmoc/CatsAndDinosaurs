@@ -18,3 +18,8 @@ UserModelGetAddress: Tests correct usage of getAddress method. PostCondition: A 
 UserModelSetAddress: Tests correct usage of setAddress method. PostCondition: A new UserModel is created, the address is set to 315, and an address of 315 is returned. Priority: Medium. Cleanup: N/A.
 UserModelGetAuthLevel: Tests correct usage of getAuthLevel method. PostCondition: A new UserModel is created with a default authLevel of 0. Priority: Medium. Cleanup: N/A.
 UserModelSetAuthLevel: Tests correct usage of setAuthLevel method. PostCondition: A new UserModel is created, the authLevel is set to 2, and an authLevel of 2 is returned. Priority: Medium. Cleanup: N/A.
+UserModelSave: Tests correct usage of save method. Priority: High. Cleanup: N/A.
+UserModelGetById: Tests correct usage of getById method. Priority: Medium. Cleanup: N/A.
+UserModelLoad: Tests correct usage of load method. Priority: High. Cleanup: N/A.
+UserModelGet: Tests correct usage of get method. Priority: Medium. Cleanup: N/A.
+UserModelSaveStorageExceptionThrown: Tests correct usage of SaveStorageExceptionThrown method. Priority: Medium. Cleanup: N/A.
