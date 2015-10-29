@@ -29,8 +29,11 @@ public class PaymentView extends javax.swing.JPanel {
     private void initCustom(IDataSource source)
     {
         controller.init(vc.getOrderModel(),source);
+        totalDue.setText(controller.getTotal()+"");
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

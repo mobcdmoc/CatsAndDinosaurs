@@ -27,6 +27,10 @@ public class PaymentController extends AbstractController {
         model = new PaymentModel(orderModel);
         model.init(source);
     }
+    public double getTotal()
+        {
+            return ((PaymentModel)model).getTotal();
+        }
     @Override
     public void submit() {
         model.save();

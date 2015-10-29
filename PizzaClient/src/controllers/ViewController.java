@@ -62,6 +62,8 @@ public class ViewController extends AbstractController{
             menu = menuListModel;
             displayMenu();
 	}
+        
+        
         public  DefaultListModel getMenu()
         {
             return menu;
