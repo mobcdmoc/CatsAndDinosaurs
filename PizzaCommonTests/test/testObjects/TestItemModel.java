@@ -3,23 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package testObjects;
 
 import data.IDataSource;
-import java.beans.*;
-import java.io.Serializable;
+import exceptions.LoadException;
+import java.util.HashMap;
+import models.IModel;
 
 /**
  *
- * @author Jacob
+ * @author Nick
  */
-public class EmployeeManagerController extends AbstractController {
-    public EmployeeManagerController() {
-        super();
-    }
-    
+public class TestItemModel implements IModel {
+
     @Override
-    public void submit() {
+    public void save() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void getById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -29,14 +32,13 @@ public class EmployeeManagerController extends AbstractController {
     }
 
     @Override
-    public void onClose() {
+    public void init(IDataSource source) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void runCommand(String command, Object input) {
+    public void load(HashMap<String, Object> fields) throws LoadException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     
 }

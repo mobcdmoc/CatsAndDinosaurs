@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javafx.collections.ObservableList;
 import models.IModel;
-import models.ListModel;
 
 /**
  *
