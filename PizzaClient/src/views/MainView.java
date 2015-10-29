@@ -22,11 +22,14 @@ public class MainView extends javax.swing.JPanel {
     public MainView() {
         initComponents();
         vc = new ViewController(menuListModel);
+        customInit();
     }
 
     public MainView(ViewController vc)
     {
         this.vc = vc;
+        if(vc.getMenu().size() != menuListModel.size())
+            vc = new ViewController(menuListModel);
         initComponents();
         customInit();
     }
@@ -130,8 +133,6 @@ public class MainView extends javax.swing.JPanel {
                 updateMenuActionPerformed(evt);
             }
         });
-        if(vc.getUser().getAuthLevel()>2)
-        updateMenu.setVisible(false);
 
         chefView.setText("Chef View");
         chefView.addActionListener(new java.awt.event.ActionListener() {
@@ -139,8 +140,6 @@ public class MainView extends javax.swing.JPanel {
                 chefViewActionPerformed(evt);
             }
         });
-        if(vc.getUser().getAuthLevel()>3)
-        chefView.setVisible(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
