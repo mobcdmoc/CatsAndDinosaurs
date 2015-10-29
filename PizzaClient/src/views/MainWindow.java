@@ -15,8 +15,8 @@ public class MainWindow {
 
 	public static void main(String args[]){
                 
-		f = new JFrame();
-		vc = new ViewController();
+        f = new JFrame();
+        vc = new ViewController();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         vc.showMainView();

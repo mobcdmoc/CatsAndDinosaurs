@@ -22,11 +22,14 @@ public class MainView extends javax.swing.JPanel {
     public MainView() {
         initComponents();
         vc = new ViewController(menuListModel);
+        customInit();
     }
 
     public MainView(ViewController vc)
     {
         this.vc = vc;
+        if(vc.getMenu().size() != menuListModel.size())
+            vc = new ViewController(menuListModel);
         initComponents();
         customInit();
     }

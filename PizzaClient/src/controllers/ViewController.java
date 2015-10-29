@@ -45,6 +45,7 @@ public class ViewController extends AbstractController{
                 //Show alert box!
             }
             menu = new DefaultListModel();
+            displayMenu();
         }
 	public ViewController(DefaultListModel<String> menuListModel){
             super();
@@ -127,19 +128,19 @@ public class ViewController extends AbstractController{
         }
         
         public void displayOrder(){
-            ArrayList<IModel> items = null;
-            try {
-                 items = source.getItems();
-            } catch (StorageException ex) {
-                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            items.stream().forEach((x) -> { menu.addElement(((ItemModel)x).getName());});
-            MainView mv = new MainView(this);
-            String menu = "Your Current Order:\n\nPizza\nSoda\nBreadsticks";
-            mv.changeDisplayMessage(menu);
-            frame.setContentPane(mv);
-            refreshView(frame);
+//            ArrayList<IModel> items = null;
+//            try {
+//                 items = source.getItems();
+//            } catch (StorageException ex) {
+//                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//            items.stream().forEach((x) -> { menu.addElement(((ItemModel)x).getName());});
+//            MainView mv = new MainView(this);
+//            String menu = "Your Current Order:\n\nPizza\nSoda\nBreadsticks";
+//            mv.changeDisplayMessage(menu);
+//            frame.setContentPane(mv);
+//            refreshView(frame);
         }
 	
 	private void refreshView(JFrame f){
