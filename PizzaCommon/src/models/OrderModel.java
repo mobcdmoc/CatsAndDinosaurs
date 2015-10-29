@@ -5,14 +5,18 @@
  */
 package models;
 
+import data.IDataSource;
 import enums.OrderStatus;
 import exceptions.LoadException;
+import exceptions.StorageException;
 import java.beans.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -34,8 +38,11 @@ public class OrderModel extends AbstractModel{
     private int paymentID; //int stores the associated payment ID
 
     private ArrayList<String> items;
+    private DefaultListModel<String> orderModel;
+    private DefaultListModel<String> menuModel;
     private ArrayList<Integer> itemIds;
-    private transient ArrayList<Double> itemPrices;
+    private transient ArrayList<Double> itemPrices = new ArrayList<>();
+    private transient ArrayList<Double> receipt = new ArrayList<>();
     
     public int getPaymentID() {
         return paymentID;
@@ -48,7 +55,43 @@ public class OrderModel extends AbstractModel{
         propertySupport.firePropertyChange(PROP_ID, oldValue, id);
     }
     
+    public void addItems(int[] indices)
+    {
+        for(int i : indices)
+        {
+            orderModel.addElement(items.get(i));
+            receipt.add(itemPrices.get(i));
+        }
+        setTotal(calculateTotal());
+    }
     
+    public void removeItems(int[] indices)
+    {
+        Arrays.sort(indices);
+        for(int i = indices.length-1; i >=0; i--)
+        {
+            orderModel.remove(indices[i]);
+            receipt.remove(indices[i]);
+        }
+        setTotal(calculateTotal());
+    }
+    
+    public void init(IDataSource source, DefaultListModel<String> menu, DefaultListModel<String> order) throws StorageException
+    {
+        this.source = source;
+        orderModel = order;
+        menuModel = menu;
+        
+        MenuModel menuIModel = (MenuModel)source.getMenu();
+        menuIModel.getItems().stream().forEach((x) -> {
+            ItemModel item = (ItemModel)x;
+            String itemCard = item.getName() + " | " + item.getPrice() + "$";
+            menu.addElement(itemCard);
+            items.add(itemCard);
+            itemIds.add(item.getId());
+            itemPrices.add(item.getPrice());
+        });
+    }
     
     public OrderModel() {
         super();
@@ -117,18 +160,25 @@ public class OrderModel extends AbstractModel{
     }
     //</editor-fold>
     //<editor-fold desc="Total">
+    
+    private double total;
     public double getTotal()
     {
-        double t = 0;
-        for(Double price : itemPrices)
-        {
-           t += price;        
-        }    
-        return t;
+        return total;
     }
     
     public void setTotal (double value)
     {
+        double oldValue = total;
+        total = value;
+        propertySupport.firePropertyChange(PROP_TOTAL, oldValue, total);
+    }
+    
+    private double calculateTotal()
+    {
+        double t = 0;
+        t = receipt.stream().map((d) -> d).reduce(t, (accumulator, _item) -> accumulator + _item);
+        return t;
     }
     //</editor-fold>
     
