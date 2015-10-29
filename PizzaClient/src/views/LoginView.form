@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Component class="controllers.LoginController" name="loginController1">
+    <Component class="controllers.LoginController" name="controller">
     </Component>
   </NonVisualComponents>
   <AuxValues>
@@ -95,7 +95,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="username">
       <BindingProperties>
-        <BindingProperty name="text" source="loginController1" sourcePath="${username}" target="username" targetPath="text" updateStrategy="0" immediately="false">
+        <BindingProperty name="text" source="controller" sourcePath="${model.userName}" target="username" targetPath="text" updateStrategy="0" immediately="false">
           <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
         </BindingProperty>
       </BindingProperties>
@@ -118,7 +118,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="password">
       <BindingProperties>
-        <BindingProperty name="text" source="loginController1" sourcePath="${password}" target="password" targetPath="text" updateStrategy="0" immediately="false">
+        <BindingProperty name="text" source="controller" sourcePath="${model.password}" target="password" targetPath="text" updateStrategy="0" immediately="false">
           <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
         </BindingProperty>
       </BindingProperties>

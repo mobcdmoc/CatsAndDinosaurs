@@ -38,7 +38,7 @@ public class LoginController extends AbstractController{
     }
     
     public UserModel getUser(){
-        return ((UserModel)model);
+        return (UserModel) (model);
     }
     
     @Override

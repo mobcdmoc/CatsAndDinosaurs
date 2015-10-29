@@ -28,8 +28,13 @@ public class MainView extends javax.swing.JPanel {
     {
         this.vc = vc;
         initComponents();
-        
+        customInit();
     }
+    
+    private void customInit(){
+        userName.setText(vc.getUser().getUserName());
+    }
+    
     private DefaultListModel<String> menuListModel = new DefaultListModel();
     
     /**

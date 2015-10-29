@@ -66,6 +66,10 @@ public class ViewController extends AbstractController{
             return menu;
         }
                 
+        public UserModel getUser(){
+            return ((UserModel)model);
+        }
+        
         public void setOrderModel(IModel model)
         {
             orderModel = model;
