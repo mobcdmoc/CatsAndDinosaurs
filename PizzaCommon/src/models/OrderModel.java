@@ -39,10 +39,21 @@ public class OrderModel extends AbstractModel{
 
     private ArrayList<String> items;
     private DefaultListModel<String> orderModel;
-    private DefaultListModel<String> menuModel;
-    private ArrayList<Integer> itemIds;
-    private transient ArrayList<Double> itemPrices = new ArrayList<>();
     private transient ArrayList<Double> receipt = new ArrayList<>();
+    
+    private DefaultListModel<String> menuModel;
+    private ArrayList<Integer> menueItemIds;
+    private transient ArrayList<Double> menuItemPrices = new ArrayList<>();
+    
+    public ArrayList<Double> getReceipt()
+    {
+        return receipt;
+    }
+    
+    public DefaultListModel<String> getOrderModel()
+    {
+        return orderModel;
+    }
     
     public int getPaymentID() {
         return paymentID;
@@ -60,7 +71,7 @@ public class OrderModel extends AbstractModel{
         for(int i : indices)
         {
             orderModel.addElement(items.get(i));
-            receipt.add(itemPrices.get(i));
+            receipt.add(menuItemPrices.get(i));
         }
         setTotal(calculateTotal());
     }
@@ -76,7 +87,7 @@ public class OrderModel extends AbstractModel{
         setTotal(calculateTotal());
     }
     
-    public void init(IDataSource source, DefaultListModel<String> menu, DefaultListModel<String> order) throws StorageException
+    public void init(IDataSource source, DefaultListModel<String> menu, DefaultListModel<String> order, IModel existingOrder) throws StorageException
     {
         this.source = source;
         orderModel = order;
@@ -89,15 +100,28 @@ public class OrderModel extends AbstractModel{
             String itemCard = item.getName() + " | " + price + "$";
             menu.addElement(itemCard);
             items.add(itemCard);
-            itemIds.add(item.getId());
-            itemPrices.add(price);
+            menueItemIds.add(item.getId());
+            menuItemPrices.add(price);
         });
+        if(existingOrder != null)
+        {
+        OrderModel tmp = ((OrderModel) existingOrder);
+            for(int i = 0; i < tmp.getOrderModel().size(); i++)
+            {
+                orderModel.addElement(tmp.getOrderModel().getElementAt(i));
+                receipt.add(tmp.getReceipt().get(i));
+
+            }
+            setTotal(calculateTotal());
+        }
     }
+    
+    
     
     public OrderModel() {
         super();
         items = new ArrayList<String>();
-        itemIds = new ArrayList<Integer>();
+        menueItemIds = new ArrayList<Integer>();
     }
     
     //<editor-fold desc="Id">
@@ -151,13 +175,13 @@ public class OrderModel extends AbstractModel{
     //<editor-fold desc="Items">
     public ArrayList<Integer> getItemIds()
     {
-        return itemIds;
+        return menueItemIds;
     }
     public void setItemIds (ArrayList<Integer> value)
     {
-        ArrayList<Integer> oldValue = itemIds;
-        itemIds = value;
-        propertySupport.firePropertyChange(PROP_ITEMS, oldValue, itemIds);
+        ArrayList<Integer> oldValue = menueItemIds;
+        menueItemIds = value;
+        propertySupport.firePropertyChange(PROP_ITEMS, oldValue, menueItemIds);
     }
     //</editor-fold>
     //<editor-fold desc="Total">
