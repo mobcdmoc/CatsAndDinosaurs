@@ -17,7 +17,7 @@ public class MainView extends javax.swing.JPanel {
     ViewController vc;
     
     /**
-     * Creates new form MainView
+     *  Creates new form MainView
      */
     public MainView() {
         initComponents();
