@@ -23,7 +23,7 @@ import models.OrderModel;
  */
 public class ChefController extends AbstractController{
 
-    ArrayList<IModel> orders;
+    ArrayList<IModel> orders = new ArrayList<IModel>();
     ArrayList<OrderModel> sd = new ArrayList<OrderModel>();
     
     public ChefController(IDataSource source)
