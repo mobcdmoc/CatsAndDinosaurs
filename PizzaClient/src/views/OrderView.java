@@ -32,7 +32,7 @@ public class OrderView extends javax.swing.JPanel {
     private void initCustom(IDataSource source)
     {
         controller.init(source);
-        controller.init(menuListModel, orderListModel);
+        controller.init(menuListModel, orderListModel, vc.getOrderModel());
     }
     
     private DefaultListModel menuListModel = new DefaultListModel();

@@ -37,9 +37,9 @@
                   <Component id="jPanel1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jPanel3" min="-2" pref="73" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
                       <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -143,11 +143,13 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="logIn" max="32767" attributes="0"/>
                       <Component id="createAccount" max="32767" attributes="0"/>
+                      <Component id="updateMenu" alignment="0" max="32767" attributes="0"/>
+                      <Component id="chefView" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -160,7 +162,11 @@
                   <Component id="logIn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="createAccount" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="updateMenu" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="chefView" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -182,6 +188,22 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createAccountActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="updateMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Update Menu"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateMenuActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="chefView">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Chef View"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chefViewActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel3">
@@ -199,9 +221,6 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="checkOrder" alignment="0" max="32767" attributes="0"/>
-                      <Component id="updateMenu" alignment="0" max="32767" attributes="0"/>
-                      <Component id="chefView" alignment="0" max="32767" attributes="0"/>
                       <Component id="checkout" max="32767" attributes="0"/>
                       <Component id="makeOrder" alignment="1" max="32767" attributes="0"/>
                   </Group>
@@ -212,52 +231,22 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="makeOrder" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="checkOrder" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="checkout" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="updateMenu" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="chefView" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="chefView">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Chef View"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chefViewActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="updateMenu">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Update Menu"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateMenuActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="checkout">
           <Properties>
             <Property name="text" type="java.lang.String" value="Checkout"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkoutActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="checkOrder">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Check Order"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkOrderActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="makeOrder">

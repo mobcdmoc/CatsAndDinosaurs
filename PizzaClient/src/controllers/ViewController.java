@@ -70,8 +70,12 @@ public class ViewController extends AbstractController{
         {
             orderModel = model;
         }
+        public IModel getOrderModel()
+        {
+           return orderModel;
+        }
 	public void showMainView(){
-		frame.setContentPane(new MainView());
+		frame.setContentPane(new MainView(this));
 		refreshView(frame);
 	}
 	
@@ -145,7 +149,7 @@ public class ViewController extends AbstractController{
             }
             
             items.stream().forEach((x) -> { menu.addElement(((ItemModel)x).getName());});
-            MainView mv = new MainView();
+            MainView mv = new MainView(this);
             String menu = "Your Current Order:\n\nPizza\nSoda\nBreadsticks";
             mv.changeDisplayMessage(menu);
             frame.setContentPane(mv);

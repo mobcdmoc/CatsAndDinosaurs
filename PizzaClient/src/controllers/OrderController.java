@@ -34,11 +34,11 @@ public class OrderController extends AbstractController {
         menu = value;
         propertySupport.firePropertyChange(PROP_MENU, oldValue, menu);
     }
-    public void init(DefaultListModel menu, DefaultListModel order)
+    public void init(DefaultListModel menu, DefaultListModel order, IModel existingOrder)
     {
         
         try {
-            ((OrderModel)model).init(source, menu, order);
+            ((OrderModel)model).init(source, menu, order, existingOrder);
         } catch (StorageException ex) {
             Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
         }
