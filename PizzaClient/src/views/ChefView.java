@@ -13,12 +13,14 @@ import controllers.ViewController;
  */
 public class ChefView extends javax.swing.JPanel {
 
-    ViewController vc = new ViewController();
+    ViewController vc;
     /**
      * Creates new form ChefView
      */
-    public ChefView() {
+    public ChefView(ViewController vc) {
+        this.vc = vc;
         initComponents();
+        
     }
 
     /**

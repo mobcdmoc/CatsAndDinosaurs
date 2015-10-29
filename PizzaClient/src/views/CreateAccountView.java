@@ -16,10 +16,11 @@ import data.PizzaServiceClient;
  */
 public class CreateAccountView extends javax.swing.JPanel {
     
-    private static ViewController vc = new ViewController();
+    private static ViewController vc;
     private IDataSource source;
     
-    public CreateAccountView() {
+    public CreateAccountView( ViewController vc) {
+        this.vc = vc;
         initComponents();
         initCustom();
     }

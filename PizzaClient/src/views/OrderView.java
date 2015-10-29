@@ -16,13 +16,14 @@ import javax.swing.JFrame;
  */
 public class OrderView extends javax.swing.JPanel {
 
-    ViewController vc = new ViewController();
+    ViewController vc;
     
     private JFrame parent;
     /**
      * Creates new form OrderView
      */
-    public OrderView() {
+    public OrderView(ViewController vc) {
+        this.vc = vc;
         initComponents();
     }
 

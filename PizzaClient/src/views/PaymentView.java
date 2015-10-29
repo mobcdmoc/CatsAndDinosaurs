@@ -17,9 +17,10 @@ public class PaymentView extends javax.swing.JPanel {
      * Creates new form PaymentView
      */
     
-    private static ViewController vc = new ViewController();
+    private ViewController vc;
     
-    public PaymentView() {
+    public PaymentView(ViewController vc) {
+        this.vc = vc;
         initComponents();
     }
 

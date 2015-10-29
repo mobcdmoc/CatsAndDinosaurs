@@ -21,12 +21,13 @@ public class LoginView extends javax.swing.JPanel {
      * Creates new form LoginView
      */
     
-    ViewController vc = new ViewController();
+    ViewController vc;
     private controllers.LoginController controller;
     private IDataSource source;
 
     
-    public LoginView() {
+    public LoginView(ViewController vc) {
+        this.vc = vc;
         initComponents();
         initCustom();
     }
