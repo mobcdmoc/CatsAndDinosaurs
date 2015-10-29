@@ -207,6 +207,10 @@ public class UserModel extends AbstractModel {
         } catch (StorageException ex) {
            
         }
+        if(getId() == -1){
+            setUserName("Guest");
+            setAuthLevel(5);
+        }
     }
     
     @Override

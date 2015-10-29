@@ -79,46 +79,28 @@ public class ViewController extends AbstractController{
            return orderModel;
         }
 	public void showMainView(){
-		frame.setContentPane(new MainView(this));
-		refreshView(frame);
+            frame.setContentPane(new MainView(this));
+            refreshView(frame);
 	}
 	
 	public void showloginView(){
-		frame.setContentPane(new LoginView(this));
-		refreshView(frame);
+            frame.setContentPane(new LoginView(this));
+            refreshView(frame);
 	}
         
         public void showCreateAccountView(){
-		frame.setContentPane(new CreateAccountView(this));
-		refreshView(frame);
+            frame.setContentPane(new CreateAccountView(this));
+            refreshView(frame);
 	}
         
         public void showPaymentView(){
-            frame.setContentPane(new PaymentView(this));
+            frame.setContentPane(new PaymentView(this, source));
             refreshView(frame);
         }
         
         public void showOrderView(){
             OrderView ov = new OrderView(source,this);
             
-            //String[] menArr = {"Pizza", "Soda", "Breadsticks"};
-//            String[] ordArr = {"Soda"};
-            //String menu = "", ord = "";
-            
-//            for (int i = 0; i < menu.length();i++){
-//                menu += (i+1) + ": " + menu(i);
-//                ov.addItemsToMenuSelect(Integer.toString(i+1));
-//                menu += "\n";
-//            }
-//            
-//            for (int i = 0; i < ordArr.length ;i++){
-//                ord += (i+1) + ": " + ordArr[i];
-//                ov.addItemsToOrderSelect(Integer.toString(i+1));
-//                ord += "\n";
-//            }
-            
-//            ov.setMenu(menu);
-//            ov.setOrder(ord);
             frame.setContentPane(ov);
             refreshView(frame);
         }
