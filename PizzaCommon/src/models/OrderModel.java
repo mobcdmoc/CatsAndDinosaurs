@@ -14,6 +14,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javax.swing.DefaultListModel;
@@ -167,9 +169,9 @@ public class OrderModel extends AbstractModel{
     }
     //</editor-fold>
     //<editor-fold desc="Status">
-    public OrderStatus getStatus()
+    public int getStatus()
     {
-        return OrderStatus.getStatus(status);
+        return status;
     }
     public void setStatus(int value)
     {
@@ -227,7 +229,12 @@ public class OrderModel extends AbstractModel{
     
     @Override
     public void save() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            source.saveOrder(this);
+        } catch (StorageException ex) {
+            Logger.getLogger(OrderModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

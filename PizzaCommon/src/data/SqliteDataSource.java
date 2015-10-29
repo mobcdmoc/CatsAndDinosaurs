@@ -350,14 +350,12 @@ public class SqliteDataSource implements IDataSource{
         {
             query.append("INSERT INTO Orders (UserId,StatusId) VALUES ('");
             query.append(m.getUser()).append("', '");
-            if(m.getStatus() == null)
-                query.append(1).append("')");
-            else               
-                query.append(m.getStatus().getValue()).append("')");
+            
+            query.append(m.getStatus()).append("')");
         }
         else
         {
-            query.append("UPDATE Users  SET UserId = '");
+            query.append("UPDATE Orders SET UserId = '");
             query.append(m.getUser()).append("', StatusId = '");
             query.append(m.getStatus()).append("' WHERE Id = '");
             query.append(m.getId()).append("'");
