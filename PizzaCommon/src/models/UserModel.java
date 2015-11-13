@@ -19,13 +19,12 @@ import javafx.collections.ObservableList;
  *
  * @author Jacob
  */
-public class UserModel extends AbstractModel {
+public class UserModel extends AbstractModel implements IUserModel {
     //NOTE: Jacob, I've left the sample property in this class for now as an example.
     public static final transient String PROP_ID = "id";
-    public static final transient String PROP_USERNAME = "userName";
+    public static final transient String PROP_USERNAME = "username";
     public static final transient String PROP_PASSWORD = "password";
     public static final transient String PROP_FIRSTNAME = "firstName";
-    public static final transient String PROP_MIDDLENAME = "middleName";
     public static final transient String PROP_LASTNAME = "lastName";
     public static final transient String PROP_ADDRESS = "address";
     public static final transient String PROP_AUTHLEVEL = "authLevel";
@@ -40,7 +39,8 @@ public class UserModel extends AbstractModel {
     private String firstName;
     private String middleName;
     private String lastName;
-    private int address;
+    private String address1;
+    private String address2;
     private int authLevel;
     
     
@@ -53,69 +53,64 @@ public class UserModel extends AbstractModel {
         return id;
     }
     public void setId(int value) {
-        int oldValue = id;
         id = value;
-        propertySupport.firePropertyChange(PROP_ID, oldValue, id);
     }
     //</editor-fold>
     //<editor-fold desc="UserName">
-    public String getUserName() {
+    @Override
+    public String getUsername() {
         return userName;
     }
-    public void setUserName(String value) {
-        String oldValue = userName;
+    @Override
+    public void setUsername(String value) {
         userName = value;
-        propertySupport.firePropertyChange(PROP_USERNAME, oldValue, userName);
     }
     //</editor-fold>
     //<editor-fold desc="Password">
+    @Override
     public String getPassword() {
         return password;
     }
+    
+    @Override
     public void setPassword(String value) {
-        String oldValue = password;
         password = value;
-        propertySupport.firePropertyChange(PROP_PASSWORD, oldValue, password);
     }
     //</editor-fold>
     //<editor-fold desc="FirstName">
+    @Override
     public String getFirstName() {
         return firstName;
     }
+    @Override
     public void setFirstName(String value) {
-        String oldValue = firstName;
         firstName = value;
-        propertySupport.firePropertyChange(PROP_FIRSTNAME, oldValue, firstName);
-    }
-    //</editor-fold>
-    //<editor-fold desc="MiddleName">
-    public String getMiddleName() {
-        return middleName;
-    }
-    public void setMiddleName(String value) {
-        String oldValue = middleName;
-        middleName = value;
-        propertySupport.firePropertyChange(PROP_MIDDLENAME, oldValue, middleName);
     }
     //</editor-fold>
     //<editor-fold desc="LastName">
+    @Override
     public String getLastName() {
         return lastName;
     }
+    @Override
     public void setLastName(String value) {
-        String oldValue = lastName;
         lastName = value;
-        propertySupport.firePropertyChange(PROP_LASTNAME, oldValue, lastName);
     }
     //</editor-fold>
     //<editor-fold desc="Address">
-    public int getAddress() {
-        return address;
+    public String getAddress1() {
+        return address1;
     }
-    public void setAddress(int value) {
-        int oldValue = address;
-        address = value;
-        propertySupport.firePropertyChange(PROP_ADDRESS, oldValue, address);
+    public void setAddress1(String value) {
+        address1 = value;
+    }
+    //</editor-fold>
+    //<editor-fold desc="Address2">
+    public String getAddress2() {
+        return address2;
+    }
+    public void setAddress2(String value) {
+        address2 = value;
     }
     //</editor-fold>
     //<editor-fold desc="AuthLevel">
@@ -123,48 +118,47 @@ public class UserModel extends AbstractModel {
         return authLevel;
     }
     public void setAuthLevel(int value) {
-        int oldValue = authLevel;
         authLevel = value;
-        propertySupport.firePropertyChange(PROP_AUTHLEVEL, oldValue, authLevel);
     }
     //</editor-fold>
     
     
     @Override
-    public void save() {
+    public boolean save() {
         try
         {
             source.saveUser(this);
+            return true;
         }
         catch(Exception e)
         {
             //TODO: Do something here
-            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, e);
         }
+        return false;
     }
 
-    @Override
-    public void getById(int id) {
-        try
-        {
-            UserModel tempUser = new UserModel();
-            tempUser = ((UserModel)source.getUser(id));
-            setId(tempUser.getId());
-            setUserName(tempUser.getUserName());
-            setPassword(tempUser.getPassword());
-            setFirstName(tempUser.getFirstName());
-            setLastName(tempUser.getLastName());
-            setMiddleName(tempUser.getMiddleName());
-            setAddress(tempUser.getAddress());
-            setAuthLevel(tempUser.getAuthLevel());
-            
-        }
-        catch(Exception e)
-        {
-            //TODO: Do something here
-            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
+//    @Override
+//    public void getById(int id) {
+//        try
+//        {
+//            UserModel tempUser = new UserModel();
+//            tempUser = ((UserModel)source.getUser(id));
+//            setId(tempUser.getId());
+//            setUserName(tempUser.getUserName());
+//            setPassword(tempUser.getPassword());
+//            setFirstName(tempUser.getFirstName());
+//            setLastName(tempUser.getLastName());
+//            setMiddleName(tempUser.getMiddleName());
+//            setAddress(tempUser.getAddress());
+//            setAuthLevel(tempUser.getAuthLevel());
+//            
+//        }
+//        catch(Exception e)
+//        {
+//            //TODO: Do something here
+//            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, e);
+//        }
+//    }
 
     @Override
     public void load(HashMap<String, Object> fields) throws LoadException {
@@ -172,50 +166,46 @@ public class UserModel extends AbstractModel {
         {
             throw new LoadException("ItemModel: No fields passed in!");
         }
-        //NOTE: This is a little gross but it should work.
-        //We may want to find a more elegant way of doing this
-        //maybe through reflection.
         if(fields.containsKey(PROP_ID.toLowerCase()))
             setId(Integer.parseInt(fields.get(PROP_ID.toLowerCase()).toString()));
         if(fields.containsKey(PROP_USERNAME.toLowerCase()))
-            setUserName(fields.get(PROP_USERNAME.toLowerCase()).toString());
+            setUsername(fields.get(PROP_USERNAME.toLowerCase()).toString());
         if(fields.containsKey(PROP_PASSWORD.toLowerCase()))
             setPassword(fields.get(PROP_PASSWORD.toLowerCase()).toString());
         if(fields.containsKey(PROP_FIRSTNAME.toLowerCase()))
             setFirstName(fields.get(PROP_FIRSTNAME.toLowerCase()).toString());
-        if(fields.containsKey(PROP_MIDDLENAME.toLowerCase()))
-            setMiddleName(fields.get(PROP_MIDDLENAME.toLowerCase()).toString());
         if(fields.containsKey(PROP_LASTNAME.toLowerCase()))
             setLastName(fields.get(PROP_LASTNAME.toLowerCase()).toString());
-        if(fields.containsKey(PROP_ADDRESS.toLowerCase()+"id"))
-            setAddress(Integer.parseInt(fields.get(PROP_ADDRESS.toLowerCase()+"id").toString()));
+//        if(fields.containsKey(PROP_ADDRESS.toLowerCase()+"id"))
+//            setAddress1(Integer.parseInt(fields.get(PROP_ADDRESS.toLowerCase()+"id").toString()));
         if(fields.containsKey(PROP_AUTHLEVEL.toLowerCase()+"id"))
             setAuthLevel(Integer.parseInt(fields.get(PROP_AUTHLEVEL.toLowerCase()+"id").toString()));
     }
 
-    public void getByAccount() {
-        try {
-            setId(-1);
-            String username = getUserName();
-            String password = getPassword();
-            ArrayList<IModel> users = source.getUsers();
-            users.stream().forEach((model) -> {
-                if(((UserModel)model).getUserName().equals(username) &&
-                   ((UserModel)model).getPassword().equals(password))
-                        getById(((UserModel)model).getId());
-            });
-        } catch (StorageException ex) {
-           
-        }
-        if(getId() == -1){
-            setUserName("Guest");
-            setAuthLevel(5);
-        }
+//    public void getByAccount() {
+//        try {
+//            setId(-1);
+//            String username = getUserName();
+//            String password = getPassword();
+//            ArrayList<IModel> users = source.getUsers();
+//            users.stream().forEach((model) -> {
+//                if(((UserModel)model).getUserName().equals(username) &&
+//                   ((UserModel)model).getPassword().equals(password))
+//                        getById(((UserModel)model).getId());
+//            });
+//        } catch (StorageException ex) {
+//           
+//        }
+//        if(getId() == -1){
+//            setUserName("Guest");
+//            setAuthLevel(5);
+//        }
+//    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    @Override
-    public void get(){
-        return;
-    }
     
 }

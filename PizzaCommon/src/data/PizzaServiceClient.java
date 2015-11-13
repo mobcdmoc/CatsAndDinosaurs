@@ -118,24 +118,24 @@ public class PizzaServiceClient implements IDataSource {
         return models;
     }
     @Override
-    public void saveMenu(IModel requestEntity) throws ClientErrorException, StorageException {
-        MenuModel m = (MenuModel)requestEntity;
+    public void saveMenu(IMenuModel requestEntity) throws ClientErrorException, StorageException {
+        IMenuModel m = (MenuModel)requestEntity;
         String json = gson.toJson(m.getItems());
         
         webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(json, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
     @Override
-    public ArrayList<IModel> getItems() throws ClientErrorException, StorageException {
+    public ArrayList<IItemModel> getItems() throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Items");
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        ArrayList<IModel> models = gson.fromJson(json, new TypeToken<ArrayList<ItemModel>>(){}.getType());
+        ArrayList<IItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<ItemModel>>(){}.getType());
         return models;
     }
 
     @Override
-    public OrderModel getOrder(int id) throws ClientErrorException, StorageException {
+    public IOrderModel getOrder(int id) throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("Get/Order/{0}", new Object[]{id}));
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
@@ -143,10 +143,10 @@ public class PizzaServiceClient implements IDataSource {
     }
 
     @Override
-    public MenuModel getMenu() throws ClientErrorException, StorageException {
+    public IMenuModel getMenu() throws ClientErrorException, StorageException {
         
         ArrayList<IModel> items = getItems();
-        MenuModel rtn = new MenuModel();
+        IMenuModel rtn = new MenuModel();
         rtn.setItems(items);
         return rtn;
     }
@@ -165,19 +165,15 @@ public class PizzaServiceClient implements IDataSource {
         
     }
 
-//    @Override
-//    public IModel getEmployee(int id) throws ClientErrorException, StorageException {
-//        WebTarget resource = webTarget;
-//        resource = resource.path(java.text.MessageFormat.format("Get/Employee/{0}", new Object[]{id}));
-//        
-//        String json =  resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-//        EmployeeModel model = gson.fromJson(json, EmployeeModel.class);
-//        return model;
-//    }
 
     @Override
     public void savePayment(IModel requestEntity) throws ClientErrorException, StorageException {
         webTarget.path("Save/Payment").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+    }
+
+    @Override
+    public boolean validateUsername(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

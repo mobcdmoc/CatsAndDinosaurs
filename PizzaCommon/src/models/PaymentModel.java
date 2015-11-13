@@ -18,38 +18,44 @@ import static models.UserModel.PROP_AUTHLEVEL;
  *
  * @author Jacob
  */
-public class PaymentModel extends AbstractModel {
+public class PaymentModel extends AbstractModel implements IPaymentModel {
     public static final transient String PROP_ID = "id";
     public static final transient String PROP_TYPE = "type";
     public static final transient String PROP_APPROVED = "approved";
     public static final transient String PROP_TOTAL = "total";
-    public static final transient String PROP_CARDHOLDER = "cardHolder";
+    public static final transient String PROP_CARDFIRSTNAME = "cardFirstName";
+    public static final transient String PROP_CARDLASTNAME = "cardLastName";
     public static final transient String PROP_CARDNUMBER = "cardNumber";
     public static final transient String PROP_EXPRDAY = "day";
     public static final transient String PROP_EXPRMONTH = "month";
     public static final transient String PROP_EXPRYEAR = "year";
-    public static final transient String PROP_SECCODE = "sec";
     
-    private IModel order;
+    private IOrderModel order;
     
     private int id;
     private PaymentType type;
-    private boolean approved;
-    private String cardHolder;
+    private String cardFirstName;
+    private String cardLastName;
     private int cardNumber;
-    private int day;
-    private int month;
-    private int year;
+    private int expDay;
+    private int expMonth;
+    private int expYear;
+    
     private int orderId;
     private double total;
-    private int sec;
+    private int orderType;
+    private String customerName;
+    private String customerAddress1;
+    private String customerAddress2;
+    private String customerCity;
+    private int customerZip;
     
-    public PaymentModel(IModel orderModel) 
+    public PaymentModel(IOrderModel orderModel) 
     {
             super();
             order = orderModel;
             if(orderModel != null)
-                setTotal(((OrderModel)order).getTotal());
+                setTotal(order.getTotal());
             else 
                 setTotal(0);
     }
@@ -59,122 +65,163 @@ public class PaymentModel extends AbstractModel {
     }
 
     public void setId(int id) {
-        int oldValue = id;
         this.id = id;
-        
-        propertySupport.firePropertyChange(PROP_ID,oldValue, id);
     }
 
-    public PaymentType getType() {
-        return type;
+    @Override
+    public String getPaymentType() {
+        return type.toString();
     }
 
-    public void setType(PaymentType type) {
-        PaymentType oldValue = this.type;
-        this.type = type;
-        
-        propertySupport.firePropertyChange(PROP_TYPE,oldValue, type);
+    @Override
+    public void setPaymentType(int type) {
+        this.type = PaymentType.getPaymentType(type);
     }
 
-    public boolean isApproved() {
-        
-        return approved;
-    }
-
-    public void setApproved(boolean approved) {
-        boolean oldValue = this.approved;
-        this.approved = approved;
-        
-        propertySupport.firePropertyChange(PROP_APPROVED,oldValue, approved);
-    }
-
+    @Override
     public double getTotal() {
         return total;
     }
 
+    @Override
     public void setTotal(double total) {
-        double oldValue = this.total;
         this.total = total;
-        
-        propertySupport.firePropertyChange(PROP_APPROVED,oldValue, approved);
     }
     
-    public String getCardHolder() {
-        return cardHolder;
+    @Override
+    public String getCardFirstName() {
+        return cardFirstName;
     }
 
-    public void setCardHolder(String value) {
-        String oldValue = this.cardHolder;
-        this.cardHolder = value;
-        
-        propertySupport.firePropertyChange(PROP_CARDHOLDER,oldValue, cardHolder);
+    @Override
+    public void setCardFirstName(String value) {
+        this.cardFirstName = value;
     }
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int value) {
-        int oldValue = this.day;
-        this.day = value;
-        
-        propertySupport.firePropertyChange(PROP_EXPRDAY,oldValue, day);
-    }
-    public int getMonth() {
-        return month;
+    
+    @Override
+    public String getCardLastName() {
+        return cardLastName;
     }
 
-    public void setMonth(int value) {
-        int oldValue = this.month;
-        this.month = value;
-        
-        propertySupport.firePropertyChange(PROP_EXPRMONTH,oldValue, month);
+    @Override
+    public void setCardLastName(String value) {
+        this.cardLastName = value;
     }
-    public int getYear() {
-        return year;
+    
+    @Override
+    public int getExpDay() {
+        return expDay;
     }
 
-    public void setCardYear(int value) {
-        int oldValue = this.year;
-        this.year = value;
-        
-        propertySupport.firePropertyChange(PROP_EXPRYEAR,oldValue, year);
+    @Override
+    public void setExpDay(int value) {
+        this.expDay = value;
     }
+    
+    @Override
+    public int getExpMonth() {
+        return expMonth;
+    }
+
+    @Override
+    public void setExpMonth(int value) {
+        this.expMonth = value;
+    }
+    
+    @Override
+    public int getExpYear() {
+        return expYear;
+    }
+
+    @Override
+    public void setExpYear(int value) {
+        this.expYear = value;
+    }
+    @Override
     public int getCardNumber() {
         return cardNumber;
     }
 
+    @Override
     public void setCardNumber(int value) {
-        int oldValue = this.cardNumber;
         this.cardNumber = value;
-        
-        propertySupport.firePropertyChange(PROP_CARDNUMBER,oldValue, cardNumber);
-    }
-    public int getSec() {
-        return sec;
-    }
-
-    public void setSec(int value) {
-        int oldValue = this.sec;
-        this.sec = value;
-        
-        propertySupport.firePropertyChange(PROP_SECCODE,oldValue, sec);
-    }
-    
-    
-    @Override
-    public void save() {
-        try {
-            this.setTotal(((OrderModel)order).getTotal());
-            source.saveOrder(order);
-            //source.savePayment(this);
-        } catch (StorageException ex) {
-            Logger.getLogger(PaymentModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     @Override
-    public void getById(int id) {
+    public int getOrderType() {
+        return this.orderType;
+    }
+
+    @Override
+    public void setOrderType(int value) {
+        this.orderType = value;
+    }
+
+    @Override
+    public String getCustomerName() {
+        return this.customerName;
+    }
+
+    @Override
+    public void setCustomerName(String value) {
+        this.customerName = value;
+    }
+
+    @Override
+    public String getCustomerAddress1() {
+        return this.customerAddress1;
+    }
+
+    @Override
+    public void setCustomerAddress1(String value) {
+        this.customerAddress1 = value;
+    }
+
+    @Override
+    public String getCustomerAddress2() {
+        return this.customerAddress2;
+    }
+
+    @Override
+    public void setCustomerAddress2(String value) {
+        this.customerAddress2 = value;
+    }
+
+    @Override
+    public String getCustomerCity() {
+        return this.customerCity;
+    }
+
+    @Override
+    public void setCustomerCity(String value) {
+        this.customerCity = value;
+    }
+
+    @Override
+    public int getCustomerZip() {
+        return this.customerZip;
+    }
+
+    @Override
+    public void setCustomerZip(int value) {
+        this.customerZip = value;
+    }
+    
+    @Override
+    public void clear() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public boolean save() {
+        try {
+            this.setTotal(order.getTotal());
+            source.saveOrder(order);
+            source.savePayment(this);
+        } catch (StorageException ex) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -189,19 +236,12 @@ public class PaymentModel extends AbstractModel {
         if(fields.containsKey(PROP_ID.toLowerCase()))
             setId(Integer.parseInt(fields.get(PROP_ID.toLowerCase()).toString()));
         if(fields.containsKey(PROP_ADDRESS.toLowerCase()+"id"))
-            setType(PaymentType.getPaymentType(Integer.parseInt(fields.get(PROP_TYPE.toLowerCase()+"id").toString())));
-        if(fields.containsKey(PROP_APPROVED.toLowerCase()+"id"))
-            setApproved(Boolean.parseBoolean(fields.get(PROP_ADDRESS.toLowerCase()+"id").toString()));
+            setPaymentType(Integer.parseInt(fields.get(PROP_TYPE.toLowerCase()+"id").toString()));
+//        if(fields.containsKey(PROP_APPROVED.toLowerCase()+"id"))
+//            setApproved(Boolean.parseBoolean(fields.get(PROP_ADDRESS.toLowerCase()+"id").toString()));
         if(fields.containsKey(PROP_TOTAL.toLowerCase()+"id"))
             setTotal(Double.parseDouble(fields.get(PROP_AUTHLEVEL.toLowerCase()+"id").toString()));
     }
 
-    @Override
-    public void get() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setPaymentType(int selectedIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }

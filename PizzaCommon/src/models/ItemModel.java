@@ -18,13 +18,12 @@ import java.util.logging.Logger;
  *
  * @author Jacob
  */
-public class ItemModel extends AbstractModel {
+public class ItemModel extends AbstractModel implements IItemModel {
     public static final transient String PROP_ID = "id";
     public static final transient String PROP_NAME = "name";
     public static final transient String PROP_DESCRIPTION = "description";
     public static final transient String PROP_PRICE = "price";
     public static final transient String PROP_TYPE = "type";
-    
     public static final transient String PROP_SPECIALPRICE = "specialPrice";
     public static final transient String PROP_ISSPECIAL = "isSpecial";
     public static final transient String PROP_ISACTIVE = "isActive";
@@ -33,16 +32,14 @@ public class ItemModel extends AbstractModel {
     private String name;
     private String description;
     private double price;
-    private int type;
     private double specialPrice;
     private boolean isSpecial;
     private boolean isActive;
-    public ItemModel() {
-        super();
-    }
-    public ItemModel(IDataSource source)
+    public ItemModel(IDataSource source, String name, double price)
     {
         super(source);
+        this.name = name;
+        this.price = price;
     }
     //<editor-fold desc="id">
     public int getId()
@@ -51,9 +48,7 @@ public class ItemModel extends AbstractModel {
     }
     public void setId(int value)
     {
-        int oldValue = id;
         id =  value;
-        propertySupport.firePropertyChange(PROP_ID, oldValue, id);
     }
     //</editor-fold>
     //<editor-fold desc="name">
@@ -63,9 +58,7 @@ public class ItemModel extends AbstractModel {
     }
     public void setName(String value)
     {
-        String oldValue = name;
         name = value;
-        propertySupport.firePropertyChange(PROP_NAME, oldValue, name);
     }
     //</editor-fold>
     //<editor-fold desc="description">
@@ -75,108 +68,76 @@ public class ItemModel extends AbstractModel {
     }
     public void setDescription(String value)
     {
-        String oldValue = description;
         description = value;
-        propertySupport.firePropertyChange(PROP_DESCRIPTION, oldValue, description);
     }
     //</editor-fold>
     //<editor-fold desc="price">
+    @Override
+    public double getDisplayPrice()
+    {
+        if(isSpecial)
+            return specialPrice;
+        return price;
+    }
+    @Override
     public double getPrice()
     {
         return price;
     }
+    @Override
     public void setPrice(double value)
     {
-        double oldValue = price;
         price = value;
-        propertySupport.firePropertyChange(PROP_PRICE, oldValue, price);
     }
-    //</editor-fold>
-    //<editor-fold desc="type">
-    public ItemType getType()
-    {
-        return ItemType.getItemType(type);
-    }
-    public void setType(int value)
-    {
-        int oldValue = type;
-        type = value;
-        propertySupport.firePropertyChange(PROP_TYPE, oldValue, type);
-    }
-    //</editor-fold>
-    
-    //<editor-fold desc="SpeicalPrice">
-    public double getSpecialPrice()
-    {
-        return specialPrice;
-    }
+    @Override
     public void setSpecialPrice(double value)
     {
-        double oldValue = specialPrice;
         specialPrice = value;
-        propertySupport.firePropertyChange(PROP_SPECIALPRICE, oldValue, specialPrice);
+    }
+    
+    @Override
+    public double getSpecialPrice() {
+        return specialPrice;
     }
     //</editor-fold>
-    
     //<editor-fold desc="IsSpecial">
+    @Override
     public boolean getIsSpecial()
     {
         return isSpecial;
     }
+    @Override
     public void setIsSpecial(boolean value)
     {
-        boolean oldValue = isSpecial;
         isSpecial = value;
-        propertySupport.firePropertyChange(PROP_ISSPECIAL, oldValue, isSpecial);
     }
     //</editor-fold>
     //<editor-fold desc="IsActive">
+    @Override
     public boolean getIsActive()
     {
         return isActive;
     }
+    @Override
     public void setIsActive(boolean value)
     {
-        boolean oldValue = isActive;
         isActive = value;
-        propertySupport.firePropertyChange(PROP_ISACTIVE, oldValue, isActive);
     }
     //</editor-fold>
     @Override
-    public void save() {
+    public boolean save() {
         try
         {
             source.saveItem(this);
         }
         catch(Exception e)
         {
-            //TODO: Do something here
-            
-            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, e);
+            return false;
         }
+        return true;
     }
 
     @Override
-    public void getById(int id) {
-        try
-        {
-            source.getItem(id);
-        }
-        catch(Exception e)
-        {
-            //TODO: Do something here
-            Logger.getLogger(MenuModel.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
-
-    @Override
-    /*
-    The load method takes a hashmap of string object and 
-    uses it to place the provided values in the model.
-    
-    It expects the key names to be all lowercase and identical
-    to the property name.
-    */
     public void load(HashMap<String, Object> fields) throws LoadException {
         if(fields == null || fields.keySet().size() < 1)
         {
@@ -193,8 +154,6 @@ public class ItemModel extends AbstractModel {
             setDescription(fields.get(PROP_DESCRIPTION).toString());
         if(fields.containsKey(PROP_PRICE))
             setPrice(Double.parseDouble(fields.get(PROP_PRICE).toString()));
-        if(fields.containsKey(PROP_TYPE))
-            setType(Integer.parseInt(fields.get(PROP_TYPE).toString()));
         if(fields.containsKey(PROP_SPECIALPRICE.toLowerCase()))
             setSpecialPrice(Double.parseDouble(fields.get(PROP_SPECIALPRICE.toLowerCase()).toString()));
         if(fields.containsKey(PROP_ISSPECIAL.toLowerCase()))
@@ -204,7 +163,8 @@ public class ItemModel extends AbstractModel {
     }
 
     @Override
-    public void get() {
+    public void clear() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }
