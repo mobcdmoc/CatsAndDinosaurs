@@ -35,11 +35,9 @@ public class ItemModel extends AbstractModel implements IItemModel {
     private double specialPrice;
     private boolean isSpecial;
     private boolean isActive;
-    public ItemModel(IDataSource source, String name, double price)
+    public ItemModel(IDataSource source)
     {
-        super(source);
-        this.name = name;
-        this.price = price;
+        
     }
     //<editor-fold desc="id">
     public int getId()

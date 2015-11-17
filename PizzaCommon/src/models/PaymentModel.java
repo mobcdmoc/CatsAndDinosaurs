@@ -5,13 +5,13 @@
  */
 package models;
 
+import data.IDataSource;
 import enums.PaymentType;
 import exceptions.LoadException;
 import exceptions.StorageException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static models.UserModel.PROP_ADDRESS;
 import static models.UserModel.PROP_AUTHLEVEL;
 
 /**
@@ -50,14 +50,15 @@ public class PaymentModel extends AbstractModel implements IPaymentModel {
     private String customerCity;
     private int customerZip;
     
-    public PaymentModel(IOrderModel orderModel) 
+    public PaymentModel(IDataSource source) 
     {
             super();
-            order = orderModel;
-            if(orderModel != null)
-                setTotal(order.getTotal());
-            else 
-                setTotal(0);
+            this.source = source;
+//            order = orderModel;
+//            if(orderModel != null)
+//                setTotal(order.getTotal());
+//            else 
+//                setTotal(0);
     }
 
     public int getId() {
@@ -235,8 +236,8 @@ public class PaymentModel extends AbstractModel implements IPaymentModel {
         //maybe through reflection.
         if(fields.containsKey(PROP_ID.toLowerCase()))
             setId(Integer.parseInt(fields.get(PROP_ID.toLowerCase()).toString()));
-        if(fields.containsKey(PROP_ADDRESS.toLowerCase()+"id"))
-            setPaymentType(Integer.parseInt(fields.get(PROP_TYPE.toLowerCase()+"id").toString()));
+//        if(fields.containsKey(PROP_ADDRESS.toLowerCase()+"id"))
+//            setPaymentType(Integer.parseInt(fields.get(PROP_TYPE.toLowerCase()+"id").toString()));
 //        if(fields.containsKey(PROP_APPROVED.toLowerCase()+"id"))
 //            setApproved(Boolean.parseBoolean(fields.get(PROP_ADDRESS.toLowerCase()+"id").toString()));
         if(fields.containsKey(PROP_TOTAL.toLowerCase()+"id"))

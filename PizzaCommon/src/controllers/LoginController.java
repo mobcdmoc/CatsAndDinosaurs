@@ -6,6 +6,7 @@
 package controllers;
 
 import data.IDataSource;
+import data.IModelFactory;
 import models.IUserModel;
 import models.UserModel;
 
@@ -16,27 +17,21 @@ import models.UserModel;
 public class LoginController extends AbstractController implements ILoginController {
 
     private IUserModel model;
-    public LoginController(IUserModel model)
+    private IModelFactory modelFactory;
+    public LoginController(IModelFactory modelFactory, IDataSource source)
     {
-        super();
-        this.model = model;
-    }
-    
-    @Override
-    public void init(IDataSource source)
-    {
-        super.init(source);
-        model.init(source);
+        super(source);
+        this.modelFactory = modelFactory;
+        this.model = modelFactory.getEmptyIUserModel();
     }
     
     @Override
     public void login() {
         try
         {
-            IUserModel user = (IUserModel)source.getUser(model.getUsername(), model.getPassword());
+            //Will return null if no user was found with the given username and password.
+            IUserModel user = source.getUser(model.getUsername(), model.getPassword());
             //Insert local login logic here.
-            
-            
             
             //End Local Login Logic
         }

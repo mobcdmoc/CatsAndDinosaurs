@@ -153,154 +153,151 @@ public class SqliteDataSource implements IDataSource{
             throw new StorageException("Something went horribly wrong!");
         }
     }
-    
-    
-//    @Override
-//    public IModel getEmployee(int id) {
-//        IModel rtn = new MenuModel();
-//        return rtn;
-//    }
-
+   
     @Override
-    public IModel getItem(int id) throws StorageException
+    public IItemModel getItem(int id) throws StorageException
     {
-        StringBuilder query = new StringBuilder("SELECT * FROM Items WHERE Id = '");
-        query.append(id);
-        query.append("' AND IsActive = 'true'");
-        IModel rtn = executeQuery(ItemModel.class,query.toString());
-        return rtn;
+//        StringBuilder query = new StringBuilder("SELECT * FROM Items WHERE Id = '");
+//        query.append(id);
+//        query.append("' AND IsActive = 'true'");
+//        IItemModel rtn = executeQuery(ItemModel.class,query.toString());
+//        return rtn;
+        return null;
     }
     
     @Override
-    public ArrayList<IModel> getItems() throws StorageException{
-        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
-        ArrayList<IModel> rtn = executeQueryMultiple(ItemModel.class, query);
-        return rtn;
+    public ArrayList<IItemModel> getItems() throws StorageException{
+//        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
+//        ArrayList<IItemModel> rtn = executeQueryMultiple(ItemModel.class, query);
+//        return rtn;
+        return null;
     }
     
     @Override
-    public IModel getMenu() throws StorageException {
-        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
-        
-        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class, query);
-        IModel rtn = new MenuModel();
-        ((MenuModel)rtn).setItems(items);
-        
-        return rtn;
-    }
-
-    @Override
-    public IModel getOrder(int id) throws StorageException {
-        StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE id = '");
-        query.append(id).append("'");
-        
-        IModel rtn = executeQuery(OrderModel.class, query.toString());
-        
-        if(rtn == null)
-            return null;
-                
-//        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-//        itemQuery.append(((OrderModel)rtn).getId());
-//        itemQuery.append("'");
+    public IMenuModel getMenu() throws StorageException {
+//        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
 //        
-//        ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+//        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class, query);
+//        IModel rtn = new MenuModel();
+////        ((MenuModel)rtn).setItems(items);
 //        
-//        ((OrderModel)rtn).setItems(FXCollections.observableArrayList(items));
-
-        return rtn;
-    }
-    @Override
-    public ArrayList<IModel> getOrders() throws StorageException {
-        String query = "SELECT * FROM Orders";
-        
-        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
-        
-        for(IModel model : orders)
-        {
-            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-            itemQuery.append(((OrderModel)model).getId());
-            itemQuery.append("'");
-        
-            ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-            ArrayList<String> itemNames = new ArrayList<>();
-            ArrayList<Integer> itemIds = new ArrayList<>();
-            items.stream().forEach((x) -> 
-            { 
-                itemNames.add(((ItemModel)x).getName()); 
-                itemIds.add((Integer)((ItemModel)x).getId());
-            });
-            ((OrderModel)model).setItems(itemNames);
-            ((OrderModel)model).setItemIds(itemIds);
-        }
-        
-        return orders;
+//        return rtn;
+        return null;
     }
 
     @Override
-    public ArrayList<IModel> getOrders(int id) throws StorageException {
-        StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE UserId = '");
-        query.append(id);
-        query.append("' AND StatusId < 4");
-        
-        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query.toString());
-        
+    public IOrderModel getOrder(int id) throws StorageException {
+//        StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE id = '");
+//        query.append(id).append("'");
+//        
+//        IModel rtn = executeQuery(OrderModel.class, query.toString());
+//        
+//        if(rtn == null)
+//            return null;
+//                
+////        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+////        itemQuery.append(((OrderModel)rtn).getId());
+////        itemQuery.append("'");
+////        
+////        ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+////        
+////        ((OrderModel)rtn).setItems(FXCollections.observableArrayList(items));
+//
+//        return rtn;
+        return null;
+    }
+    @Override
+    public ArrayList<IOrderModel> getOrders() throws StorageException {
+//        String query = "SELECT * FROM Orders";
+//        
+//        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
+//        
 //        for(IModel model : orders)
 //        {
 //            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
 //            itemQuery.append(((OrderModel)model).getId());
 //            itemQuery.append("'");
-        
-//            ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-//            ((OrderModel)model).setItems(FXCollections.observableArrayList(items));
+//        
+//            ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+//            ArrayList<String> itemNames = new ArrayList<>();
+//            ArrayList<Integer> itemIds = new ArrayList<>();
+//            items.stream().forEach((x) -> 
+//            { 
+//                itemNames.add(((ItemModel)x).getName()); 
+//                itemIds.add((Integer)((ItemModel)x).getId());
+//            });
+////            ((OrderModel)model).setItems(itemNames);
+////            ((OrderModel)model).setItemIds(itemIds);
 //        }
-        
-        return orders;
+//        
+//        return orders;
+        return null;
     }
 
     @Override
-    public ArrayList<IModel> getUsers() throws StorageException {
+    public ArrayList<IOrderModel> getOrders(int id) throws StorageException {
+//        StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE UserId = '");
+//        query.append(id);
+//        query.append("' AND StatusId < 4");
+//        
+//        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query.toString());
+//        
+////        for(IModel model : orders)
+////        {
+////            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+////            itemQuery.append(((OrderModel)model).getId());
+////            itemQuery.append("'");
+//        
+////            ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+////            ((OrderModel)model).setItems(FXCollections.observableArrayList(items));
+////        }
+//        
+//        return orders;
+        return null;
+    }
+
+    @Override
+    public ArrayList<IUserModel> getUsers() throws StorageException {
         String query = "SELECT * FROM Users";
         
-        ArrayList<IModel> rtn = executeQueryMultiple(UserModel.class, query);
+        ArrayList<IModel> results = executeQueryMultiple(UserModel.class, query);
+        ArrayList<IUserModel> rtn = new ArrayList<>();
+        results.stream().forEach((x) -> {rtn.add((IUserModel)x);});
         return rtn;
     }
     
     @Override
-    public IModel getUser(int id) throws StorageException {
+    public IUserModel getUser(int id) throws StorageException {
         StringBuilder query = new StringBuilder("SELECT * FROM Users WHERE Id = '");
         query.append(id).append("'");
         
         IModel rtn = executeQuery(UserModel.class,query.toString());
-        return rtn;
+        return (IUserModel)rtn;
     }
 
     @Override
-    public IModel getUser(String userName, String password) throws StorageException {
+    public IUserModel getUser(String userName, String password) throws StorageException {
         StringBuilder query = new StringBuilder("SELECT * FROM Users WHERE UserName = '");
         query.append(userName).append("' AND Password = '");
         query.append(password).append("'");
         
         IModel rtn = executeQuery(UserModel.class,query.toString());
-        return rtn;
+       
+        return (IUserModel)rtn;
+    }
+
+    
+    @Override
+    public boolean validateUsername(String name) throws StorageException {
+        StringBuilder query = new StringBuilder("SELECT * FROM Users WHERE UserName = '");
+        query.append(name).append("'");
+
+        IModel rtn = executeQuery(UserModel.class,query.toString());
+        return rtn == null;
     }
     
-//    @Override
-//    public void saveEmployee(IModel model) throws StorageException {
-//        
-//        EmployeeModel emp = (EmployeeModel)model;
-//        
-//        String query = null;
-//        
-//        if(emp.getId() > 0)
-//            query = String.format("UPDATE Employees SET PayRate = '{0}', EmployeeStatus = '{1}' WHERE Id = '{2}'", emp.getPayRate(), emp.getEmployeeStatus, emp.getId());
-//        else 
-//            query = String.format("INSERT INTO Employees VALUES ('{0}','{1}','{2}'", emp.getId(),emp.getPayRate(),emp.getEmpStatus);
-//        
-//        executeNonQuery(query);
-//    }
-
     @Override
-    public void saveItem(IModel model) throws StorageException {
+    public void saveItem(IItemModel model) throws StorageException {
         ItemModel m = (ItemModel)model;
         StringBuilder query = new StringBuilder();
         if(m.getId() < 1)
@@ -309,7 +306,7 @@ public class SqliteDataSource implements IDataSource{
             query.append(m.getName()).append("', '");
             query.append(m.getDescription()).append("', '");
             query.append(m.getPrice()).append("', '");
-            query.append(m.getType().getValue()).append("', '");
+//            query.append(m.getType().getValue()).append("', '");
             query.append(m.getSpecialPrice()).append("', '");
             query.append(m.getIsSpecial()).append("', '");
             query.append(m.getIsActive()).append("')");
@@ -324,7 +321,7 @@ public class SqliteDataSource implements IDataSource{
             query.append(m.getSpecialPrice()).append("', IsSpecial = '");
             query.append(m.getIsSpecial()).append("', IsActive = '");
             query.append(m.getIsActive()).append("', Type = '");
-            query.append(m.getType().getValue()).append("' WHERE Id = '");
+//            query.append(m.getType().getValue()).append("' WHERE Id = '");
             query.append(m.getId()).append("'");
         }
        
@@ -332,18 +329,18 @@ public class SqliteDataSource implements IDataSource{
     }
 
     @Override
-    public void saveMenu(IModel model) throws StorageException {
+    public void saveMenu(IMenuModel model) throws StorageException {
         MenuModel m = (MenuModel)model;
         
         for(int i = 0; i< m.getItems().size(); i++)
         {
             IModel n = (IModel)m.getItems().get(i);
-            saveItem(n);
+//            saveItem(n);
         }
     }
 
     @Override
-    public void saveOrder(IModel model) throws StorageException {
+    public void saveOrder(IOrderModel model) throws StorageException {
         OrderModel m = (OrderModel)model;
         StringBuilder query = new StringBuilder();
         if(m.getId() < 1)
@@ -367,71 +364,68 @@ public class SqliteDataSource implements IDataSource{
         
         ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, q);
         int id = ((OrderModel)orders.get(0)).getId();
-        
-        StringBuilder q2 = new StringBuilder();
-        q2.append("INSERT INTO ItemOrder (OrderId,ItemId) VALUES");
-        for(int i = 0; i < m.getOrderItemIds().size(); i++)
-        {
-            q2.append("(").append(id).append(", ").append(m.getOrderItemIds().get(i)).append(")");
-            if(i < m.getOrderItemIds().size()-1)
-                q2.append(",");
-        }
-        executeNonQuery(q2.toString());
+//        
+//        StringBuilder q2 = new StringBuilder();
+//        q2.append("INSERT INTO ItemOrder (OrderId,ItemId) VALUES");
+//        for(int i = 0; i < m.getOrderItemIds().size(); i++)
+//        {
+//            q2.append("(").append(id).append(", ").append(m.getOrderItemIds().get(i)).append(")");
+//            if(i < m.getOrderItemIds().size()-1)
+//                q2.append(",");
+//        }
+//        executeNonQuery(q2.toString());
     }
 
     @Override
-    public void saveUser(IModel model) throws StorageException {
+    public void saveUser(IUserModel model) throws StorageException {
         UserModel m = (UserModel)model;
         StringBuilder query = new StringBuilder();
         if(m.getId() < 1)
         {
-            query.append("INSERT INTO Users (UserName,Password,FirstName,MiddleName,LastName,AddressId,AuthLevelId) VALUES ('");
-            query.append(m.getUserName()).append("', '");
+            query.append("INSERT INTO Users (UserName,Password,FirstName,LastName,EmailAddress,Address1,Address2,City,Zip,AuthLevelId) VALUES ('");
+            query.append(m.getUsername()).append("', '");
             query.append(m.getPassword()).append("', '");
             query.append(m.getFirstName()).append("', '");
-            query.append(m.getMiddleName()).append("', '");
             query.append(m.getLastName()).append("', '");
-            query.append(m.getAddress()).append("', '");
+            query.append(m.getEmailAddress()).append("', '");
+            query.append(m.getAddress1()).append("', '");
+            query.append(m.getAddress2()).append("', '");
+            query.append(m.getCity()).append("', '");
+            query.append(m.getZip()).append("', '");
             query.append(m.getAuthLevel()).append("')");
         }
         else
         {
             query.append("UPDATE Users  SET UserName = '");
-            query.append(m.getUserName()).append("', Password = '");
+            query.append(m.getUsername()).append("', Password = '");
             query.append(m.getPassword()).append("', FirstName = '");
-            query.append(m.getFirstName()).append("', MiddleName = '");
-            query.append(m.getMiddleName()).append("', LastName = '");
-            query.append(m.getLastName()).append("', AddressId = '");
-            query.append(m.getAddress()).append("', AuthLevelId = '");
-            query.append(m.getAuthLevel()).append("' WHERE Id = '");
+            query.append(m.getFirstName()).append("', EmailAddress = '");
+            query.append(m.getEmailAddress()).append("', LastName = '");
+            query.append(m.getLastName()).append("', Address1 = '");
+            query.append(m.getAddress1()).append("', Address2 = '");
+            query.append(m.getAddress2()).append("', AuthLevelId = '");
+            query.append(m.getAuthLevel()).append("', City = '");
+            query.append(m.getCity()).append("', Zip = '");
+            query.append(m.getZip()).append("' WHERE Id = '");
             query.append(m.getId()).append("'");
         }
        
         executeNonQuery(query.toString());
     }
-//
-//    @Override
-//    public ObservableList<IModel> getEmployees() throws StorageException {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//
-//    @Override
-//    public void saveEmployees(Collection<IModel> models) throws StorageException {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-
+    
     @Override
-    public void savePayment(IModel model) throws StorageException {
+    public void savePayment(IPaymentModel model) throws StorageException {
         PaymentModel m = (PaymentModel)model;
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO Payment (CardHolder,CardNumber,ExpDay,ExpMonth,ExpYear,SecCode,Ammount) VALUES ('");
-        query.append(m.getCardHolder()).append("', '");
+        query.append(m.getCardFirstName()).append("', '");
         query.append(m.getCardNumber()).append("', '");
-        query.append(m.getDay()).append("', '");
-        query.append(m.getMonth()).append("', '");
-        query.append(m.getYear()).append("', '");
-        query.append(m.getSec()).append("', '");
+//        query.append(m.getDay()).append("', '");
+        query.append(m.getExpMonth()).append("', '");
+        query.append(m.getExpYear()).append("', '");
+//        query.append(m.getSec()).append("', '");
         query.append(m.getTotal()).append("')");
     }
+
 
 }

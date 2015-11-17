@@ -5,8 +5,9 @@
  */
 package controllers;
 
-import models.IChangeMenuModel;
-import models.MenuModel;
+import data.IDataSource;
+import data.IModelFactory;
+import models.IMenuModel;
 
 /**
  *
@@ -14,32 +15,42 @@ import models.MenuModel;
  */
 public class ChangeMenuController extends AbstractController implements IChangeMenuController{
 
-    IChangeMenuModel model;
-    public ChangeMenuController(IChangeMenuModel model)
+    private IMenuModel model;
+    private IModelFactory modelFactory;
+    public ChangeMenuController(IModelFactory modelFactory, IDataSource source)
     {
-        super();
-        this.model = model;
+        super(source);
+        this.model = modelFactory.getEmptyIMenuModel();
     }
 
-
-    public void remove(int[] indices)
+    @Override
+    public void removeItems(int[] indices)
     {
     }
     
+    @Override
     public void newItem(String name, double price)
     {
     }
     
+    @Override
     public void revokeSpecial(int[] indecies)
     {
     }
-    public void newSpecialPrice(int index, double price)
+    
+    @Override
+    public void newSpecial(int index, double price)
     {
     }
     
     @Override
     public void save() {
        model.save();
+    }
+
+    @Override
+    public void getCurrentMenu() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

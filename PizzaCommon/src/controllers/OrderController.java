@@ -5,6 +5,8 @@
  */
 package controllers;
 
+import data.IDataSource;
+import data.IModelFactory;
 import enums.OrderStatus;
 import java.util.ArrayList;
 import models.IMenuModel;
@@ -21,11 +23,14 @@ public class OrderController extends AbstractController implements IOrderControl
     private IMenuModel menu;
     private IOrderModel order;
     private OrderStatus status;
-    public OrderController(IMenuModel menu, IOrderModel order)
+    
+    private IModelFactory modelFactory;
+    public OrderController(IModelFactory modelFactory, IDataSource source)
     {
-        super();
-        this.menu = menu;
-        this.order = order;
+        super(source);
+        this.modelFactory = modelFactory;
+        this.menu = modelFactory.getEmptyIMenuModel();
+        this.order = modelFactory.getEmptyIOrderModel();
     }
     
     public ArrayList<String> getMenu()

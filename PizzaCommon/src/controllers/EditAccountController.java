@@ -6,12 +6,15 @@
 package controllers;
 
 import data.IDataSource;
+import data.IModelFactory;
 
 /**
  *
  * @author Jacob
  */
-public interface IController {
-    //Initializes the controller
+public class EditAccountController extends IEditAccountController {
+
+    public EditAccountController(IModelFactory modelFactory, IDataSource source) {
+    }
     
 }

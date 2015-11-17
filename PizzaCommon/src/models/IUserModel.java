@@ -18,8 +18,14 @@ public interface IUserModel extends IModel{
     void setFirstName(String value);
     String getLastName();
     void setLastName(String value);
+    String getEmailAddress();
+    void setEmailAddress(String value);
     String getAddress1();
     void setAddress1(String value);
     String getAddress2();
     void setAddress2(String value);
+    String getCity();
+    void setCity(String value);
+    int getZip();
+    void setZip(int value);
 }

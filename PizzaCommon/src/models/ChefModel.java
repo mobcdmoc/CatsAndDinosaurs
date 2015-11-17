@@ -5,6 +5,7 @@
  */
 package models;
 
+import data.IDataSource;
 import exceptions.LoadException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,9 +18,10 @@ public class ChefModel extends AbstractModel implements IChefModel {
 
     ArrayList<IOrderModel> orders = new ArrayList<>();
     ArrayList<IOrderModel> completedOrders = new ArrayList<>();
-    
-    
-    
+    public ChefModel(IDataSource source)
+    {
+        this.source = source;
+    }
     @Override
     public boolean save() {
         boolean savedGood = true;

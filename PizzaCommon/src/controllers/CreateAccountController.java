@@ -6,6 +6,10 @@
 package controllers;
 
 import data.IDataSource;
+import data.IModelFactory;
+import exceptions.StorageException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.IUserModel;
 
 /**
@@ -14,24 +18,23 @@ import models.IUserModel;
  */
 public class CreateAccountController extends AbstractController implements ICreateAccountController{
 
-    IUserModel model;
-    
-    public CreateAccountController(IUserModel model)
+    private IUserModel model;
+    private IModelFactory modelFactory;
+    public CreateAccountController(IModelFactory modelFactory, IDataSource source)
     {
-        super();
-        this.model = model;
-    }
-    
-    @Override
-    public void init(IDataSource source)
-    {
-        this.source = source;
-        model.init(source);
+        super(source);
+        this.modelFactory = modelFactory;
+        this.model = modelFactory.getEmptyIUserModel();
     }
     
     @Override
     public boolean usernameExists(String name) {
-        return source.validateUsername(name);
+        try {
+            return source.validateUsername(name);
+        } catch (StorageException ex) {
+//            Logger.getLogger(CreateAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override

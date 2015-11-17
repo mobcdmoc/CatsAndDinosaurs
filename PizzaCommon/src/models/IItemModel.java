@@ -10,6 +10,8 @@ package models;
  * @author Jacob
  */
 public interface IItemModel extends IModel {
+    String getName();
+    void setName(String value);
     double getDisplayPrice();
     double getPrice();
     void setPrice(double value);

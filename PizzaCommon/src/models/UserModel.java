@@ -5,15 +5,10 @@
  */
 package models;
 
+import data.IDataSource;
 import exceptions.LoadException;
-import exceptions.StorageException;
 import java.beans.*;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 
 /**
  *
@@ -26,8 +21,13 @@ public class UserModel extends AbstractModel implements IUserModel {
     public static final transient String PROP_PASSWORD = "password";
     public static final transient String PROP_FIRSTNAME = "firstName";
     public static final transient String PROP_LASTNAME = "lastName";
-    public static final transient String PROP_ADDRESS = "address";
+    public static final transient String PROP_ADDRESS1 = "address1";
+    public static final transient String PROP_ADDRESS2 = "address2";
     public static final transient String PROP_AUTHLEVEL = "authLevel";
+    public static final transient String PROP_CITY = "city";
+    public static final transient String PROP_ZIP = "zip";
+    public static final transient String PROP_EMAILADDRESS = "emailAddress";
+    
     
     private int id;
     private String userName;
@@ -37,14 +37,17 @@ public class UserModel extends AbstractModel implements IUserModel {
     */
     private String password;
     private String firstName;
-    private String middleName;
     private String lastName;
     private String address1;
     private String address2;
+    private String city;
+    private int zip;
     private int authLevel;
+    private String emailAddress;
     
     
-    public UserModel() {
+    public UserModel(IDataSource source) {
+        this.source = source;
         propertySupport = new PropertyChangeSupport(this);
     }
     
@@ -98,17 +101,21 @@ public class UserModel extends AbstractModel implements IUserModel {
     }
     //</editor-fold>
     //<editor-fold desc="Address">
+    @Override
     public String getAddress1() {
         return address1;
     }
+    @Override
     public void setAddress1(String value) {
         address1 = value;
     }
     //</editor-fold>
     //<editor-fold desc="Address2">
+    @Override
     public String getAddress2() {
         return address2;
     }
+    @Override
     public void setAddress2(String value) {
         address2 = value;
     }
@@ -122,6 +129,35 @@ public class UserModel extends AbstractModel implements IUserModel {
     }
     //</editor-fold>
     
+    @Override
+    public String getCity() {
+        return city;
+    }
+    @Override
+    public void setCity(String value) {
+        city = value;
+    }
+    
+    @Override
+    public int getZip()
+    {
+        return zip;
+    }
+    @Override
+    public void setZip(int value)
+    {
+        zip = value;
+    }
+    @Override
+    public String getEmailAddress()
+    {
+        return emailAddress;
+    }
+    @Override
+    public void setEmailAddress(String value)
+    {
+        emailAddress = value;
+    }
     
     @Override
     public boolean save() {
@@ -176,8 +212,16 @@ public class UserModel extends AbstractModel implements IUserModel {
             setFirstName(fields.get(PROP_FIRSTNAME.toLowerCase()).toString());
         if(fields.containsKey(PROP_LASTNAME.toLowerCase()))
             setLastName(fields.get(PROP_LASTNAME.toLowerCase()).toString());
-//        if(fields.containsKey(PROP_ADDRESS.toLowerCase()+"id"))
-//            setAddress1(Integer.parseInt(fields.get(PROP_ADDRESS.toLowerCase()+"id").toString()));
+        if(fields.containsKey(PROP_ADDRESS1.toLowerCase()))
+            setAddress1(fields.get(PROP_ADDRESS1.toLowerCase()).toString());
+        if(fields.containsKey(PROP_ADDRESS2.toLowerCase()))
+            setAddress2(fields.get(PROP_ADDRESS2.toLowerCase()).toString());
+        if(fields.containsKey(PROP_CITY.toLowerCase()))
+            setCity(fields.get(PROP_CITY.toLowerCase()).toString());
+        if(fields.containsKey(PROP_ZIP.toLowerCase()))
+            setZip(Integer.parseInt(fields.get(PROP_ZIP.toLowerCase()).toString()));
+        if(fields.containsKey(PROP_EMAILADDRESS.toLowerCase()))
+            setEmailAddress(fields.get(PROP_EMAILADDRESS.toLowerCase()).toString());
         if(fields.containsKey(PROP_AUTHLEVEL.toLowerCase()+"id"))
             setAuthLevel(Integer.parseInt(fields.get(PROP_AUTHLEVEL.toLowerCase()+"id").toString()));
     }

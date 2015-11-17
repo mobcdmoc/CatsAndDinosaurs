@@ -5,9 +5,10 @@
  */
 package models;
 
+import data.IDataSource;
+import data.IModelFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.DefaultListModel;
 
 /**
  *
@@ -16,16 +17,19 @@ import javax.swing.DefaultListModel;
 public class MenuModel extends AbstractModel implements IMenuModel {
     public static final String PROP_ITEMS = "items";
     private ArrayList<IItemModel> items;
-    
-    public MenuModel() {
+    private IModelFactory modelFactory;
+    public MenuModel(IModelFactory modelFactory, IDataSource source) {
         super();
         items = new ArrayList<>();
+        this.source = source;
     }
     
     public void newItem(String name, double price)
     {
-        IItemModel m = new ItemModel(this.source, name, price);
-        items.add(m);
+        IItemModel tmp = modelFactory.getEmptyIItemModel();
+        tmp.setName(name);
+        tmp.setPrice(price);
+        items.add(tmp);
     }
    
     public void removeItem(ItemModel item)

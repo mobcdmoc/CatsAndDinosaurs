@@ -10,13 +10,9 @@ import com.google.gson.Gson;
 import exceptions.LoadException;
 import exceptions.StorageException;
 import java.util.ArrayList;
-import java.util.Collection;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 import models.*;
 
 /**
@@ -45,12 +41,12 @@ public class PizzaServiceClient implements IDataSource {
     }
     
     @Override
-    public void saveItem(IModel requestEntity) throws ClientErrorException, StorageException {
+    public void saveItem(IItemModel requestEntity) throws ClientErrorException, StorageException {
         webTarget.path("Save/Item").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(gson.toJson(requestEntity), javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
     @Override
-    public void saveOrder(IModel requestEntity) throws ClientErrorException, StorageException {
+    public void saveOrder(IOrderModel requestEntity) throws ClientErrorException, StorageException {
         webTarget.path("Save/Order").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
@@ -69,7 +65,7 @@ public class PizzaServiceClient implements IDataSource {
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
         if(json == null)
         {
-            UserModel m = new UserModel();
+            UserModel m = new UserModel(null);
             m.setId(-1);
             return m;
         }
@@ -77,18 +73,13 @@ public class PizzaServiceClient implements IDataSource {
     }
 
     @Override
-    public ArrayList<IModel> getUsers() throws ClientErrorException, StorageException {
+    public ArrayList<IUserModel> getUsers() throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Users");
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        ArrayList<IModel> models = gson.fromJson(resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class), new TypeToken<ArrayList<UserModel>>(){}.getType());
+        ArrayList<IUserModel> models = gson.fromJson(resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class), new TypeToken<ArrayList<UserModel>>(){}.getType());
         return models;
     } 
-    
-//    @Override
-//    public void saveEmployee(IModel requestEntity) throws ClientErrorException, StorageException {
-//        webTarget.path("Save/Employee").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
-//    }
 
     @Override
     public ItemModel getItem(int id) throws ClientErrorException, StorageException {
@@ -101,38 +92,38 @@ public class PizzaServiceClient implements IDataSource {
     }
 
     @Override
-    public ArrayList<IModel> getOrders() throws ClientErrorException, StorageException {
+    public ArrayList<IOrderModel> getOrders() throws ClientErrorException, StorageException {
         WebTarget resource = webTarget;
         resource = resource.path("Get/Orders");
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        ArrayList<IModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
+        ArrayList<IOrderModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
         return models;
     }
 
     @Override
-    public ArrayList<IModel> getOrders(int id) throws StorageException {
+    public ArrayList<IOrderModel> getOrders(int id) throws StorageException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("Get/Orders/{0}",new Object[] {id}));
         String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        ArrayList<IModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
+        ArrayList<IOrderModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
         return models;
     }
-    @Override
-    public void saveMenu(IMenuModel requestEntity) throws ClientErrorException, StorageException {
-        IMenuModel m = (MenuModel)requestEntity;
-        String json = gson.toJson(m.getItems());
-        
-        webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(json, javax.ws.rs.core.MediaType.APPLICATION_JSON));
-    }
-
-    @Override
-    public ArrayList<IItemModel> getItems() throws ClientErrorException, StorageException {
-        WebTarget resource = webTarget;
-        resource = resource.path("Get/Items");
-        String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-        ArrayList<IItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<ItemModel>>(){}.getType());
-        return models;
-    }
+//    @Override
+//    public void saveMenu(IMenuModel requestEntity) throws ClientErrorException, StorageException {
+//        IMenuModel m = (MenuModel)requestEntity;
+//        String json = gson.toJson(m.getItems());
+//        
+//        webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(json, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+//    }
+//
+//    @Override
+//    public ArrayList<IItemModel> getItems() throws ClientErrorException, StorageException {
+//        WebTarget resource = webTarget;
+//        resource = resource.path("Get/Items");
+//        String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+//        ArrayList<IItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<ItemModel>>(){}.getType());
+//        return models;
+//    }
 
     @Override
     public IOrderModel getOrder(int id) throws ClientErrorException, StorageException {
@@ -145,14 +136,15 @@ public class PizzaServiceClient implements IDataSource {
     @Override
     public IMenuModel getMenu() throws ClientErrorException, StorageException {
         
-        ArrayList<IModel> items = getItems();
-        IMenuModel rtn = new MenuModel();
-        rtn.setItems(items);
-        return rtn;
+//        ArrayList<IModel> items = getItems();
+//        IMenuModel rtn = new MenuModel();
+//        rtn.setItems(items);
+//        return rtn;
+        return null;
     }
 
     @Override
-    public void saveUser(IModel requestEntity) throws ClientErrorException, StorageException {
+    public void saveUser(IUserModel requestEntity) throws ClientErrorException, StorageException {
         webTarget.path("Save/User").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
@@ -167,12 +159,26 @@ public class PizzaServiceClient implements IDataSource {
 
 
     @Override
-    public void savePayment(IModel requestEntity) throws ClientErrorException, StorageException {
+    public void savePayment(IPaymentModel requestEntity) throws ClientErrorException, StorageException {
         webTarget.path("Save/Payment").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
     @Override
     public boolean validateUsername(String name) {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("Get/User/{0}", new Object[]{name}));
+        String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+        boolean rtn = gson.fromJson(json, Boolean.class);
+        return rtn;
+    }
+
+    @Override
+    public ArrayList<IItemModel> getItems() throws StorageException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveMenu(IMenuModel model) throws StorageException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

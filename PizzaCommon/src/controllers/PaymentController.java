@@ -6,6 +6,7 @@
 package controllers;
 
 import data.IDataSource;
+import data.IModelFactory;
 import enums.PaymentType;
 import models.IModel;
 import models.IOrderModel;
@@ -18,25 +19,19 @@ import models.PaymentModel;
  */
 public class PaymentController extends AbstractController implements IPaymentController {
 
-    IPaymentModel model;
-    public PaymentController()
+    private IPaymentModel model;
+    private IModelFactory modelFactory;
+    
+    public PaymentController(IModelFactory modelFactory, IDataSource source)
     {
-        super();
+        super(source);
+        this.modelFactory = modelFactory;
+        model = modelFactory.getEmptyIPaymentModel();
     }
-    public void init(IOrderModel orderModel, IDataSource source)
-    {
-        init(source);
-        
-        model = new PaymentModel(orderModel);
-        model.init(source);
-    }
+    
     @Override
     public boolean submit() {
         return model.save();
-    }
-
-    public PaymentController(IPaymentModel model) {
-        this.model = model;
     }
     
     //You should do validation in this method. If it's good set it in the model
@@ -118,17 +113,5 @@ public class PaymentController extends AbstractController implements IPaymentCon
         model.setTotal(value);
         return true;
     }
-    
-    
-//    public double getTotal()
-//    {
-//        return ((PaymentModel)model).getTotal();
-//    }
-    
-    
-//
-//    public void setPaymentType(int selectedIndex) {
-//        ((PaymentModel)model).setType(PaymentType.getPaymentType(selectedIndex));
-//    }
     
 }

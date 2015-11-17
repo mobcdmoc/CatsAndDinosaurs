@@ -6,6 +6,7 @@
 package controllers;
 
 import data.IDataSource;
+import data.IModelFactory;
 import data.PizzaServiceClient;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -21,9 +22,11 @@ public class ChefController extends AbstractController implements IChefControlle
 
     private ArrayList<IOrderModel> orders = new ArrayList<>();
     
-    public ChefController(IDataSource source)
+    private IModelFactory modelFactory;
+    public ChefController(IModelFactory modelFactory, IDataSource source)
     {
-        super();
+        super(source);
+        this.modelFactory = modelFactory;
         this.source = source;
     }
     

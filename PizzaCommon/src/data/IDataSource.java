@@ -8,9 +8,7 @@ package data;
 import exceptions.LoadException;
 import exceptions.StorageException;
 import java.util.ArrayList;
-import java.util.Collection;
-import javafx.collections.ObservableList;
-import models.IModel;
+import models.*;
 
 /**
  *
@@ -19,21 +17,21 @@ import models.IModel;
 public interface IDataSource {
     void load() throws LoadException;
     
-    IModel getItem(int id) throws StorageException;
-    ArrayList<IModel> getItems() throws StorageException;
-    IModel getMenu() throws StorageException;
-    IModel getOrder(int id) throws StorageException;
-    ArrayList<IModel> getOrders(int id) throws StorageException;
-    ArrayList<IModel> getOrders() throws StorageException;//returns only active orders
-    IModel getUser(int id) throws StorageException;
-    IModel getUser(String userName, String password) throws StorageException;
-    ArrayList<IModel> getUsers() throws StorageException;
+    IItemModel getItem(int id) throws StorageException;
+    ArrayList<IItemModel> getItems() throws StorageException;
+    IMenuModel getMenu() throws StorageException;
+    IOrderModel getOrder(int id) throws StorageException;
+    ArrayList<IOrderModel> getOrders(int id) throws StorageException;
+    ArrayList<IOrderModel> getOrders() throws StorageException;//returns only active orders
+    IUserModel getUser(int id) throws StorageException;
+    IUserModel getUser(String userName, String password) throws StorageException;
+    ArrayList<IUserModel> getUsers() throws StorageException;
 //    ObservableList<IModel> getOrderItems() throws StorageException;
-    void saveUser(IModel model) throws StorageException;
-    void saveItem(IModel model)throws StorageException;
-    void saveMenu(IModel model)throws StorageException;
-    void saveOrder(IModel model)throws StorageException;
-    void savePayment(IModel model) throws StorageException;
+    void saveUser(IUserModel model) throws StorageException;
+    void saveItem(IItemModel model)throws StorageException;
+    void saveMenu(IMenuModel model)throws StorageException;
+    void saveOrder(IOrderModel model)throws StorageException;
+    void savePayment(IPaymentModel model) throws StorageException;
     
-    boolean validateUsername(String name);
+    boolean validateUsername(String name) throws StorageException;
 }
