@@ -5,6 +5,8 @@
  */
 package models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jacob
@@ -14,4 +16,5 @@ public interface IOrderModel extends IModel{
     void setTotal(double value);
     void addItem(ItemModel item);
     void removeItem(ItemModel item);
+    void setItems(ArrayList<IItemModel> items);
 }

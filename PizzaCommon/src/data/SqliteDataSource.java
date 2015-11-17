@@ -13,14 +13,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import models.*;
 
 /**
@@ -31,9 +27,10 @@ public class SqliteDataSource implements IDataSource{
     
     private String connectionString;
     private Connection connection;
-    
+    private IModelFactory modelFactory;
     public SqliteDataSource(String connectionString)
     {
+        this.modelFactory = new ModelFactory(null);
         this.connectionString = connectionString;
     }
     
@@ -134,7 +131,8 @@ public class SqliteDataSource implements IDataSource{
         ResultSetMetaData mt = results.getMetaData();
         for(int i = 1; i < mt.getColumnCount()+1; i++)
         {
-            fields.put(mt.getColumnName(i).toLowerCase(), results.getObject(i));
+            if(results.getObject(i) != null)
+                fields.put(mt.getColumnName(i).toLowerCase(), results.getObject(i));
         }
         return fields;
     }
@@ -175,63 +173,57 @@ public class SqliteDataSource implements IDataSource{
     
     @Override
     public IMenuModel getMenu() throws StorageException {
-//        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
-//        
-//        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class, query);
-//        IModel rtn = new MenuModel();
-////        ((MenuModel)rtn).setItems(items);
-//        
-//        return rtn;
-        return null;
+        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
+        
+        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class, query);
+        ArrayList<IItemModel> tmp = new ArrayList<>();
+        items.stream().forEach((x) -> {tmp.add((IItemModel)x);});
+        IMenuModel rtn = modelFactory.getEmptyIMenuModel();
+        (rtn).setItems(tmp);
+        
+        return rtn;
     }
 
     @Override
     public IOrderModel getOrder(int id) throws StorageException {
-//        StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE id = '");
-//        query.append(id).append("'");
-//        
-//        IModel rtn = executeQuery(OrderModel.class, query.toString());
-//        
-//        if(rtn == null)
-//            return null;
-//                
-////        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-////        itemQuery.append(((OrderModel)rtn).getId());
-////        itemQuery.append("'");
-////        
-////        ObservableList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-////        
-////        ((OrderModel)rtn).setItems(FXCollections.observableArrayList(items));
-//
-//        return rtn;
-        return null;
+        StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE id = '");
+        query.append(id).append("'");
+        
+        IOrderModel rtn = (IOrderModel)executeQuery(OrderModel.class, query.toString());
+        
+        if(rtn == null)
+            return null;
+                
+        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+        itemQuery.append(((OrderModel)rtn).getId());
+        itemQuery.append("'");
+        
+        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+        ArrayList<IItemModel> tmp = new ArrayList<>();
+        items.stream().forEach((x) -> {tmp.add((IItemModel)x);});            
+        (rtn).setItems(tmp);
+        
+        return rtn;
     }
     @Override
     public ArrayList<IOrderModel> getOrders() throws StorageException {
-//        String query = "SELECT * FROM Orders";
-//        
-//        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
-//        
-//        for(IModel model : orders)
-//        {
-//            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-//            itemQuery.append(((OrderModel)model).getId());
-//            itemQuery.append("'");
-//        
-//            ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-//            ArrayList<String> itemNames = new ArrayList<>();
-//            ArrayList<Integer> itemIds = new ArrayList<>();
-//            items.stream().forEach((x) -> 
-//            { 
-//                itemNames.add(((ItemModel)x).getName()); 
-//                itemIds.add((Integer)((ItemModel)x).getId());
-//            });
-////            ((OrderModel)model).setItems(itemNames);
-////            ((OrderModel)model).setItemIds(itemIds);
-//        }
-//        
-//        return orders;
-        return null;
+        String query = "SELECT * FROM Orders";
+        
+        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
+        ArrayList<IOrderModel> rtn = new ArrayList<>();
+        orders.stream().forEach((x)-> {rtn.add((IOrderModel)x);});
+        for(IOrderModel order : rtn)
+        {
+            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+            itemQuery.append(((OrderModel)order).getId());
+            itemQuery.append("'");
+        
+            ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+            ArrayList<IItemModel> tmp = new ArrayList<>();
+            items.stream().forEach((x) -> {tmp.add((IItemModel)x);});            
+            (order).setItems(tmp);
+        }        
+        return rtn;
     }
 
     @Override

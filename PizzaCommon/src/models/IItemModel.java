@@ -22,4 +22,7 @@ public interface IItemModel extends IModel {
     boolean getIsActive();
     void setIsActive(boolean value);
     
+    int getId();
+    void setId(int value);
+            
 }

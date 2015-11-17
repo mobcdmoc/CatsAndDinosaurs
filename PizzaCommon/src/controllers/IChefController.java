@@ -16,5 +16,6 @@ public interface IChefController extends IController {
     void markDone();
     void submit();
     ArrayList<String> getOrders();
-    
+    ArrayList<String> getCompletedOrders();
+    void init();
 }

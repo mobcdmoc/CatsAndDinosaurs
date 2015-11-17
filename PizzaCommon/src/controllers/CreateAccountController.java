@@ -39,6 +39,7 @@ public class CreateAccountController extends AbstractController implements ICrea
 
     @Override
     public boolean createUser() {
+        //Do validation on fields here
         return model.save();
     }
     

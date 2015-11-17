@@ -5,10 +5,12 @@
  */
 package models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jacob
  */
 public interface IMenuModel extends IModel {
-    
+    void setItems(ArrayList<IItemModel> value);
 }

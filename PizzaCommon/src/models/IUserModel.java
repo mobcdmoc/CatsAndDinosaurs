@@ -28,4 +28,6 @@ public interface IUserModel extends IModel{
     void setCity(String value);
     int getZip();
     void setZip(int value);
+    int getAuthLevel();
+    void setAuthLevel(int value);
 }

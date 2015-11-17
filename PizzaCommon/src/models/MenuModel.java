@@ -71,4 +71,9 @@ public class MenuModel extends AbstractModel implements IMenuModel {
     public void clear() {
     
     }
+
+    @Override
+    public void setItems(ArrayList<IItemModel> value) {
+        this.items = value;
+    }
 }

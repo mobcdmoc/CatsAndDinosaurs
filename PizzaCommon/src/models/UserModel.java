@@ -30,7 +30,7 @@ public class UserModel extends AbstractModel implements IUserModel {
     
     
     private int id;
-    private String userName;
+    private String username;
     /*
     In a real system we would encrypt and do as much as we possibly could
     to prevent anyone from seeing this value. but for this we don't really care
@@ -45,7 +45,10 @@ public class UserModel extends AbstractModel implements IUserModel {
     private int authLevel;
     private String emailAddress;
     
-    
+    public UserModel()
+    {
+        //Don't use this.It's a hack to allow the existing query system to work.
+    }
     public UserModel(IDataSource source) {
         this.source = source;
         propertySupport = new PropertyChangeSupport(this);
@@ -62,11 +65,11 @@ public class UserModel extends AbstractModel implements IUserModel {
     //<editor-fold desc="UserName">
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
     @Override
     public void setUsername(String value) {
-        userName = value;
+        username = value;
     }
     //</editor-fold>
     //<editor-fold desc="Password">
@@ -121,9 +124,11 @@ public class UserModel extends AbstractModel implements IUserModel {
     }
     //</editor-fold>
     //<editor-fold desc="AuthLevel">
+    @Override
     public int getAuthLevel() {
         return authLevel;
     }
+    @Override
     public void setAuthLevel(int value) {
         authLevel = value;
     }
@@ -250,6 +255,7 @@ public class UserModel extends AbstractModel implements IUserModel {
     public void clear() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     
     
 }
