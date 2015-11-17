@@ -8,13 +8,12 @@ package resources;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import data.IDataSource;
+import data.IModelFactory;
+import data.ModelFactory;
 import data.SqliteDataSource;
 import exceptions.LoadException;
 import exceptions.StorageException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Context;
@@ -23,13 +22,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.POST;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-//import models.EmployeeModel;
+import models.IItemModel;
+import models.IMenuModel;
 import models.IModel;
+import models.IOrderModel;
+import models.IUserModel;
 import models.ItemModel;
 import models.MenuModel;
 import models.OrderModel;
@@ -57,6 +58,7 @@ public class PizzaService {
     in the interest of time we're just going to hard code it for now.
     */
     private static final String connectionString = "jdbc:sqlite:../resources/PizzaDb.db"; //"jdbc:sqlite:resources/PizzaDb.db";
+    private IModelFactory mf;
     /**
      * Creates a new instance of GeneralServiceResource
      * @throws exceptions.LoadException
@@ -68,6 +70,7 @@ public class PizzaService {
     {
         gson = new Gson();
         this.dataStorage = dataStorage;
+        mf = new ModelFactory(dataStorage);
         dataStorage.load();
     }
 
@@ -102,7 +105,7 @@ public class PizzaService {
     private String doGetOrders() {
         try
         {
-            ArrayList<IModel> model = dataStorage.getOrders();
+            ArrayList<IOrderModel> model = dataStorage.getOrders();
             
             if(model.size() <1)
                 return null;
@@ -126,7 +129,7 @@ public class PizzaService {
     private String doGetOrders(@PathParam(value="id") int id) {
         try
         {
-            ArrayList<IModel> model = dataStorage.getOrders(id);
+            ArrayList<IOrderModel> model = dataStorage.getOrders(id);
             if(model.size() <1)
                 return null;
             String results = gson.toJson(model);
@@ -207,7 +210,7 @@ public class PizzaService {
     private String doGetUsers() throws StorageException {
         String results = "";
 
-        ArrayList<IModel> model = dataStorage.getUsers();
+        ArrayList<IUserModel> model = dataStorage.getUsers();
         results = gson.toJson(model);
 
         return results;
@@ -226,7 +229,7 @@ public class PizzaService {
         if(id < 1)
             return IdError;
 
-        IModel model = (ItemModel)dataStorage.getItem(id);
+        IItemModel model = (IItemModel)dataStorage.getItem(id);
         String results = gson.toJson(model);
         return results;
 
@@ -241,7 +244,7 @@ public class PizzaService {
     }
     private String doGetItems() throws StorageException {
 
-            ArrayList<IModel> model = dataStorage.getItems();
+            ArrayList<IItemModel> model = dataStorage.getItems();
             String results = gson.toJson(model);
             return results;
 
@@ -315,7 +318,7 @@ public class PizzaService {
     }
     private void doSaveItem(String content) throws StorageException {
     
-            IModel model = gson.fromJson(content, ItemModel.class);
+            IItemModel model = gson.fromJson(content, ItemModel.class);
             dataStorage.saveItem(model);
         
     }
@@ -330,9 +333,9 @@ public class PizzaService {
     }
     private void doSaveMenu(String content) throws StorageException {
 
-            ArrayList<IModel> models = gson.fromJson(content, new TypeToken<ArrayList<ItemModel>>(){}.getType());
-            MenuModel model = new MenuModel();
-            model.setItems(models);
+            ArrayList<IMenuModel> models = gson.fromJson(content, new TypeToken<ArrayList<ItemModel>>(){}.getType());
+            IMenuModel model = mf.getEmptyIMenuModel();
+//            model.setItems(models);
             dataStorage.saveMenu(model);
 
     }
@@ -347,7 +350,7 @@ public class PizzaService {
     }
     private void doSaveOrder(String content) throws StorageException {
 
-            IModel model = gson.fromJson(content, OrderModel.class);
+            IOrderModel model = gson.fromJson(content, OrderModel.class);
             dataStorage.saveOrder(model);
 
     }
@@ -362,7 +365,7 @@ public class PizzaService {
     }
     private void doSaveUser(String content) throws StorageException {
         
-            IModel model = gson.fromJson(content, UserModel.class);
+            IUserModel model = gson.fromJson(content, UserModel.class);
             dataStorage.saveUser(model);
        
     }
