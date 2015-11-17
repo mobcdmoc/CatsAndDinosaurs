@@ -323,8 +323,8 @@ public class SqliteDataSource implements IDataSource{
         
         for(int i = 0; i< m.getItems().size(); i++)
         {
-            IModel n = (IModel)m.getItems().get(i);
-//            saveItem(n);
+            IItemModel n = (IItemModel)m.getItems().get(i);
+            saveItem(n);
         }
     }
 
