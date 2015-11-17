@@ -42,7 +42,10 @@ public class OrderModel extends AbstractModel implements IOrderModel{
 
     private ArrayList<IItemModel> items;
     
-    
+    public OrderModel()
+    {
+        //Do not use this is a hack
+    }
     public OrderModel(IDataSource source) {
         super();
         this.source = source;

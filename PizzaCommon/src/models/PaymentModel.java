@@ -50,6 +50,10 @@ public class PaymentModel extends AbstractModel implements IPaymentModel {
     private String customerCity;
     private int customerZip;
     
+    public PaymentModel()
+    {
+        //Do not use this is a hack
+    }
     public PaymentModel(IDataSource source) 
     {
             super();

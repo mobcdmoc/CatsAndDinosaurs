@@ -5,6 +5,8 @@
  */
 package models;
 
+import enums.ItemType;
+
 /**
  *
  * @author Jacob
@@ -24,5 +26,7 @@ public interface IItemModel extends IModel {
     
     int getId();
     void setId(int value);
-            
+    
+    String getDescription();
+    void setDescription(String value);
 }

@@ -35,35 +35,45 @@ public class ItemModel extends AbstractModel implements IItemModel {
     private double specialPrice;
     private boolean isSpecial;
     private boolean isActive;
+    public ItemModel()
+    {
+        //Do not use this is a hack
+    }
     public ItemModel(IDataSource source)
     {
         
     }
     //<editor-fold desc="id">
+    @Override
     public int getId()
     {   
         return id;
     }
+    @Override
     public void setId(int value)
     {
         id =  value;
     }
     //</editor-fold>
     //<editor-fold desc="name">
+    @Override
     public String getName()
     {
         return name;
     }
+    @Override
     public void setName(String value)
     {
         name = value;
     }
     //</editor-fold>
     //<editor-fold desc="description">
+    @Override
     public String getDescription()
     {
         return description;
     }
+    @Override
     public void setDescription(String value)
     {
         description = value;
@@ -164,5 +174,6 @@ public class ItemModel extends AbstractModel implements IItemModel {
     public void clear() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 }

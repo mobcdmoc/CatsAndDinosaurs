@@ -14,6 +14,8 @@ import data.IModelFactory;
 import data.ModelFactory;
 import data.PizzaServiceClient;
 import exceptions.StorageException;
+import java.util.ArrayList;
+import models.IOrderModel;
 import models.IUserModel;
 
 /**
@@ -28,18 +30,7 @@ public class FunctionalTester {
         IControllerFactory f = new ControllerFactory(m,source);
         
 //        ILoginController c = f.getLoginController();
-        IUserModel u = m.getEmptyIUserModel();
-        u.setUsername("cat");
-        u.setAddress1("mew");
-        u.setAddress2("mew");
-        u.setCity("meow");
-        u.setEmailAddress("cats@cats.com");
-        u.setFirstName("CATS");
-        u.setLastName("CATS");
-        u.setPassword("cats");
-        u.setZip(1234);
-        u.setAuthLevel(1);
-        u.save();
+        ArrayList<IOrderModel> o = source.getOrders();
 //        IUserModel u = source.getUser("Jbparker", "CATSANDDAWGSYO");
         
     }

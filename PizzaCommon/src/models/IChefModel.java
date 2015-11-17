@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author Jacob
  */
 public interface IChefModel extends IModel{
-    ArrayList<IOrderModel> getOrders();
+    ArrayList<String> getOrders();
+    ArrayList<String> getCompletedOrders();
     void setOrders(ArrayList<IOrderModel> value);
     
     void markDone(int orderIdex);

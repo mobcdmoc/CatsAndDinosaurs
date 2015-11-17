@@ -18,6 +18,10 @@ public class MenuModel extends AbstractModel implements IMenuModel {
     public static final String PROP_ITEMS = "items";
     private ArrayList<IItemModel> items;
     private IModelFactory modelFactory;
+    public MenuModel()
+    {
+        //Do not use this is a hack
+    }
     public MenuModel(IModelFactory modelFactory, IDataSource source) {
         super();
         items = new ArrayList<>();

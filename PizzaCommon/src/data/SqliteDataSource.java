@@ -155,20 +155,20 @@ public class SqliteDataSource implements IDataSource{
     @Override
     public IItemModel getItem(int id) throws StorageException
     {
-//        StringBuilder query = new StringBuilder("SELECT * FROM Items WHERE Id = '");
-//        query.append(id);
-//        query.append("' AND IsActive = 'true'");
-//        IItemModel rtn = executeQuery(ItemModel.class,query.toString());
-//        return rtn;
-        return null;
+        StringBuilder query = new StringBuilder("SELECT * FROM Items WHERE Id = '");
+        query.append(id);
+        query.append("' AND IsActive = 'true'");
+        IItemModel rtn = (IItemModel)executeQuery(ItemModel.class,query.toString());
+        return rtn;
     }
     
     @Override
     public ArrayList<IItemModel> getItems() throws StorageException{
-//        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
-//        ArrayList<IItemModel> rtn = executeQueryMultiple(ItemModel.class, query);
-//        return rtn;
-        return null;
+        String query = "SELECT * FROM Items WHERE Type > 3 AND IsActive = 'true'";
+        ArrayList<IModel> rtn = executeQueryMultiple(ItemModel.class, query);
+        ArrayList<IItemModel> tmp = new ArrayList<>();
+        rtn.stream().forEach((x) -> { tmp.add((IItemModel)x);});
+        return tmp;
     }
     
     @Override
@@ -290,31 +290,28 @@ public class SqliteDataSource implements IDataSource{
     
     @Override
     public void saveItem(IItemModel model) throws StorageException {
-        ItemModel m = (ItemModel)model;
         StringBuilder query = new StringBuilder();
-        if(m.getId() < 1)
+        if(model.getId() < 1)
         {
-            query.append("INSERT INTO Items (Name,Description,Price,Type,SpecialPrice,IsSpecial,IsActive) VALUES ('");
-            query.append(m.getName()).append("', '");
-            query.append(m.getDescription()).append("', '");
-            query.append(m.getPrice()).append("', '");
-//            query.append(m.getType().getValue()).append("', '");
-            query.append(m.getSpecialPrice()).append("', '");
-            query.append(m.getIsSpecial()).append("', '");
-            query.append(m.getIsActive()).append("')");
+            query.append("INSERT INTO Items (Name,Description,Price,SpecialPrice,IsSpecial,IsActive) VALUES ('");
+            query.append(model.getName()).append("', '");
+            query.append(model.getDescription()).append("', '");
+            query.append(model.getPrice()).append("', '");
+            query.append(model.getSpecialPrice()).append("', '");
+            query.append(model.getIsSpecial()).append("', '");
+            query.append(model.getIsActive()).append("')");
         }
         else
         {
             query.append("UPDATE Items  SET Name = '");
-            query.append(m.getName()).append("', Description = '");
-            query.append(m.getDescription()).append("', Price = '");
-            query.append(m.getPrice()).append("', IsSpecial = '");
-            query.append(m.getIsSpecial()).append("', SpecialPrice = '");
-            query.append(m.getSpecialPrice()).append("', IsSpecial = '");
-            query.append(m.getIsSpecial()).append("', IsActive = '");
-            query.append(m.getIsActive()).append("', Type = '");
-//            query.append(m.getType().getValue()).append("' WHERE Id = '");
-            query.append(m.getId()).append("'");
+            query.append(model.getName()).append("', Description = '");
+            query.append(model.getDescription()).append("', Price = '");
+            query.append(model.getPrice()).append("', IsSpecial = '");
+            query.append(model.getIsSpecial()).append("', SpecialPrice = '");
+            query.append(model.getSpecialPrice()).append("', IsSpecial = '");
+            query.append(model.getIsSpecial()).append("', IsActive = '");
+            query.append(model.getIsActive()).append("' WHERE Id = '");
+            query.append(model.getId()).append("'");
         }
        
         executeNonQuery(query.toString());
@@ -356,16 +353,16 @@ public class SqliteDataSource implements IDataSource{
         
         ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, q);
         int id = ((OrderModel)orders.get(0)).getId();
-//        
-//        StringBuilder q2 = new StringBuilder();
-//        q2.append("INSERT INTO ItemOrder (OrderId,ItemId) VALUES");
-//        for(int i = 0; i < m.getOrderItemIds().size(); i++)
-//        {
-//            q2.append("(").append(id).append(", ").append(m.getOrderItemIds().get(i)).append(")");
-//            if(i < m.getOrderItemIds().size()-1)
-//                q2.append(",");
-//        }
-//        executeNonQuery(q2.toString());
+        
+        StringBuilder q2 = new StringBuilder();
+        q2.append("INSERT INTO ItemOrder (OrderId,ItemId) VALUES");
+        for(int i = 0; i < m.getItems().size(); i++)
+        {
+            q2.append("(").append(id).append(", ").append(m.getItems().get(i).getId()).append(")");
+            if(i < m.getItems().size()-1)
+                q2.append(",");
+        }
+        executeNonQuery(q2.toString());
     }
 
     @Override
@@ -412,10 +409,8 @@ public class SqliteDataSource implements IDataSource{
         query.append("INSERT INTO Payment (CardHolder,CardNumber,ExpDay,ExpMonth,ExpYear,SecCode,Ammount) VALUES ('");
         query.append(m.getCardFirstName()).append("', '");
         query.append(m.getCardNumber()).append("', '");
-//        query.append(m.getDay()).append("', '");
         query.append(m.getExpMonth()).append("', '");
         query.append(m.getExpYear()).append("', '");
-//        query.append(m.getSec()).append("', '");
         query.append(m.getTotal()).append("')");
     }
 
