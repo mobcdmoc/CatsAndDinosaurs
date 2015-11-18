@@ -30,10 +30,12 @@ import models.IItemModel;
 import models.IMenuModel;
 import models.IModel;
 import models.IOrderModel;
+import models.IPaymentModel;
 import models.IUserModel;
 import models.ItemModel;
 import models.MenuModel;
 import models.OrderModel;
+import models.PaymentModel;
 import models.UserModel;
 
 /**
@@ -349,10 +351,8 @@ public class PizzaService {
         asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
     }
     private void doSaveOrder(String content) throws StorageException {
-
-            IOrderModel model = gson.fromJson(content, OrderModel.class);
-            dataStorage.saveOrder(model);
-
+        IOrderModel model = gson.fromJson(content, OrderModel.class);
+        dataStorage.saveOrder(model);
     }
 
     @POST
@@ -368,6 +368,20 @@ public class PizzaService {
             IUserModel model = gson.fromJson(content, UserModel.class);
             dataStorage.saveUser(model);
        
+    }
+    
+    @POST
+    @Consumes(value = "application/json")
+    @Path(value = "/Save/Payment/")
+    @Asynchronous
+    public void savePayment(@Suspended final AsyncResponse asyncResponse, final String content) throws StorageException {
+        doSavePayment(content);
+        asyncResponse.resume(javax.ws.rs.core.Response.ok().build());
+    }
+    private void doSavePayment(String content) throws StorageException {
+        
+            IPaymentModel model = gson.fromJson(content, PaymentModel.class);
+            dataStorage.savePayment(model);
     }
     
 }
