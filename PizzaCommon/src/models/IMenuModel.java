@@ -13,4 +13,5 @@ import java.util.ArrayList;
  */
 public interface IMenuModel extends IModel {
     void setItems(ArrayList<IItemModel> value);
+    ArrayList<IItemModel> getItems();
 }

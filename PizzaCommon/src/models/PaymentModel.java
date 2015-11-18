@@ -6,6 +6,7 @@
 package models;
 
 import data.IDataSource;
+import data.IModelFactory;
 import enums.PaymentType;
 import exceptions.LoadException;
 import exceptions.StorageException;
@@ -26,7 +27,6 @@ public class PaymentModel extends AbstractModel implements IPaymentModel {
     public static final transient String PROP_CARDFIRSTNAME = "cardFirstName";
     public static final transient String PROP_CARDLASTNAME = "cardLastName";
     public static final transient String PROP_CARDNUMBER = "cardNumber";
-    public static final transient String PROP_EXPRDAY = "day";
     public static final transient String PROP_EXPRMONTH = "month";
     public static final transient String PROP_EXPRYEAR = "year";
     
@@ -41,28 +41,18 @@ public class PaymentModel extends AbstractModel implements IPaymentModel {
     private int expMonth;
     private int expYear;
     
-    private int orderId;
     private double total;
     private int orderType;
-    private String customerName;
-    private String customerAddress1;
-    private String customerAddress2;
-    private String customerCity;
-    private int customerZip;
     
     public PaymentModel()
     {
         //Do not use this is a hack
     }
-    public PaymentModel(IDataSource source) 
+    public PaymentModel(IModelFactory f,IDataSource source) 
     {
-            super();
-            this.source = source;
-//            order = orderModel;
-//            if(orderModel != null)
-//                setTotal(order.getTotal());
-//            else 
-//                setTotal(0);
+        super();
+        this.source = source;
+        order = f.getEmptyIOrderModel();
     }
 
     public int getId() {
@@ -164,52 +154,52 @@ public class PaymentModel extends AbstractModel implements IPaymentModel {
 
     @Override
     public String getCustomerName() {
-        return this.customerName;
+        return order.getCustomerName();
     }
 
     @Override
     public void setCustomerName(String value) {
-        this.customerName = value;
+        order.setCustomerName(value);
     }
 
     @Override
     public String getCustomerAddress1() {
-        return this.customerAddress1;
+        return order.getCustomerAddress1();
     }
 
     @Override
     public void setCustomerAddress1(String value) {
-        this.customerAddress1 = value;
+        order.setCustomerAddress1(value);
     }
 
     @Override
     public String getCustomerAddress2() {
-        return this.customerAddress2;
+        return order.getCustomerAddress2();
     }
 
     @Override
     public void setCustomerAddress2(String value) {
-        this.customerAddress2 = value;
+        order.setCustomerAddress2(value);
     }
 
     @Override
     public String getCustomerCity() {
-        return this.customerCity;
+        return order.getCustomerCity();
     }
 
     @Override
     public void setCustomerCity(String value) {
-        this.customerCity = value;
+        order.setCustomerCity(value);
     }
 
     @Override
     public int getCustomerZip() {
-        return this.customerZip;
+        return order.getCustomerZip();
     }
 
     @Override
     public void setCustomerZip(int value) {
-        this.customerZip = value;
+        order.setCustomerZip(value);
     }
     
     @Override
@@ -235,15 +225,9 @@ public class PaymentModel extends AbstractModel implements IPaymentModel {
         {
             throw new LoadException("PaymentModel: No fields passed in!");
         }
-        //NOTE: This is a little gross but it should work.
-        //We may want to find a more elegant way of doing this
-        //maybe through reflection.
         if(fields.containsKey(PROP_ID.toLowerCase()))
             setId(Integer.parseInt(fields.get(PROP_ID.toLowerCase()).toString()));
-//        if(fields.containsKey(PROP_ADDRESS.toLowerCase()+"id"))
-//            setPaymentType(Integer.parseInt(fields.get(PROP_TYPE.toLowerCase()+"id").toString()));
-//        if(fields.containsKey(PROP_APPROVED.toLowerCase()+"id"))
-//            setApproved(Boolean.parseBoolean(fields.get(PROP_ADDRESS.toLowerCase()+"id").toString()));
+
         if(fields.containsKey(PROP_TOTAL.toLowerCase()+"id"))
             setTotal(Double.parseDouble(fields.get(PROP_AUTHLEVEL.toLowerCase()+"id").toString()));
     }

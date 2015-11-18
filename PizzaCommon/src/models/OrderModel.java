@@ -6,19 +6,11 @@
 package models;
 
 import data.IDataSource;
-import enums.OrderStatus;
 import exceptions.LoadException;
 import exceptions.StorageException;
-import java.beans.*;
-import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javax.swing.DefaultListModel;
 
 /**
  *
@@ -34,12 +26,23 @@ public class OrderModel extends AbstractModel implements IOrderModel{
     public static final transient String PROP_TOTAL = "total";
     public static final transient String PROP_PAYMENTID = "paymentID";
     public static final transient String PROP_ORDERITEMIDS = "orderItemIds";
+    public static final transient String PROP_CUSTOMERNAME = "customerName";
+    public static final transient String PROP_CUSTOMERADDRESS1 = "customerAddress1";
+    public static final transient String PROP_CUSTOMERADDRESS2 = "customerAddress2";
+    public static final transient String PROP_CUSTOMERCITY = "customerCity";
+    public static final transient String PROP_CUSTOMERZIP = "customerZip";
     
     private int id;
     private int user;
     private int status;
     private int paymentID; //int stores the associated payment ID
 
+    private String customerName;
+    private String customerAddress1;
+    private String customerAddress2;
+    private String customerCity;
+    private int customerZip;
+    
     private ArrayList<IItemModel> items;
     
     public OrderModel()
@@ -134,7 +137,8 @@ public class OrderModel extends AbstractModel implements IOrderModel{
     //</editor-fold>
     
     @Override
-    public boolean save() {
+    public boolean save() 
+    {
         
         try {
             source.saveOrder(this);
@@ -151,6 +155,7 @@ public class OrderModel extends AbstractModel implements IOrderModel{
         {
             throw new LoadException("ItemModel: No fields passed in!");
         }
+        
         if(fields.containsKey(PROP_ID))
             setId(Integer.parseInt(fields.get(PROP_ID).toString()));
         if(fields.containsKey(PROP_USER+"id"))
@@ -159,6 +164,16 @@ public class OrderModel extends AbstractModel implements IOrderModel{
             setStatus(Integer.parseInt(fields.get(PROP_STATUS+"id").toString()));
         if(fields.containsKey(PROP_PAYMENTID+"id"))
             setStatus(Integer.parseInt(fields.get(PROP_PAYMENTID+"id").toString()));
+        if(fields.containsKey(PROP_CUSTOMERNAME.toLowerCase()))
+            setCustomerName(fields.get(PROP_CUSTOMERNAME.toLowerCase()).toString());
+        if(fields.containsKey(PROP_CUSTOMERADDRESS1.toLowerCase()))
+            setCustomerAddress1(fields.get(PROP_CUSTOMERADDRESS1.toLowerCase()).toString());
+        if(fields.containsKey(PROP_CUSTOMERADDRESS2.toLowerCase()))
+            setCustomerAddress2(fields.get(PROP_CUSTOMERADDRESS2.toLowerCase()).toString());
+        if(fields.containsKey(PROP_CUSTOMERCITY.toLowerCase()))
+            setCustomerCity(fields.get(PROP_CUSTOMERCITY.toLowerCase()).toString());
+        if(fields.containsKey(PROP_CUSTOMERNAME.toLowerCase()))
+            setCustomerZip(Integer.parseInt(fields.get(PROP_CUSTOMERZIP.toLowerCase()).toString()));
     }
 
     @Override
@@ -174,6 +189,56 @@ public class OrderModel extends AbstractModel implements IOrderModel{
     @Override
     public void removeItem(ItemModel item) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    @Override
+    public void setCustomerName(String value) {
+        customerName = value;
+    }
+
+    @Override
+    public String getCustomerAddress1() {
+        return customerAddress1;
+    }
+
+    @Override
+    public void setCustomerAddress1(String value) {
+        customerAddress1 = value;
+    }
+
+    @Override
+    public String getCustomerAddress2() {
+        return customerAddress2;
+    }
+
+    @Override
+    public void setCustomerAddress2(String value) {
+        customerAddress2 = value;
+    }
+
+    @Override
+    public String getCustomerCity() {
+        return customerCity;
+    }
+
+    @Override
+    public void setCustomerCity(String value) {
+        customerCity = value;
+    }
+
+    @Override
+    public int getCustomerZip() {
+        return customerZip ;
+    }
+
+    @Override
+    public void setCustomerZip(int value) {
+        customerZip = value;
     }
 
     

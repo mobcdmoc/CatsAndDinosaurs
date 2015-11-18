@@ -46,7 +46,7 @@ public class ModelFactory implements IModelFactory {
 
     @Override
     public IPaymentModel getEmptyIPaymentModel() {
-        return new PaymentModel(source);
+        return new PaymentModel(this, source);
     }
     
 }

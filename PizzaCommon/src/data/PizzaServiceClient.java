@@ -32,11 +32,11 @@ public class PizzaServiceClient implements IDataSource {
     private WebTarget webTarget;
     private Client client;
     private Gson gson;
-    private static final String BASE_URI = "http://localhost:8080/PizzaWebService/webresources";
+    private static final String BASE_URI = "PizzaWebService/webresources";
 
-    public PizzaServiceClient() {
+    public PizzaServiceClient(String host) {
         client = javax.ws.rs.client.ClientBuilder.newClient();
-        webTarget = client.target(BASE_URI).path("PizzaService");
+        webTarget = client.target(host+"/"+BASE_URI).path("PizzaService");
         gson = new Gson();
     }
     
@@ -108,22 +108,22 @@ public class PizzaServiceClient implements IDataSource {
         ArrayList<IOrderModel> models = gson.fromJson(json, new TypeToken<ArrayList<OrderModel>>(){}.getType());
         return models;
     }
-//    @Override
-//    public void saveMenu(IMenuModel requestEntity) throws ClientErrorException, StorageException {
-//        IMenuModel m = (MenuModel)requestEntity;
-//        String json = gson.toJson(m.getItems());
-//        
-//        webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(json, javax.ws.rs.core.MediaType.APPLICATION_JSON));
-//    }
-//
-//    @Override
-//    public ArrayList<IItemModel> getItems() throws ClientErrorException, StorageException {
-//        WebTarget resource = webTarget;
-//        resource = resource.path("Get/Items");
-//        String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
-//        ArrayList<IItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<ItemModel>>(){}.getType());
-//        return models;
-//    }
+    @Override
+    public void saveMenu(IMenuModel requestEntity) throws ClientErrorException, StorageException {
+        
+        String json = gson.toJson(requestEntity.getItems());
+        
+        webTarget.path("Save/Menu").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(json, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+    }
+
+    @Override
+    public ArrayList<IItemModel> getItems() throws ClientErrorException, StorageException {
+        WebTarget resource = webTarget;
+        resource = resource.path("Get/Items");
+        String json = resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+        ArrayList<IItemModel> models = gson.fromJson(json, new TypeToken<ArrayList<ItemModel>>(){}.getType());
+        return models;
+    }
 
     @Override
     public IOrderModel getOrder(int id) throws ClientErrorException, StorageException {
@@ -136,13 +136,12 @@ public class PizzaServiceClient implements IDataSource {
     @Override
     public IMenuModel getMenu() throws ClientErrorException, StorageException {
         
-//        ArrayList<IModel> items = getItems();
-//        IMenuModel rtn = new MenuModel();
-//        rtn.setItems(items);
-//        return rtn;
-        return null;
+        ArrayList<IItemModel> items = getItems();
+        IMenuModel rtn = new MenuModel();
+        rtn.setItems(items);
+        return rtn;
     }
-
+    
     @Override
     public void saveUser(IUserModel requestEntity) throws ClientErrorException, StorageException {
         webTarget.path("Save/User").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
@@ -172,14 +171,6 @@ public class PizzaServiceClient implements IDataSource {
         return rtn;
     }
 
-    @Override
-    public ArrayList<IItemModel> getItems() throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void saveMenu(IMenuModel model) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }

@@ -329,40 +329,50 @@ public class SqliteDataSource implements IDataSource{
     }
 
     @Override
-    public void saveOrder(IOrderModel model) throws StorageException {
-        OrderModel m = (OrderModel)model;
+    public void saveOrder(IOrderModel m) throws StorageException {
         StringBuilder query = new StringBuilder();
         if(m.getId() < 1)
         {
-            query.append("INSERT INTO Orders (UserId,StatusId) VALUES ('");
+            query.append("INSERT INTO Orders (UserId,StatusId,CustomerName,CustomerCity,CustomerAddress1,CustomerAddress2,CustomerZip) VALUES ('");
             query.append(m.getUser()).append("', '");
-            
-            query.append(m.getStatus()).append("')");
+            query.append(m.getStatus()).append("', '");
+            query.append(m.getCustomerName()).append("', '");
+            query.append(m.getCustomerCity()).append("', '");
+            query.append(m.getCustomerAddress1()).append("', '");
+            query.append(m.getCustomerAddress2()).append("', '");
+            query.append(m.getCustomerZip()).append("')");
         }
         else
         {
             query.append("UPDATE Orders SET UserId = '");
             query.append(m.getUser()).append("', StatusId = '");
-            query.append(m.getStatus()).append("' WHERE Id = '");
+            query.append(m.getStatus()).append("', CustomerName = '");
+            query.append(m.getCustomerName()).append("', CustomerCity = '");
+            query.append(m.getCustomerCity()).append("', CustomerAddress1 = '");
+            query.append(m.getCustomerAddress1()).append("', CustomerAddress2 = '");
+            query.append(m.getCustomerAddress2()).append("', CustomerZip = '");
+            query.append(m.getCustomerZip()).append("' WHERE Id = '");
             query.append(m.getId()).append("'");
         }
        
         executeNonQuery(query.toString());
-        
-        String q = "SELECT Id FROM Orders ORDER BY Id DESC";
-        
-        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, q);
-        int id = ((OrderModel)orders.get(0)).getId();
-        
-        StringBuilder q2 = new StringBuilder();
-        q2.append("INSERT INTO ItemOrder (OrderId,ItemId) VALUES");
-        for(int i = 0; i < m.getItems().size(); i++)
+        if(m.getItems().size() > 0)
         {
-            q2.append("(").append(id).append(", ").append(m.getItems().get(i).getId()).append(")");
-            if(i < m.getItems().size()-1)
-                q2.append(",");
+            String q = "SELECT Id FROM Orders ORDER BY Id DESC";
+
+            ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, q);
+            int id = ((OrderModel)orders.get(0)).getId();
+
+            StringBuilder q2 = new StringBuilder();
+            q2.append("INSERT INTO ItemOrder (OrderId,ItemId) VALUES");
+            for(int i = 0; i < m.getItems().size(); i++)
+            {
+                q2.append("(").append(id).append(", ").append(m.getItems().get(i).getId()).append(")");
+                if(i < m.getItems().size()-1)
+                    q2.append(",");
+            }
+            executeNonQuery(q2.toString());
         }
-        executeNonQuery(q2.toString());
     }
 
     @Override
@@ -406,12 +416,15 @@ public class SqliteDataSource implements IDataSource{
     public void savePayment(IPaymentModel model) throws StorageException {
         PaymentModel m = (PaymentModel)model;
         StringBuilder query = new StringBuilder();
-        query.append("INSERT INTO Payment (CardHolder,CardNumber,ExpDay,ExpMonth,ExpYear,SecCode,Ammount) VALUES ('");
+        query.append("INSERT INTO Payment (CardHolderFirstName,CardHolderLastName,CardNumber,ExpMonth,ExpYear,Ammount) VALUES ('");
         query.append(m.getCardFirstName()).append("', '");
+        query.append(m.getCardLastName()).append("', '");
         query.append(m.getCardNumber()).append("', '");
         query.append(m.getExpMonth()).append("', '");
         query.append(m.getExpYear()).append("', '");
         query.append(m.getTotal()).append("')");
+        
+        executeNonQuery(query.toString());
     }
 
 

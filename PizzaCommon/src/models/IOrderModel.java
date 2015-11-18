@@ -16,5 +16,22 @@ public interface IOrderModel extends IModel{
     void setTotal(double value);
     void addItem(ItemModel item);
     void removeItem(ItemModel item);
+    String getCustomerName();
+    void setCustomerName(String value);
+    String getCustomerAddress1();
+    void setCustomerAddress1(String value);
+    String getCustomerAddress2();
+    void setCustomerAddress2(String value);
+    String getCustomerCity();
+    void setCustomerCity(String value);
+    int getCustomerZip();
+    void setCustomerZip(int value);
+    int getUser();
+    void setUser(int value);
+    int getStatus();
+    void setStatus(int value);
+    int getId();
+    void setId(int value);
+    ArrayList<IItemModel> getItems();
     void setItems(ArrayList<IItemModel> items);
 }
