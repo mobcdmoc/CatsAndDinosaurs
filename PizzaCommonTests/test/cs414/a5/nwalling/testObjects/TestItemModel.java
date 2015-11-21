@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testObjects;
+package cs414.a5.nwalling.testObjects;
 
-import data.IDataSource;
-import exceptions.LoadException;
+import cs414.a5.nwalling.data.IDataSource;
+import cs414.a5.nwalling.exceptions.LoadException;
 import java.util.HashMap;
-import models.IModel;
+import cs414.a5.nwalling.models.IModel;
 
 /**
  *

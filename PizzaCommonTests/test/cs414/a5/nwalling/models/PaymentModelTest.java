@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package cs414.a5.nwalling.models;
 
-import enums.PaymentType;
+import cs414.a5.nwalling.enums.PaymentType;
 import java.util.HashMap;
-import models.PaymentModel;
+import cs414.a5.nwalling.models.PaymentModel;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import testObjects.TestIDataSource;
+import cs414.a5.nwalling.testObjects.TestIDataSource;
 
 /**
  *

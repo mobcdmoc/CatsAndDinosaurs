@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package cs414.a5.nwalling.models;
 
-import exceptions.StorageException;
+import cs414.a5.nwalling.exceptions.StorageException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import testObjects.TestIDataSource;
+import cs414.a5.nwalling.testObjects.TestIDataSource;
 
 /**
  *

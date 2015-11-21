@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package cs414.a5.nwalling.controllers;
 
 import static junit.framework.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
-import testObjects.TestIDataSource;
-import testObjects.TestIModelFactory;
+import cs414.a5.nwalling.testObjects.TestIDataSource;
+import cs414.a5.nwalling.testObjects.TestIModelFactory;
 
 /**
  *

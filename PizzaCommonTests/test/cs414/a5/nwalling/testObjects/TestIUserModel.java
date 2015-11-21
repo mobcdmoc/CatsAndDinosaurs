@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testObjects;
+package cs414.a5.nwalling.testObjects;
 
-import data.IDataSource;
-import exceptions.LoadException;
+import cs414.a5.nwalling.data.IDataSource;
+import cs414.a5.nwalling.exceptions.LoadException;
 import java.util.HashMap;
-import models.IUserModel;
+import cs414.a5.nwalling.models.IUserModel;
 
 /**
  *
@@ -125,6 +125,16 @@ public class TestIUserModel implements IUserModel{
 
     @Override
     public void setCity(String value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getAuthLevel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setAuthLevel(int value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

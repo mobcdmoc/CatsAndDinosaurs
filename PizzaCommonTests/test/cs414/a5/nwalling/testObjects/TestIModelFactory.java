@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testObjects;
+package cs414.a5.nwalling.testObjects;
 
-import data.IModelFactory;
-import models.IChefModel;
-import models.IItemModel;
-import models.IMenuModel;
-import models.IOrderModel;
-import models.IPaymentModel;
-import models.IUserModel;
+import cs414.a5.nwalling.data.IModelFactory;
+import cs414.a5.nwalling.models.IChefModel;
+import cs414.a5.nwalling.models.IItemModel;
+import cs414.a5.nwalling.models.IMenuModel;
+import cs414.a5.nwalling.models.IOrderModel;
+import cs414.a5.nwalling.models.IPaymentModel;
+import cs414.a5.nwalling.models.IUserModel;
 
 /**
  *
