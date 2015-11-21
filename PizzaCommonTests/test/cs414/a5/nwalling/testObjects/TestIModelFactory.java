@@ -19,9 +19,13 @@ import cs414.a5.nwalling.models.IUserModel;
  */
 public class TestIModelFactory implements IModelFactory{
 
+    public boolean isValid = true;
+    
     @Override
     public IUserModel getEmptyIUserModel() {
-        return new TestIUserModel();
+        TestIUserModel m = new TestIUserModel();
+        m.IsValid = isValid;
+        return m;
     }
 
     @Override

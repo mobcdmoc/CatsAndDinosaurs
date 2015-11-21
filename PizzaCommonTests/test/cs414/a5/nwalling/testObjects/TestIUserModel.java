@@ -16,81 +16,96 @@ import cs414.a5.nwalling.models.IUserModel;
  */
 public class TestIUserModel implements IUserModel{
 
-    
+    public boolean IsValid = true;
     
     @Override
     public String getUsername() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(IsValid)
+            return "GOODNAME";
+        return "    \t";
     }
 
     @Override
     public void setUsername(String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public String getPassword() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(IsValid)
+            return "GOODPASSWORD";
+        return "    \t";
     }
 
     @Override
     public void setPassword(String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public String getFirstName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(IsValid)
+            return "GOODNAME";
+        return "    \t";
     }
 
     @Override
     public void setFirstName(String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public String getLastName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(IsValid)
+            return "GOODNAME";
+        return "    \t";
     }
 
     @Override
     public void setLastName(String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public String getAddress1() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(IsValid)
+            return "GOODADDRESS";
+        return "    \t";
     }
 
     @Override
     public void setAddress1(String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public String getAddress2() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(IsValid)
+            return "GOODADDRESS";
+        return "    \t";
     }
 
     @Override
     public void setAddress2(String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public int getZip() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(IsValid)
+            return 1234;
+        return -123123;
     }
 
     @Override
     public void setZip(int value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
+    
     @Override
     public boolean save() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override

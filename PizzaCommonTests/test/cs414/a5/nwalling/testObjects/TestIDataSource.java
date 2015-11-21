@@ -15,6 +15,7 @@ import cs414.a5.nwalling.models.IModel;
 import cs414.a5.nwalling.models.IOrderModel;
 import cs414.a5.nwalling.models.IPaymentModel;
 import cs414.a5.nwalling.models.IUserModel;
+import cs414.a5.nwalling.models.ItemModel;
 import cs414.a5.nwalling.models.UserModel;
 
 /**
@@ -30,12 +31,12 @@ public class TestIDataSource implements IDataSource {
 
     @Override
     public IItemModel getItem(int id) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new TestIItemModel();
     }
 
     @Override
     public ArrayList<IItemModel> getItems() throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
@@ -75,32 +76,35 @@ public class TestIDataSource implements IDataSource {
 
     @Override
     public void saveUser(IUserModel model) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void saveItem(IItemModel model) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               
     }
 
     @Override
     public void saveMenu(IMenuModel model) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void saveOrder(IOrderModel model) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void savePayment(IPaymentModel model) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public boolean validateUsername(String name) throws StorageException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if(name == "BAD")
+            throw new StorageException();
+        return Boolean.parseBoolean(name);
     }
 
 //    @Override
