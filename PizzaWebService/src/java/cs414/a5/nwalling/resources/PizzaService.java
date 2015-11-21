@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package resources;
+package cs414.a5.nwalling.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import data.IDataSource;
-import data.IModelFactory;
-import data.ModelFactory;
-import data.SqliteDataSource;
-import exceptions.LoadException;
-import exceptions.StorageException;
+import cs414.a5.nwalling.data.IDataSource;
+import cs414.a5.nwalling.data.IModelFactory;
+import cs414.a5.nwalling.data.ModelFactory;
+import cs414.a5.nwalling.data.SqliteDataSource;
+import cs414.a5.nwalling.exceptions.LoadException;
+import cs414.a5.nwalling.exceptions.StorageException;
 import java.util.ArrayList;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
@@ -26,17 +26,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.POST;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import models.IItemModel;
-import models.IMenuModel;
-import models.IModel;
-import models.IOrderModel;
-import models.IPaymentModel;
-import models.IUserModel;
-import models.ItemModel;
-import models.MenuModel;
-import models.OrderModel;
-import models.PaymentModel;
-import models.UserModel;
+import cs414.a5.nwalling.models.IItemModel;
+import cs414.a5.nwalling.models.IMenuModel;
+import cs414.a5.nwalling.models.IModel;
+import cs414.a5.nwalling.models.IOrderModel;
+import cs414.a5.nwalling.models.IPaymentModel;
+import cs414.a5.nwalling.models.IUserModel;
+import cs414.a5.nwalling.models.ItemModel;
+import cs414.a5.nwalling.models.MenuModel;
+import cs414.a5.nwalling.models.OrderModel;
+import cs414.a5.nwalling.models.PaymentModel;
+import cs414.a5.nwalling.models.UserModel;
 
 /**
  * REST Web Service
@@ -63,7 +63,7 @@ public class PizzaService {
     private IModelFactory mf;
     /**
      * Creates a new instance of GeneralServiceResource
-     * @throws exceptions.LoadException
+     * @throws cs414.a5.nwalling.exceptions.LoadException
      */
     public PizzaService() throws LoadException {
         this(new SqliteDataSource(connectionString));
