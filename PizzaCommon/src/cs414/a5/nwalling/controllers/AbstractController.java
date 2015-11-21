@@ -21,8 +21,10 @@ public abstract class AbstractController implements IController, Serializable
 
     protected IDataSource source;
     
-    public AbstractController(IDataSource source)
+    public AbstractController(IDataSource source) throws IllegalArgumentException
     {
+        if(source == null)
+            throw new IllegalArgumentException();
         this.source = source;
         propertySupport = new PropertyChangeSupport(this);
     }

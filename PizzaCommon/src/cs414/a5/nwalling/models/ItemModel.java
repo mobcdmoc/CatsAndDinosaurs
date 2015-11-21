@@ -41,7 +41,7 @@ public class ItemModel extends AbstractModel implements IItemModel {
     }
     public ItemModel(IDataSource source)
     {
-        
+        this.source = source;
     }
     //<editor-fold desc="id">
     @Override

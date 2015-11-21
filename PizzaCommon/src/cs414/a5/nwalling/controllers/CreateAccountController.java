@@ -8,8 +8,6 @@ package cs414.a5.nwalling.controllers;
 import cs414.a5.nwalling.data.IDataSource;
 import cs414.a5.nwalling.data.IModelFactory;
 import cs414.a5.nwalling.exceptions.StorageException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import cs414.a5.nwalling.models.IUserModel;
 
 /**
@@ -23,6 +21,8 @@ public class CreateAccountController extends AbstractController implements ICrea
     public CreateAccountController(IModelFactory modelFactory, IDataSource source)
     {
         super(source);
+        if(modelFactory == null || source == null)
+            throw new IllegalArgumentException();
         this.modelFactory = modelFactory;
         this.model = modelFactory.getEmptyIUserModel();
     }
@@ -31,10 +31,13 @@ public class CreateAccountController extends AbstractController implements ICrea
     public boolean usernameExists(String name) {
         try {
             return source.validateUsername(name);
-        } catch (StorageException ex) {
-//            Logger.getLogger(CreateAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        catch (StorageException e)
+        {
+            //Do logging here
+            //Eat it, something went wrong just don't let them make an account for now
         }
-        return false;
+        return true;
     }
 
     @Override

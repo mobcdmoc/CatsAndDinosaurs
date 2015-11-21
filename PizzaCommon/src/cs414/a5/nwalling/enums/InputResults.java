@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cs414.a5.nwalling.controllers;
+package cs414.a5.nwalling.enums;
 
 /**
  *
  * @author Jacob
  */
-public interface IEditAccountController {
-    
+public enum InputResults {
+    ValidInput,
+    InputWhiteSpace,
+    InputNull
 }

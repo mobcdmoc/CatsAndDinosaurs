@@ -5,12 +5,14 @@
  */
 package cs414.a5.nwalling.controllers;
 
+import cs414.a5.nwalling.enums.InputResults;
+
 /**
  *
  * @author Jacob
  */
 public interface ILoginController extends IController {
     void login();
-    void setUsername(String value);
-    void setPassword(String value);
+    InputResults setUsername(String value);
+    InputResults setPassword(String value);
 }

@@ -7,6 +7,7 @@ package cs414.a5.nwalling.controllers;
 
 import cs414.a5.nwalling.data.IDataSource;
 import cs414.a5.nwalling.data.IModelFactory;
+import cs414.a5.nwalling.enums.InputResults;
 import cs414.a5.nwalling.models.IUserModel;
 import cs414.a5.nwalling.models.UserModel;
 
@@ -18,9 +19,11 @@ public class LoginController extends AbstractController implements ILoginControl
 
     private IUserModel model;
     private IModelFactory modelFactory;
-    public LoginController(IModelFactory modelFactory, IDataSource source)
+    public LoginController(IModelFactory modelFactory, IDataSource source) throws IllegalArgumentException
     {
         super(source);
+        if(modelFactory == null || source == null)
+            throw new IllegalArgumentException();
         this.modelFactory = modelFactory;
         this.model = modelFactory.getEmptyIUserModel();
     }
@@ -45,12 +48,14 @@ public class LoginController extends AbstractController implements ILoginControl
     //This method is so that you can set the username and password into the model when it's provided
     //I would suggest calling these methods on focus lost of their respective text boxes.
     @Override
-    public void setUsername(String value) {
+    public InputResults setUsername(String value) {
         model.setUsername(value);
+        return InputResults.ValidInput;
     }
 
     @Override
-    public void setPassword(String value) {
+    public InputResults setPassword(String value) {
         model.setPassword(value);
+        return InputResults.ValidInput;
     }
 }
