@@ -144,6 +144,51 @@ public class PizzaService {
         }
     }
     
+    @Produces(value = "application/json")
+    @Path(value = "/Get/OrderItems/{id}")
+    @Asynchronous
+    public void getOrderItems(@Suspended final AsyncResponse asyncResponse, @PathParam(value="id") int id) {
+        asyncResponse.resume(doGetOrders(id));
+    }
+    private String doGetOrderItems(@PathParam(value="id") int id) {
+        try
+        {
+            ArrayList<IItemModel> model = dataStorage.getOrderItems();
+            if(model.size() <1)
+                return null;
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemErrorGet;
+        }
+    }
+    
+    @Produces(value = "application/json")
+    @Path(value = "/Get/OrderItems")
+    @Asynchronous
+    public void getOrderItems(@Suspended final AsyncResponse asyncResponse) {
+        asyncResponse.resume(doGetOrders());
+    }
+    private String doGetOrderItems() {
+        try
+        {
+            ArrayList<IItemModel> model = dataStorage.getOrderItems();
+            if(model.size() <1)
+                return null;
+            String results = gson.toJson(model);
+            return results;
+        }
+        catch(StorageException e)
+        {
+            //Do logging here
+            return SystemErrorGet;
+        }
+    }
+    
+    
     
     @GET
     @Produces(value = "application/json")
