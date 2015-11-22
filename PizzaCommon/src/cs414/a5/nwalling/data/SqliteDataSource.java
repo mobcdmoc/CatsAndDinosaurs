@@ -205,14 +205,14 @@ public class SqliteDataSource implements IDataSource{
         if(rtn == null)
             return null;
                 
-        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-        itemQuery.append(((OrderModel)rtn).getId());
-        itemQuery.append("'");
-        
-        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-        ArrayList<IItemModel> tmp = new ArrayList<>();
-        items.stream().forEach((x) -> {tmp.add((IItemModel)x);});            
-        (rtn).setItems(tmp);
+//        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+//        itemQuery.append(((OrderModel)rtn).getId());
+//        itemQuery.append("'");
+//        
+//        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+//        ArrayList<IItemModel> tmp = new ArrayList<>();
+//        items.stream().forEach((x) -> {tmp.add((IItemModel)x);});            
+//        (rtn).setItems(tmp);
         
         return rtn;
     }
@@ -223,20 +223,46 @@ public class SqliteDataSource implements IDataSource{
         ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
         ArrayList<IOrderModel> rtn = new ArrayList<>();
         orders.stream().forEach((x)-> {rtn.add((IOrderModel)x);});
-        for(IOrderModel order : rtn)
-        {
-            StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
-            itemQuery.append(((OrderModel)order).getId());
-            itemQuery.append("'");
-        
-            ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
-            ArrayList<IItemModel> tmp = new ArrayList<>();
-            items.stream().forEach((x) -> {tmp.add((IItemModel)x);});            
-            (order).setItems(tmp);
-        }        
+          
         return rtn;
     }
 
+    @Override
+    public ArrayList<IItemModel> getOrderItems(int orderId) throws StorageException
+    {
+        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+        itemQuery.append(orderId);
+        itemQuery.append("'");
+
+        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+        ArrayList<IItemModel> tmp = new ArrayList<>();
+        items.stream().forEach((x) -> {tmp.add((IItemModel)x);});            
+        return tmp;
+    }
+    
+    @Override
+    public ArrayList<IItemModel> getOrderItems() throws StorageException
+    {
+        String query = "SELECT * FROM Orders";
+        
+        ArrayList<IModel> orders = executeQueryMultiple(OrderModel.class, query);
+        ArrayList<IOrderModel> orderIds = new ArrayList<>();
+        orders.stream().forEach((x)-> {orderIds.add((IOrderModel)x);});
+        
+        StringBuilder itemQuery = new StringBuilder("SELECT * FROM Items as i JOIN ItemOrder as o ON o.ItemId = i.id WHERE o.OrderId = '");
+        for(int i = 0; i < orderIds.size(); i++)
+        {
+            itemQuery.append(i);
+            itemQuery.append("'");
+            if(i < orderIds.size()-1)
+                itemQuery.append(" OR o.OrderId = '");
+        }
+        ArrayList<IModel> items = executeQueryMultiple(ItemModel.class,itemQuery.toString());
+        ArrayList<IItemModel> tmp = new ArrayList<>();
+        items.stream().forEach((x) -> {tmp.add((IItemModel)x);});            
+        return tmp;
+    }
+    
     @Override
     public ArrayList<IOrderModel> getOrders(int id) throws StorageException {
 //        StringBuilder query = new StringBuilder("SELECT * FROM Orders WHERE UserId = '");

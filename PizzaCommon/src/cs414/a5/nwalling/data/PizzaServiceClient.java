@@ -179,6 +179,16 @@ public class PizzaServiceClient implements IDataSource {
         return rtn;
     }
 
+    @Override
+    public ArrayList<IItemModel> getOrderItems(int id) throws StorageException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<IItemModel> getOrderItems() throws StorageException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 
 }

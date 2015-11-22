@@ -27,6 +27,8 @@ public interface IDataSource {
     IOrderModel getOrder(int id) throws StorageException;
     ArrayList<IOrderModel> getOrders(int id) throws StorageException;
     ArrayList<IOrderModel> getOrders() throws StorageException;//returns only active orders
+    ArrayList<IItemModel> getOrderItems(int id) throws StorageException;
+    ArrayList<IItemModel> getOrderItems() throws StorageException;
     IUserModel getUser(int id) throws StorageException;
     IUserModel getUser(String userName, String password) throws StorageException;
     ArrayList<IUserModel> getUsers() throws StorageException;
