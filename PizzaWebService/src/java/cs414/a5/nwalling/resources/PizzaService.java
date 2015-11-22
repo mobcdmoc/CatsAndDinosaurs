@@ -144,16 +144,17 @@ public class PizzaService {
         }
     }
     
+    @GET
     @Produces(value = "application/json")
     @Path(value = "/Get/OrderItems/{id}")
     @Asynchronous
     public void getOrderItems(@Suspended final AsyncResponse asyncResponse, @PathParam(value="id") int id) {
-        asyncResponse.resume(doGetOrders(id));
+        asyncResponse.resume(doGetOrderItems(id));
     }
     private String doGetOrderItems(@PathParam(value="id") int id) {
         try
         {
-            ArrayList<IItemModel> model = dataStorage.getOrderItems();
+            ArrayList<IItemModel> model = dataStorage.getOrderItems(id);
             if(model.size() <1)
                 return null;
             String results = gson.toJson(model);
@@ -166,11 +167,12 @@ public class PizzaService {
         }
     }
     
+    @GET
     @Produces(value = "application/json")
     @Path(value = "/Get/OrderItems")
     @Asynchronous
     public void getOrderItems(@Suspended final AsyncResponse asyncResponse) {
-        asyncResponse.resume(doGetOrders());
+        asyncResponse.resume(doGetOrderItems());
     }
     private String doGetOrderItems() {
         try
