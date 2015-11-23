@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cs414.a5.nwalling.resources;
+package cs414.a5.nwalling.resources.webservice;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import cs414.a5.nwalling.data.IDataSource;
-import cs414.a5.nwalling.data.IModelFactory;
-import cs414.a5.nwalling.data.ModelFactory;
-import cs414.a5.nwalling.data.SqliteDataSource;
-import cs414.a5.nwalling.exceptions.LoadException;
-import cs414.a5.nwalling.exceptions.StorageException;
+import cs414.a5.nwalling.common.data.IDataSource;
+import cs414.a5.nwalling.common.data.IModelFactory;
+import cs414.a5.nwalling.common.data.ModelFactory;
+import cs414.a5.nwalling.common.data.SqliteDataSource;
+import cs414.a5.nwalling.common.exceptions.LoadException;
+import cs414.a5.nwalling.common.exceptions.StorageException;
 import java.util.ArrayList;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
@@ -26,17 +26,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.POST;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import cs414.a5.nwalling.models.IItemModel;
-import cs414.a5.nwalling.models.IMenuModel;
-import cs414.a5.nwalling.models.IModel;
-import cs414.a5.nwalling.models.IOrderModel;
-import cs414.a5.nwalling.models.IPaymentModel;
-import cs414.a5.nwalling.models.IUserModel;
-import cs414.a5.nwalling.models.ItemModel;
-import cs414.a5.nwalling.models.MenuModel;
-import cs414.a5.nwalling.models.OrderModel;
-import cs414.a5.nwalling.models.PaymentModel;
-import cs414.a5.nwalling.models.UserModel;
+import cs414.a5.nwalling.common.models.IItemModel;
+import cs414.a5.nwalling.common.models.IMenuModel;
+import cs414.a5.nwalling.common.models.IModel;
+import cs414.a5.nwalling.common.models.IOrderModel;
+import cs414.a5.nwalling.common.models.IPaymentModel;
+import cs414.a5.nwalling.common.models.IUserModel;
+import cs414.a5.nwalling.common.models.ItemModel;
+import cs414.a5.nwalling.common.models.MenuModel;
+import cs414.a5.nwalling.common.models.OrderModel;
+import cs414.a5.nwalling.common.models.PaymentModel;
+import cs414.a5.nwalling.common.models.UserModel;
 
 /**
  * REST Web Service
@@ -63,7 +63,7 @@ public class PizzaService {
     private IModelFactory mf;
     /**
      * Creates a new instance of GeneralServiceResource
-     * @throws cs414.a5.nwalling.exceptions.LoadException
+     * @throws cs414.a5.nwalling.common.exceptions.LoadException
      */
     public PizzaService() throws LoadException {
         this(new SqliteDataSource(connectionString));
