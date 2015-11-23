@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package cs414.a5.nwalling.employeeclient.controllers;
 
-import data.IDataSource;
-import data.PizzaServiceClient;
-import enums.OrderStatus;
-import exceptions.StorageException;
+import cs414.a5.nwalling.common.data.IDataSource;
+import cs414.a5.nwalling.common.data.PizzaServiceClient;
+import cs414.a5.nwalling.common.enums.OrderStatus;
+import cs414.a5.nwalling.common.exceptions.StorageException;
+import cs414.a5.nwalling.common.models.IItemModel;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import models.IModel;
-import models.ItemModel;
-import models.OrderModel;
+import cs414.a5.nwalling.common.models.IModel;
+import cs414.a5.nwalling.common.models.IOrderModel;
+import cs414.a5.nwalling.common.models.ItemModel;
+import cs414.a5.nwalling.common.models.OrderModel;
 
 /**
  *
@@ -23,11 +25,12 @@ import models.OrderModel;
  */
 public class ChefController extends AbstractController{
 
-    private ArrayList<IModel> orders = new ArrayList<IModel>();
-    private ArrayList<OrderModel> sd = new ArrayList<OrderModel>();
-    private ArrayList<OrderModel> removed = new ArrayList<OrderModel>();
+    private ArrayList<IOrderModel> orders = new ArrayList<IOrderModel>();
+    private ArrayList<IOrderModel> sd = new ArrayList<IOrderModel>();
+    private ArrayList<IOrderModel> removed = new ArrayList<IOrderModel>();
+    private ArrayList<IOrderModel> rd = new ArrayList<IOrderModel>();
     private DefaultListModel<String> orderElements;
-    
+    private DefaultListModel<String> completedElements;
     public ChefController(IDataSource source)
     {
         super();
@@ -42,47 +45,76 @@ public class ChefController extends AbstractController{
         }
         
         if (orders == null)
-            orders = new ArrayList<IModel>();
+            orders = new ArrayList<IOrderModel>();
         else{
             orders.stream().forEach((O)-> {O.init(source);});
         }
     }
     
-    public void init(DefaultListModel ordersList){
+    public void init(DefaultListModel ordersList, DefaultListModel completed){
         //items.stream().forEach((x) -> { menu.addElement(((ItemModel)x).getName());});
 
         String orderString = "";
         orderElements = ordersList;
-        
+        completedElements = completed;
         for(IModel im : orders){
             OrderModel om = (OrderModel)im;
             //System.out.println(om.getId());
             
-            //if(om.getStatus() != 4)
+            if(om.getStatus() != 4)
                 sd.add(om);
-            
+            else
+                rd.add(om);
         }
         
-        for(OrderModel om : sd){
-            ArrayList<String> gf = om.getItems();
+        for(IOrderModel om : sd){
+            ArrayList<IItemModel> gf = null;
+            
+            try {
+                gf = source.getOrderItems(om.getId());
+            } catch (StorageException ex) {
+                Logger.getLogger(ChefController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(gf == null)
+                gf = new ArrayList<>();
             orderString = "Order #" + om.getId() + ":   ";
             
-            for(String str : gf){
-                orderString += str + " | ";
+            for(IItemModel str : gf){
+                orderString += str.getName() + " | ";
             }
             
             orderElements.addElement(orderString);
         }
+        for(IOrderModel om : rd){
+            ArrayList<IItemModel> gf = null;
+            
+            try {
+                gf = source.getOrderItems(om.getId());
+            } catch (StorageException ex) {
+                Logger.getLogger(ChefController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(gf == null)
+                gf = new ArrayList<>();
+            orderString = "Order #" + om.getId() + ":   ";
+            
+            for(IItemModel str : gf){
+                orderString += str.getName() + " | ";
+            }
+            
+            completedElements.addElement(orderString);
+        }
+        
     }
     
     public void removeOrders(int[] toRemove){
         
         if(toRemove.length > 0){
             for (int i : toRemove){
-                OrderModel om = sd.get(i);
+                IOrderModel om = sd.get(i);
                 om.setStatus(4);
                 removed.add(om);
                 sd.remove(om);
+                completedElements.addElement(orderElements.get(i));
                 orderElements.remove(i);
             }
         }
@@ -90,7 +122,7 @@ public class ChefController extends AbstractController{
     
     @Override
     public void submit() {
-        for(OrderModel ty : removed){
+        for(IOrderModel ty : removed){
             ty.save();
         }
     }
@@ -100,10 +132,10 @@ public class ChefController extends AbstractController{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public ArrayList<IModel> getOrders(){
-        ArrayList<IModel> iOrders =null;
+    public ArrayList<IOrderModel> getOrders(){
+        ArrayList<IOrderModel> iOrders =null;
         
-        PizzaServiceClient psc = new PizzaServiceClient();
+        PizzaServiceClient psc = new PizzaServiceClient("http://localhost:8080");
         
         try{
             iOrders = psc.getOrders();

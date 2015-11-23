@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package cs414.a5.nwalling.employeeclient.views;
 
-import controllers.ViewController;
-import data.IDataSource;
-import data.PizzaServiceClient;
+import cs414.a5.nwalling.employeeclient.controllers.ViewController;
+import cs414.a5.nwalling.common.data.IDataSource;
+import cs414.a5.nwalling.common.data.PizzaServiceClient;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
-import models.MenuModel;
+import cs414.a5.nwalling.common.models.MenuModel;
 
 /**
  *
@@ -43,7 +43,7 @@ public class ChangeMenuView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        controller = new controllers.ChangeMenuController();
+        controller = new cs414.a5.nwalling.employeeclient.controllers.ChangeMenuController();
         nameList1 = new javax.swing.JList();
         jScrollPane3 = new javax.swing.JScrollPane();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -63,6 +63,10 @@ public class ChangeMenuView extends javax.swing.JPanel {
         newItemPrice = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        updatePriceButton = new javax.swing.JButton();
+        priceField = new javax.swing.JTextField();
+        errorLable = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         removeButton = new javax.swing.JButton();
         revokeSpecialButton = new javax.swing.JButton();
@@ -126,6 +130,15 @@ public class ChangeMenuView extends javax.swing.JPanel {
 
         jLabel8.setText("Price: $");
 
+        jLabel2.setText("Price: $");
+
+        updatePriceButton.setText("Update Price");
+        updatePriceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePriceButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -135,15 +148,6 @@ public class ChangeMenuView extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(newSpecialPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(specialButton, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(newItemPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -152,13 +156,32 @@ public class ChangeMenuView extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(newItemName)))
+                        .addComponent(newItemName))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(newSpecialPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(specialButton, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(updatePriceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(errorLable)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(errorLable)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -176,7 +199,12 @@ public class ChangeMenuView extends javax.swing.JPanel {
                     .addComponent(jLabel8)
                     .addComponent(newSpecialPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(specialButton))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(updatePriceButton)
+                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -262,6 +290,11 @@ public class ChangeMenuView extends javax.swing.JPanel {
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         String name = newItemName.getText();
         String strPrice = newItemPrice.getText();
+        if(name.trim().equals(""))
+        {
+            this.errorLable.setText("Please provide an Item Name");
+            return;
+        }
         double price;
         try
         {
@@ -269,26 +302,35 @@ public class ChangeMenuView extends javax.swing.JPanel {
         }
         catch(Exception e)
         {
+            this.errorLable.setText("Price must be a numeric value.");
             return;
+            
         }
         
-        if(name.trim().equals(""))
-            return;
         
         controller.newItem(name.trim(), price);
         newItemName.setText("");
         newItemPrice.setText("");
+        this.errorLable.setText("");
     }//GEN-LAST:event_addItemButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         int[] removed = nameList.getSelectedIndices();
+        if(removed.length < 1)
+        {
+            this.errorLable.setText("Please Select an Item.");
+            return;
+        }
         controller.remove(removed);
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void specialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specialButtonActionPerformed
         int index = nameList.getSelectedIndex();
         if(index < 0)
+        {
+            this.errorLable.setText("Please Select an Item.");
             return;
+        }
         String strPrice = newSpecialPrice.getText();
         double price;
         try
@@ -297,30 +339,61 @@ public class ChangeMenuView extends javax.swing.JPanel {
         }
         catch(Exception e)
         {
+            this.errorLable.setText("Price must be a numeric value.");
             return;
         }
         
         controller.newSpecialPrice(index, price);
         newSpecialPrice.setText("");
+        this.errorLable.setText("");
     }//GEN-LAST:event_specialButtonActionPerformed
 
     private void revokeSpecialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revokeSpecialButtonActionPerformed
         int[] indecies = nameList.getSelectedIndices();
+        if(indecies.length < 1)
+        {
+            this.errorLable.setText("Please Select an Item.");
+            return;
+        }
         controller.revokeSpecial(indecies);
     }//GEN-LAST:event_revokeSpecialButtonActionPerformed
+
+    private void updatePriceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePriceButtonActionPerformed
+        int index = nameList.getSelectedIndex();
+        if(index < 0)
+        {
+            this.errorLable.setText("Please Select an Item.");
+            return;
+        }
+        String strPrice = priceField.getText();
+        double price;
+        try
+        {
+            price = Double.parseDouble(strPrice);
+        }
+        catch(Exception e)
+        {
+            return;
+        }
+        controller.updatePrice(index, price);
+        this.priceField.setText("");
+        this.errorLable.setText("");
+    }//GEN-LAST:event_updatePriceButtonActionPerformed
 
 
     
     private void initCustom(IDataSource source)
     {
-        controller.init(source, combinedListModel, nameListModel, priceListModel, specialPriceListModel,isSpecialListModel);
+        controller.init(source, combinedListModel);
         controller.get();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addItemButton;
-    private controllers.ChangeMenuController controller;
+    private cs414.a5.nwalling.employeeclient.controllers.ChangeMenuController controller;
     private javax.swing.JButton done;
+    private javax.swing.JLabel errorLable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -337,8 +410,10 @@ public class ChangeMenuView extends javax.swing.JPanel {
     private javax.swing.JTextField newItemName;
     private javax.swing.JTextField newItemPrice;
     private javax.swing.JTextField newSpecialPrice;
+    private javax.swing.JTextField priceField;
     private javax.swing.JButton removeButton;
     private javax.swing.JButton revokeSpecialButton;
     private javax.swing.JButton specialButton;
+    private javax.swing.JButton updatePriceButton;
     // End of variables declaration//GEN-END:variables
 }

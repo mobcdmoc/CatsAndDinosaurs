@@ -3,21 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package cs414.a5.nwalling.employeeclient.controllers;
 
-import data.IDataSource;
-import data.PizzaServiceClient;
-import exceptions.StorageException;
+import cs414.a5.nwalling.employeeclient.views.LoginView;
+import cs414.a5.nwalling.employeeclient.views.ChangeMenuView;
+import cs414.a5.nwalling.employeeclient.views.MainWindow;
+import cs414.a5.nwalling.employeeclient.views.CreateAccountView;
+import cs414.a5.nwalling.employeeclient.views.ChefView;
+import cs414.a5.nwalling.employeeclient.views.MainView;
+import cs414.a5.nwalling.common.data.IDataSource;
+import cs414.a5.nwalling.common.data.PizzaServiceClient;
+import cs414.a5.nwalling.common.exceptions.StorageException;
+import cs414.a5.nwalling.common.models.IItemModel;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import models.IModel;
-import models.ItemModel;
-import models.OrderModel;
-import models.UserModel;
-import views.*;
+import cs414.a5.nwalling.common.models.IModel;
+import cs414.a5.nwalling.common.models.ItemModel;
+import cs414.a5.nwalling.common.models.OrderModel;
+import cs414.a5.nwalling.common.models.UserModel;
 
 public class ViewController extends AbstractController{
 	
@@ -32,16 +38,17 @@ public class ViewController extends AbstractController{
         public ViewController()
         {
             super();
-            model = new UserModel();
-            ((UserModel)model).setUserName("Guest");
-            ((UserModel)model).setAuthLevel(5);
+            user = new UserModel();
+            ((UserModel)user).setUsername("Guest");
+            ((UserModel)user).setAuthLevel(5);
             frame = MainWindow.getFrame();
             try
             {
-                source = new PizzaServiceClient();
+                source = new PizzaServiceClient("http://localhost:8080");
             }
             catch (Exception e)
             {
+                String cat = "meow";
                 //Show alert box!
             }
             menu = new DefaultListModel();
@@ -49,11 +56,11 @@ public class ViewController extends AbstractController{
         }
 	public ViewController(DefaultListModel<String> menuListModel){
             super();
-            model = new UserModel();
+            user = new UserModel();
             frame = MainWindow.getFrame();
             try
             {
-                source = new PizzaServiceClient();
+                source = new PizzaServiceClient("http://localhost:8080");
             }
             catch (Exception e)
             {
@@ -70,7 +77,7 @@ public class ViewController extends AbstractController{
         }
                 
         public UserModel getUser(){
-            return ((UserModel)model);
+            return ((UserModel)user);
         }
         
         public void setOrderModel(IModel model)
@@ -82,6 +89,7 @@ public class ViewController extends AbstractController{
            return orderModel;
         }
 	public void showMainView(){
+            displayMenu();
             frame.setContentPane(new MainView(this));
             refreshView(frame);
 	}
@@ -97,14 +105,14 @@ public class ViewController extends AbstractController{
 	}
         
         public void showPaymentView(){
-            frame.setContentPane(new PaymentView(this, source));
+//            frame.setContentPane(new PaymentView(this, source));
             refreshView(frame);
         }
         
         public void showOrderView(){
-            OrderView ov = new OrderView(source,this);
+//            OrderView ov = new OrderView(source,this);
             
-            frame.setContentPane(ov);
+//            frame.setContentPane(ov);
             refreshView(frame);
         }
         
@@ -119,14 +127,22 @@ public class ViewController extends AbstractController{
         }
         
         public void displayMenu(){
-            ArrayList<IModel> items = null;
+            ArrayList<IItemModel> items = null;
             try {
-                 items = source.getItems();
+                items = source.getItems();
             } catch (StorageException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            items.stream().forEach((x) -> { menu.addElement(((ItemModel)x).getName());});
+            for(IItemModel m : items)
+            {
+                String menuItem = m.getName();
+                if(m.getIsSpecial())
+                    menuItem = menuItem + "SPECIAL: $" + m.getSpecialPrice();
+                else
+                    menuItem = menuItem + " $" + m.getPrice();
+                menu.addElement(menuItem);
+            }
+//            items.stream().forEach((x) -> { menu.addElement(((ItemModel)x).getName());});
         }
         
         public void displayOrder(){
@@ -152,7 +168,7 @@ public class ViewController extends AbstractController{
         }
 
         public void updateUser(UserModel newUser){
-            model = newUser;
+            user = newUser;
         }
         
     @Override

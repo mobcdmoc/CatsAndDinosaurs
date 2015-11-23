@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package cs414.a5.nwalling.employeeclient.controllers;
 
-import data.IDataSource;
+import cs414.a5.nwalling.common.data.IDataSource;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import models.IModel;
+import cs414.a5.nwalling.common.models.IModel;
 
 /**
  *
@@ -21,9 +21,9 @@ public abstract class AbstractController implements IController, Serializable
     public static final String PROP_USER = "user";
     
     protected PropertyChangeSupport propertySupport;
-    
+//    
     protected IModel user;
-    protected IModel model;
+//    protected IModel model;
     
     protected IDataSource source;
     
@@ -44,27 +44,23 @@ public abstract class AbstractController implements IController, Serializable
     
     public IModel getUser()
     {
-        return model;
+        return user;
     }
     
     public void setUser(IModel value)
     {
-        IModel oldValue = user;
         user = value;
-        propertySupport.firePropertyChange(PROP_USER, oldValue, user);
     }
     
-    public IModel getModel()
-    {
-        return model;
-    }
+//    public IModel getModel()
+//    {
+//        return model;
+//    }
     
-    public void setModel(IModel value)
-    {
-        IModel oldValue = model;
-        model = value;
-        propertySupport.firePropertyChange(PROP_MODEL, oldValue, model);
-    }
+//    public void setModel(IModel value)
+//    {
+//        model = value;
+//    }
     
     
     public void addPropertyChangeListener(PropertyChangeListener listener) {

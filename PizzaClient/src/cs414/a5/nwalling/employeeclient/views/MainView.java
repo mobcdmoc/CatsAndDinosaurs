@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package cs414.a5.nwalling.employeeclient.views;
 
-import controllers.ViewController;
+import cs414.a5.nwalling.employeeclient.controllers.ViewController;
+import cs414.a5.nwalling.common.models.UserModel;
 import javax.swing.DefaultListModel;
 
 /**
@@ -32,10 +33,19 @@ public class MainView extends javax.swing.JPanel {
             vc = new ViewController(menuListModel);
         initComponents();
         customInit();
+        
     }
     
     private void customInit(){
-        userName.setText(vc.getUser().getUserName());
+        userName.setText(vc.getUser().getUsername());
+        if(vc.getUser().getAuthLevel() >= 3 )
+            this.createAccount.setVisible(false);
+        
+        if(vc.getUser().getAuthLevel() < 5)
+            this.logIn.setText("Log Out");
+        else
+            this.createAccount.setVisible(false);
+        
     }
     
     private DefaultListModel<String> menuListModel = new DefaultListModel();
@@ -61,9 +71,6 @@ public class MainView extends javax.swing.JPanel {
         createAccount = new javax.swing.JButton();
         updateMenu = new javax.swing.JButton();
         chefView = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        checkout = new javax.swing.JButton();
-        makeOrder = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         exit = new javax.swing.JButton();
 
@@ -153,7 +160,7 @@ public class MainView extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(logIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(createAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(createAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                     .addComponent(updateMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chefView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -170,43 +177,6 @@ public class MainView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chefView)
                 .addContainerGap(12, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        checkout.setText("Checkout");
-        checkout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkoutActionPerformed(evt);
-            }
-        });
-
-        makeOrder.setText("Make/Edit Order");
-        makeOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                makeOrderActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(makeOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(checkout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(makeOrder)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkout)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -245,7 +215,6 @@ public class MainView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -257,8 +226,6 @@ public class MainView extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -272,7 +239,22 @@ public class MainView extends javax.swing.JPanel {
 
     private void logInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInActionPerformed
         // TODO add your handling code here:
-        vc.showloginView();
+        if(vc.getUser().getAuthLevel() < 5)
+        {
+            UserModel tmp = new UserModel();
+            tmp.setUsername("Guest");
+            tmp.setAuthLevel(5);
+            vc.setUser(tmp);
+            updateMenu.setVisible(false);
+            chefView.setVisible(false);
+            logIn.setText("Log In");
+            createAccount.setVisible(false);
+            userName.setText("Guest");
+        }
+        else
+        {
+            vc.showloginView();
+        }
     }//GEN-LAST:event_logInActionPerformed
 
     private void createAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountActionPerformed
@@ -285,16 +267,6 @@ public class MainView extends javax.swing.JPanel {
         vc.showChefView();
     }//GEN-LAST:event_chefViewActionPerformed
 
-    private void checkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutActionPerformed
-        // TODO add your handling code here:
-        vc.showPaymentView();
-    }//GEN-LAST:event_checkoutActionPerformed
-
-    private void makeOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeOrderActionPerformed
-        // TODO add your handling code here:
-        vc.showOrderView();
-    }//GEN-LAST:event_makeOrderActionPerformed
-
     private void updateMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateMenuActionPerformed
         // TODO add your handling code here:
         vc.showChangeMenuView();
@@ -305,7 +277,6 @@ public class MainView extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton checkout;
     private javax.swing.JButton chefView;
     private javax.swing.JButton createAccount;
     private javax.swing.JButton exit;
@@ -313,13 +284,11 @@ public class MainView extends javax.swing.JPanel {
     private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton logIn;
-    private javax.swing.JButton makeOrder;
     private javax.swing.JButton updateMenu;
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables

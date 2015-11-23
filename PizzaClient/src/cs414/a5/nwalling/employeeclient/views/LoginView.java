@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package cs414.a5.nwalling.employeeclient.views;
 
-import controllers.LoginController;
-import controllers.ViewController;
-import data.IDataSource;
-import data.PizzaServiceClient;
-import models.UserModel;
-
+import cs414.a5.nwalling.employeeclient.controllers.LoginController;
+import cs414.a5.nwalling.employeeclient.controllers.ViewController;
+import cs414.a5.nwalling.common.controllers.ILoginController;
+import cs414.a5.nwalling.common.data.IDataSource;
+import cs414.a5.nwalling.common.data.PizzaServiceClient;
+import cs414.a5.nwalling.common.models.UserModel;
 /**
  *
  * @author Nigel
@@ -23,7 +23,7 @@ public class LoginView extends javax.swing.JPanel {
     
     ViewController vc;
     private IDataSource source;
-
+    private LoginController controller;
     
     public LoginView(ViewController vc) {
         this.vc = vc;
@@ -39,9 +39,7 @@ public class LoginView extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        controller = new controllers.LoginController();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -49,6 +47,7 @@ public class LoginView extends javax.swing.JPanel {
         submit = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
         password = new javax.swing.JTextField();
+        ErrorText = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Login");
@@ -56,9 +55,6 @@ public class LoginView extends javax.swing.JPanel {
         jLabel2.setText("Password:");
 
         jLabel3.setText("Username:");
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.userName}"), username, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
 
         submit.setText("Submit");
         submit.addActionListener(new java.awt.event.ActionListener() {
@@ -73,9 +69,6 @@ public class LoginView extends javax.swing.JPanel {
                 cancelActionPerformed(evt);
             }
         });
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.password}"), password, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -94,12 +87,15 @@ public class LoginView extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(ErrorText)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -115,31 +111,42 @@ public class LoginView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ErrorText)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submit)
                     .addComponent(cancel))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
-
-        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     private void initCustom()
     {
-        source = new PizzaServiceClient();
-        //controller = new LoginController();
+        source = new PizzaServiceClient("http://localhost:8080");
+        controller = new LoginController();
         controller.init(source);
+//        controller.init(source);
         //controller.get();
     }
     
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
-        //String usrStr = username.getText();
-        //String psswrdStr = password.getText();
-        controller.get();
+        if(username.getText().trim().equals("") || password.getText().trim().equals(""))
+        {
+            this.ErrorText.setText("Username and Password are both required.");
+            return;
+        }
+        controller.get(this.username.getText(), this.password.getText());
+        
         UserModel newUser = controller.getUser();
+        if(newUser == null)
+        {
+            this.ErrorText.setText("Bad Username Or Password");
+            return;
+        }
         vc.updateUser(newUser);
+        
         vc.showMainView();
     }//GEN-LAST:event_submitActionPerformed
 
@@ -150,14 +157,13 @@ public class LoginView extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ErrorText;
     private javax.swing.JButton cancel;
-    private controllers.LoginController controller;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField password;
     private javax.swing.JButton submit;
     private javax.swing.JTextField username;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

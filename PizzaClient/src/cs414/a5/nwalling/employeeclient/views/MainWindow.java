@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package cs414.a5.nwalling.employeeclient.views;
 
 import javax.swing.JFrame;
-import controllers.ViewController;
+import cs414.a5.nwalling.employeeclient.controllers.ViewController;
 
 public class MainWindow {
 	

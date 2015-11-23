@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package cs414.a5.nwalling.employeeclient.controllers;
 
-import data.IDataSource;
+import cs414.a5.nwalling.common.data.IDataSource;
 
 /**
  *

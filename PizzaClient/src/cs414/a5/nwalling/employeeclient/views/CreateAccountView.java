@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package cs414.a5.nwalling.employeeclient.views;
 
-import controllers.CreateAccountController;
-import controllers.ViewController;
-import data.IDataSource;
-import data.PizzaServiceClient;
+import cs414.a5.nwalling.employeeclient.controllers.CreateAccountController;
+import cs414.a5.nwalling.employeeclient.controllers.ViewController;
+import cs414.a5.nwalling.common.data.IDataSource;
+import cs414.a5.nwalling.common.data.PizzaServiceClient;
+import cs414.a5.nwalling.common.exceptions.StorageException;
+import cs414.a5.nwalling.common.models.IUserModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +22,7 @@ public class CreateAccountView extends javax.swing.JPanel {
     
     private static ViewController vc;
     private IDataSource source;
-    
+    private CreateAccountController controller;
     public CreateAccountView( ViewController vc) {
         this.vc = vc;
         initComponents();
@@ -35,9 +39,7 @@ public class CreateAccountView extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        controller = new controllers.CreateAccountController();
         firstNameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JTextField();
         firstNameLabel = new javax.swing.JLabel();
@@ -49,12 +51,9 @@ public class CreateAccountView extends javax.swing.JPanel {
         userNameField = new javax.swing.JTextField();
         lastNameLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.firstName}"), firstNameField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.password}"), passwordField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
+        empType = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        errorLabel = new javax.swing.JLabel();
 
         firstNameLabel.setText("First Name:");
 
@@ -77,15 +76,13 @@ public class CreateAccountView extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Account Creation");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.lastName}"), lastNameField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, controller, org.jdesktop.beansbinding.ELProperty.create("${model.userName}"), userNameField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         lastNameLabel.setText("Last Name: ");
 
         emailLabel.setText("Username:");
+
+        empType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Chef" }));
+
+        jLabel1.setText("Account Type:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -94,34 +91,42 @@ public class CreateAccountView extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 105, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(submitButton))
                     .addComponent(firstNameField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(userNameField)
                     .addComponent(lastNameField)
                     .addComponent(passwordField)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 87, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(cancelButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(submitButton))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(empType, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(55, 55, 55))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(firstNameLabel)
                             .addComponent(lastNameLabel)
                             .addComponent(emailLabel)
                             .addComponent(passwordLabel))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(65, 65, 65))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(errorLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(firstNameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,18 +142,21 @@ public class CreateAccountView extends javax.swing.JPanel {
                 .addComponent(passwordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(empType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
                     .addComponent(cancelButton))
                 .addContainerGap())
         );
-
-        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     public void initCustom(){
-        source = new PizzaServiceClient();
+        source = new PizzaServiceClient("http://localhost:8080");
+        controller = new CreateAccountController();
         controller.init(source);
         //controller.get();
     }
@@ -160,17 +168,46 @@ public class CreateAccountView extends javax.swing.JPanel {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         
-        controller.submit(vc.getUser().getAuthLevel());
+        if(firstNameField.getText().trim().equals(""))
+        {
+            errorLabel.setText("First Name is Required.");
+            return;
+        }
+        if(lastNameField.getText().trim().equals(""))
+        {
+            errorLabel.setText("Last Name is Required.");
+            return;
+        }
+        if(userNameField.getText().trim().equals(""))
+        {
+            errorLabel.setText("Username is Required.");
+            return;
+        }
+        if(passwordField.getText().trim().equals(""))
+        {
+            errorLabel.setText("Password is Required.");
+            return;
+        }
+        
+        if(controller.usernameExists(userNameField.getText()))
+        {
+            errorLabel.setText("Username already exists. Please choose another.");
+            return;
+        }
+        
+        controller.submit(firstNameField.getText(),lastNameField.getText(),userNameField.getText(),passwordField.getText(),empType.getSelectedIndex()+2);
         vc.showMainView();
     }//GEN-LAST:event_submitButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
-    private controllers.CreateAccountController controller;
     private javax.swing.JLabel emailLabel;
+    private javax.swing.JComboBox<String> empType;
+    private javax.swing.JLabel errorLabel;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel firstNameLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JLabel lastNameLabel;
@@ -178,6 +215,5 @@ public class CreateAccountView extends javax.swing.JPanel {
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JButton submitButton;
     private javax.swing.JTextField userNameField;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
