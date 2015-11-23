@@ -5,19 +5,19 @@
  */
 package Tester;
 
-import cs414.a5.nwalling.controllers.ILoginController;
-import cs414.a5.nwalling.controllers.LoginController;
-import cs414.a5.nwalling.data.ControllerFactory;
-import cs414.a5.nwalling.data.IControllerFactory;
-import cs414.a5.nwalling.data.IDataSource;
-import cs414.a5.nwalling.data.IModelFactory;
-import cs414.a5.nwalling.data.ModelFactory;
-import cs414.a5.nwalling.data.PizzaServiceClient;
-import cs414.a5.nwalling.exceptions.StorageException;
+import cs414.a5.nwalling.common.controllers.ILoginController;
+import cs414.a5.nwalling.common.controllers.LoginController;
+import cs414.a5.nwalling.common.data.ControllerFactory;
+import cs414.a5.nwalling.common.data.IControllerFactory;
+import cs414.a5.nwalling.common.data.IDataSource;
+import cs414.a5.nwalling.common.data.IModelFactory;
+import cs414.a5.nwalling.common.data.ModelFactory;
+import cs414.a5.nwalling.common.data.PizzaServiceClient;
+import cs414.a5.nwalling.common.exceptions.StorageException;
 import java.util.ArrayList;
-import cs414.a5.nwalling.models.IOrderModel;
-import cs414.a5.nwalling.models.IPaymentModel;
-import cs414.a5.nwalling.models.IUserModel;
+import cs414.a5.nwalling.common.models.IOrderModel;
+import cs414.a5.nwalling.common.models.IPaymentModel;
+import cs414.a5.nwalling.common.models.IUserModel;
 
 /**
  *
